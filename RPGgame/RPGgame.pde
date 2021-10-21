@@ -4,22 +4,34 @@
 
 // Variables //
 
-final int INTRO = 0;  // Mode Framework
+// Mode Framework
+final int INTRO = 0;  
 final int GAME = 1;
 int mode;
 
-color roomFloor = 230;  // Colors
+  // Colors
+color roomFloor = 230;
 color roomWall = #4B48B2;
 
-float wallSize;  // Room values
-float roomScale = 1;
+// Room values
+float wallSize;  
+float scale = 1;
 float roomSize = 1000;
 float roomX, roomY;
 
-ArrayList<Room> myRooms; // ArrayLists
+// Objects
+ArrayList<Room> myRooms; 
 ArrayList<gameObject> myObjects;
+Player myPlayer;
 
-float speed = 5;  // Player
+// Player
+float speed = 5;  
+
+// Game
+boolean leftWall, rightWall, upWall, downWall;  // true if touching wall
+boolean leftDoor, rightDoor, upDoor, downDoor;  // true if door exists
+boolean leftMove, rightMove, upMove, downMove;  // true if can move in that direction
+int newRoom = -1;
 
 void setup() { 
   size(960, 540);
@@ -28,13 +40,14 @@ void setup() {
   
   wallSize = 50*scaleX;
   
-  roomX = width/2;
-  roomY = height/2;
+  roomX = 0;
+  roomY = 0;
   
   myRooms = new ArrayList<Room>();
   myRooms.add(new Room(width/2, height/2));
   myObjects = new ArrayList<gameObject>();
-  myObjects.add(new Player());
+  myPlayer = new Player();
+  myObjects.add(myPlayer);
   
   
   mode = GAME;

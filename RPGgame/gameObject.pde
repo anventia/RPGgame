@@ -2,7 +2,8 @@ class gameObject {
   
   // Instance Variables //
   int lives;
-  float size;
+  float size;  // Size (Diameter)
+  float rad;  // Size (Radius)
   
   PVector location;
   PVector velocity;

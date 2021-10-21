@@ -1,11 +1,12 @@
 class Player extends gameObject {
   
   // Instance Variables //
-  
+
   
   // Constructor //
   Player() {
-    size = 60;
+    size = 60*scale;
+    rad = size/2;
     
     location = new PVector(width/2, height/2);
     velocity = new PVector(0,0);
