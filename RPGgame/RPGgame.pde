@@ -11,11 +11,13 @@ int mode;
 
   // Colors
 color roomFloor = 230;
+color roomTile = 210;
 color roomWall = #4B48B2;
 
-// Room values
+// Room valuesaa
 float wallSize;  
-float scale = 1;
+float roomScale;
+float defaultroomScale;
 float roomSize = 1000;
 float roomX, roomY;
 
@@ -25,7 +27,7 @@ ArrayList<gameObject> myObjects;
 Player myPlayer;
 
 // Player
-float speed = 5;  
+  
 
 // Game
 boolean leftWall, rightWall, upWall, downWall;  // true if touching wall
@@ -37,11 +39,15 @@ void setup() {
   size(960, 540);
   background(255);
   scaleWindow();
+  surface.setResizable(true);
   
-  wallSize = 50*scaleX;
+  defaultroomScale = 0.5;
+  roomScale = 0.5;
+  wallSize = 50;
   
   roomX = 0;
   roomY = 0;
+  
   
   myRooms = new ArrayList<Room>();
   myRooms.add(new Room(width/2, height/2));
@@ -54,6 +60,8 @@ void setup() {
 }
 
 void draw() {
+  if(keyQ) { keyQ = false; defaultroomScale += 0.1; }
+  //println(roomScale);
   detectClicks();
   scaleWindow();
   switch(mode) {  // Mode Framework

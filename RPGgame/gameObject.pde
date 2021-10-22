@@ -4,6 +4,7 @@ class gameObject {
   int lives;
   float size;  // Size (Diameter)
   float rad;  // Size (Radius)
+  float speed;
   
   PVector location;
   PVector velocity;
