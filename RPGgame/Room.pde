@@ -20,7 +20,7 @@ class Room {
     tw = width;
     th = height;
     
-    tiles = 8;
+    tiles = 10;
     tileSize = (roomSize*roomScale)/tiles;
   }
   
@@ -28,22 +28,25 @@ class Room {
   // Act //
   void act() {
     
-    if(tw != width)  { println("updatewidth");   x = startX*scaleX;}  // Detect if window size changes... 
-    if(th != height) { println("updateheight"); y = startY*scaleY;}
+    if(tw != width)  { println("updatewidth");   x = int(startX*scaleX); }  // Detect if window size changes... 
+    if(th != height) { println("updateheight");  y = int(startY*scaleY); }
+    
+    println(width/2+"---"+x);
     
     tw = width;
     th = height;
-    tileSize = ((roomSize*roomScale)/tiles);
+    tileSize = (roomSize*roomScale)/tiles;
+    wallSize = defaultwallSize*roomScale;
   }
   
-  // Show //
+  // Show // width/2+(100*scale)+roomX*scale
   void show() {
     pushMatrix();
-      translate(x+roomX, y+roomY);
+      translate(x+roomX*scale, y+roomY*scale);
       rectMode(CENTER);
       noStroke();
       fill(roomWall);
-      rect(0,0, ((roomSize+wallSize*2)*roomScale),((roomSize+wallSize*2)*roomScale));  // Walls
+      rect(0,0, (roomSize*roomScale+wallSize*2),(roomSize*roomScale+wallSize*2));  // Walls
       fill(roomFloor);
       rect(0,0, ((roomSize)*roomScale), ((roomSize)*roomScale));  // Floor
       fill(roomTile);

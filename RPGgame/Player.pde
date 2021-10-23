@@ -1,13 +1,13 @@
 class Player extends gameObject {
   
   // Instance Variables //
-
+  float defaultSize = 100;
   
   // Constructor //
   Player() {
-    size = 60*roomScale;
+    size = defaultSize*roomScale;
     rad = size/2;
-    speed = 10*roomScale;
+    speed = 5*roomScale;
     
     location = new PVector(width/2, height/2);
     velocity = new PVector(0,0);
@@ -18,9 +18,9 @@ class Player extends gameObject {
   void act() {
     location.x = width/2;
     location.y = height/2;
-    size = 60*roomScale;
+    size = defaultSize*roomScale;
     rad = size/2;
-    speed = 10*roomScale;
+    speed = 5*roomScale;
     super.act();
   }
   

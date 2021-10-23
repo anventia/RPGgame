@@ -16,6 +16,7 @@ color roomWall = #4B48B2;
 
 // Room valuesaa
 float wallSize;  
+float defaultwallSize;
 float roomScale;
 float defaultroomScale;
 float roomSize = 1000;
@@ -43,7 +44,8 @@ void setup() {
   
   defaultroomScale = 0.5;
   roomScale = 0.5;
-  wallSize = 50;
+  defaultwallSize = 100;
+  wallSize = 100;
   
   roomX = 0;
   roomY = 0;
