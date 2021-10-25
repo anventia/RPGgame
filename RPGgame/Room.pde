@@ -1,8 +1,8 @@
 class Room {
   
   // Instance Variables //
-  float startX;
-  float startY;
+  //float startX;
+  //float startY;
   float x;
   float y;
   int tiles;
@@ -12,8 +12,8 @@ class Room {
   
   // Constructor //
   Room(float x, float y) {
-    this.startX = x;
-    this.startY = y;
+    //this.startX = x;
+    //this.startY = y;
     this.x = x;
     this.y = y;
     
@@ -28,10 +28,10 @@ class Room {
   // Act //
   void act() {
     
-    if(tw != width)  { println("updatewidth");   x = int(startX*scaleX); }  // Detect if window size changes... 
-    if(th != height) { println("updateheight");  y = int(startY*scaleY); }
+    //if(tw != width)  { println("updatewidth");   x = int(startX*scaleX); }  // Detect if window size changes... 
+    //if(th != height) { println("updateheight");  y = int(startY*scaleY); }
     
-    println(width/2+"---"+x);
+    //println(width/2+"---"+x);
     
     tw = width;
     th = height;
@@ -42,7 +42,7 @@ class Room {
   // Show // width/2+(100*scale)+roomX*scale
   void show() {
     pushMatrix();
-      translate(x+roomX*scale, y+roomY*scale);
+      translate(width/2+x+roomX*scale, height/2+y+roomY*scale);// x+roomX*scale, y+roomY*scale
       rectMode(CENTER);
       noStroke();
       fill(roomWall);

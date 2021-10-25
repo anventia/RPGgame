@@ -52,7 +52,7 @@ void setup() {
   
   
   myRooms = new ArrayList<Room>();
-  myRooms.add(new Room(width/2, height/2));
+  myRooms.add(new Room(0,0));
   myObjects = new ArrayList<gameObject>();
   myPlayer = new Player();
   myObjects.add(myPlayer);

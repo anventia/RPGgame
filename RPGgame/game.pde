@@ -15,20 +15,25 @@ void game() {
   
   
   // Wall collisions //
-  upWall    = (myPlayer.location.y - (height/2+roomY-roomSize/2*roomScale)) <= myPlayer.rad;
-  leftWall  = (myPlayer.location.x - (width/2+roomX-roomSize/2*roomScale))  <= myPlayer.rad;
-  downWall  = ((height/2+roomY+roomSize/2*roomScale) - myPlayer.location.y) <= myPlayer.rad;
-  rightWall = ((width/2+roomX+roomSize/2*roomScale) - myPlayer.location.x)  <= myPlayer.rad;
+  upWall    = (myPlayer.location.y - (height/2+roomY*scale-roomSize/2*roomScale)) <= myPlayer.rad;
+  leftWall  = (myPlayer.location.x - (width/2+roomX*scale-roomSize/2*roomScale))  <= myPlayer.rad;
+  downWall  = ((height/2+roomY*scale+roomSize/2*roomScale) - myPlayer.location.y) <= myPlayer.rad;
+  rightWall = ((width/2+roomX*scale+roomSize/2*roomScale) - myPlayer.location.x)  <= myPlayer.rad;
   
   
-  // /*
-  stroke(0,255,255);
   strokeWeight(5);
-  line((width/2+roomX-roomSize/2*roomScale),(height/2+roomY-roomSize/2*roomScale), (width/2+roomX+roomSize/2*roomScale),(height/2+roomY-roomSize/2*roomScale));
-  line((width/2+roomX+roomSize/2*roomScale),(height/2+roomY-roomSize/2*roomScale), (width/2+roomX+roomSize/2*roomScale),(height/2+roomY+roomSize/2*roomScale));
-  line((width/2+roomX+roomSize/2*roomScale),(height/2+roomY+roomSize/2*roomScale), (width/2+roomX-roomSize/2*roomScale),(height/2+roomY+roomSize/2*roomScale));
-  line((width/2+roomX-roomSize/2*roomScale),(height/2+roomY+roomSize/2*roomScale), (width/2+roomX-roomSize/2*roomScale),(height/2+roomY-roomSize/2*roomScale));
-  line(width/2+roomX,height/2+roomY, width/2,height/2);
+   /*
+  stroke(0,255,255); // width/2+(100*scale)+roomX*scale
+  
+  line((width/2+roomX*scale-roomSize/2*roomScale),(height/2+roomY*scale-roomSize/2*roomScale), (width/2+roomX*scale+roomSize/2*roomScale),(height/2+roomY*scale-roomSize/2*roomScale));
+  line((width/2+roomX*scale+roomSize/2*roomScale),(height/2+roomY*scale-roomSize/2*roomScale), (width/2+roomX*scale+roomSize/2*roomScale),(height/2+roomY*scale+roomSize/2*roomScale));
+  line((width/2+roomX*scale+roomSize/2*roomScale),(height/2+roomY*scale+roomSize/2*roomScale), (width/2+roomX*scale-roomSize/2*roomScale),(height/2+roomY*scale+roomSize/2*roomScale));
+  line((width/2+roomX*scale-roomSize/2*roomScale),(height/2+roomY*scale+roomSize/2*roomScale), (width/2+roomX*scale-roomSize/2*roomScale),(height/2+roomY*scale-roomSize/2*roomScale));
+  line(width/2+roomX*scale,height/2+roomY*scale, width/2,height/2);
+  // */dd
+ 
+  
+  
   
   noFill();
   stroke(255,255,0);
@@ -62,41 +67,41 @@ void game() {
   if(keyS && downMove)  { roomY -= myPlayer.speed; }
   if(keyD && rightMove) { roomX -= myPlayer.speed; }
   
-  // println(rightWall+" - "+newRoom+" - "+rightDoor);
+   //println(rightWall+" - "+newRoom+" - "+rightDoor);
   
   // Add new rooms // (To be replaced with doors)
   if(upWall && newRoom == -1 && upDoor) {  // Top 
     newRoom = 0;
-    myRooms.add(new Room(width/2, height/2-((roomSize+wallSize*2)*roomScale)));
+    myRooms.add(new Room(0, -(roomSize*roomScale+wallSize)));
   }
   
-  if(rightWall && newRoom == -1 && rightDoor) {  // Right 
+  if(rightWall && newRoom == -1 && rightDoor) {  // Right
     newRoom = 1;
-    println(newRoom);
-    myRooms.add(new Room(width/2+((roomSize+wallSize*2)*roomScale), height/2));
+    myRooms.add(new Room((roomSize*roomScale+wallSize), 0));
   }
   
   if(downWall && newRoom == -1 && downDoor) {  // Bottom 
     newRoom = 2;
-    myRooms.add(new Room(width/2, height/2+((roomSize+wallSize*2)*roomScale)));
+    myRooms.add(new Room(0, (roomSize*roomScale+wallSize)));
   }
   
   if(leftWall && newRoom == -1 && leftDoor) {  // Left 
     newRoom = 3;
-    myRooms.add(new Room(width/2-((roomSize+wallSize*2)*roomScale), height/2));
+    myRooms.add(new Room(-(roomSize*roomScale+wallSize), 0));
   }
   
   
-  // Remove unneeded rooms //
+  // Remove unneeded rooms //  TODO: Make adding new rooms (and correctly deleting old ones) work with larger window // ===========================================================================
   switch(newRoom) {
     case 0:  // Top
-      if(roomY < (roomSize*roomScale)/2-myPlayer.rad) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
+      if(roomY < (roomSize*roomScale)/2-myPlayer.rad) {println("deletenew");myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
       else if(roomY > ((roomSize*roomScale)/2+(wallSize*roomScale)*2+myPlayer.rad)) {  // Remove old room on the bottom
         myRooms.remove(0);
         newRoom = -1;
-        roomY = -((roomSize*roomScale)/2-myPlayer.rad);  // Set new room to main room
-        myRooms.get(0).startY = height/2;
-        myRooms.get(0).y = height/2;
+        println("deleteold");
+        roomY = -roomY+myPlayer.size+wallSize;  // Set new room to main room
+        //myRooms.get(0).startY = 0;
+        myRooms.get(0).y = 0;
       } break;
       
     case 1:  // Right
@@ -104,19 +109,19 @@ void game() {
       else if(roomX < -((roomSize*roomScale)/2+(wallSize*roomScale)*2+myPlayer.rad)) {  // Remove old room on the left
         myRooms.remove(0);
         newRoom = -1;
-        roomX = ((roomSize*roomScale)/2-myPlayer.rad);  // Set new room to main room
-        myRooms.get(0).startX = width/2;
-        myRooms.get(0).x = width/2;
+        roomX = -roomX-myPlayer.size-wallSize;  // Set new room to main room
+        //myRooms.get(0).startX = 0;
+        myRooms.get(0).x = 0;
       } break;
       
     case 2:  // Bottom
-      if(roomY > -((roomSize*roomScale)/2-myPlayer.rad)) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
+      if(roomY > -1*((roomSize*roomScale)/2-myPlayer.rad)) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
       else if(roomY < -((roomSize*roomScale)/2+(wallSize*roomScale)*2+myPlayer.rad)) {  // Remove old room on the bottom
         myRooms.remove(0);
         newRoom = -1;
-        roomY = ((roomSize*roomScale)/2-myPlayer.rad);  // Set new room to main room
-        myRooms.get(0).startY = height/2;
-        myRooms.get(0).y = height/2;
+        roomY = -roomY-myPlayer.size-wallSize;  // Set new room to main room
+        //myRooms.get(0).startY = 0;
+        myRooms.get(0).y = 0;
       } break;
       
     case 3:  // Left
@@ -124,9 +129,9 @@ void game() {
       else if(roomX > ((roomSize*roomScale)/2+(wallSize*roomScale)*2+myPlayer.rad)) {  // Remove old room on the left
         myRooms.remove(0);
         newRoom = -1;
-        roomX = -((roomSize*roomScale)/2-myPlayer.rad);  // Set new room to main room
-        myRooms.get(0).startX = width/2;
-        myRooms.get(0).x = width/2;
+        roomX = -roomX+myPlayer.size+wallSize;  // Set new room to main room
+        //myRooms.get(0).startX = 0;
+        myRooms.get(0).x = 0;
       } break;
   }
   
