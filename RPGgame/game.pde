@@ -30,11 +30,11 @@ void game() {
   line((width/2+roomX*scale+roomSize/2*roomScale),(height/2+roomY*scale+roomSize/2*roomScale), (width/2+roomX*scale-roomSize/2*roomScale),(height/2+roomY*scale+roomSize/2*roomScale));
   line((width/2+roomX*scale-roomSize/2*roomScale),(height/2+roomY*scale+roomSize/2*roomScale), (width/2+roomX*scale-roomSize/2*roomScale),(height/2+roomY*scale-roomSize/2*roomScale));
   line(width/2+roomX*scale,height/2+roomY*scale, width/2,height/2);
-  // */dd
+  // */
  
   
   
-  
+  /*
   noFill();
   stroke(255,255,0);
   rect(width/2, height/2, 540*scale, 540*scale);
@@ -91,45 +91,47 @@ void game() {
   }
   
   
+  
+  
   // Remove unneeded rooms //  TODO: Make adding new rooms (and correctly deleting old ones) work with larger window // ===========================================================================
   switch(newRoom) {
     case 0:  // Top
-      if(roomY < (roomSize*roomScale)/2-myPlayer.rad) {println("deletenew");myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
-      else if(roomY > ((roomSize*roomScale)/2+(wallSize*roomScale)*2+myPlayer.rad)) {  // Remove old room on the bottom
+      if(roomY*scale < (roomSize*roomScale)/2-myPlayer.rad) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
+      else if(roomY*scale > (myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the bottom
         myRooms.remove(0);
         newRoom = -1;
-        println("deleteold");
-        roomY = -roomY+myPlayer.size+wallSize;  // Set new room to main room
+        roomY = -roomY+(myPlayer.size+wallSize)/scale;  // Set new room to main room
         //myRooms.get(0).startY = 0;
         myRooms.get(0).y = 0;
       } break;
       
-    case 1:  // Right
-      if(roomX > -((roomSize*roomScale)/2-myPlayer.rad)) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
-      else if(roomX < -((roomSize*roomScale)/2+(wallSize*roomScale)*2+myPlayer.rad)) {  // Remove old room on the left
+    case 1:  // Right =========================================
+      if(roomX*scale > -((roomSize*roomScale)/2-myPlayer.rad)) {println("e"+random(1,2)); myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
+      else if(roomX*scale < -(myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the left
         myRooms.remove(0);
+        println("A");
         newRoom = -1;
-        roomX = -roomX-myPlayer.size-wallSize;  // Set new room to main room
+        roomX = -roomX-(myPlayer.size+wallSize)/scale;  // Set new room to mai room
         //myRooms.get(0).startX = 0;
-        myRooms.get(0).x = 0;
+        myRooms.get(0).x = 0;  
       } break;
       
     case 2:  // Bottom
-      if(roomY > -1*((roomSize*roomScale)/2-myPlayer.rad)) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
-      else if(roomY < -((roomSize*roomScale)/2+(wallSize*roomScale)*2+myPlayer.rad)) {  // Remove old room on the bottom
+      if(roomY*scale > -1*((roomSize*roomScale)/2-myPlayer.rad)) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
+      else if(roomY*scale < -(myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the bottom
         myRooms.remove(0);
         newRoom = -1;
-        roomY = -roomY-myPlayer.size-wallSize;  // Set new room to main room
+        roomY = -roomY-(myPlayer.size+wallSize)/scale;  // Set new room to main room
         //myRooms.get(0).startY = 0;
         myRooms.get(0).y = 0;
       } break;
       
     case 3:  // Left
-      if(roomX < (roomSize*roomScale)/2-myPlayer.rad) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
-      else if(roomX > ((roomSize*roomScale)/2+(wallSize*roomScale)*2+myPlayer.rad)) {  // Remove old room on the left
+      if(roomX*scale < (roomSize*roomScale)/2-myPlayer.rad) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
+      else if(roomX*scale > (myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the left
         myRooms.remove(0);
         newRoom = -1;
-        roomX = -roomX+myPlayer.size+wallSize;  // Set new room to main room
+        roomX = -roomX+(myPlayer.size+wallSize)/scale;  // Set new room to main room
         //myRooms.get(0).startX = 0;
         myRooms.get(0).x = 0;
       } break;

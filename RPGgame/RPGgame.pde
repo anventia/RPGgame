@@ -42,10 +42,10 @@ void setup() {
   scaleWindow();
   surface.setResizable(true);
   
-  defaultroomScale = 0.5;
-  roomScale = 0.5;
+  defaultroomScale = 1;
+
   defaultwallSize = 100;
-  wallSize = 100;
+
   
   roomX = 0;
   roomY = 0;
