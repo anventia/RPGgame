@@ -28,10 +28,8 @@ class Room {
   // Act //
   void act() {
     
-    //if(tw != width)  { println("updatewidth");   x = int(startX*scaleX); }  // Detect if window size changes... 
-    //if(th != height) { println("updateheight");  y = int(startY*scaleY); }
+
     
-    //println(width/2+"---"+x);
     
     tw = width;
     th = height;

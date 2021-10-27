@@ -13,14 +13,17 @@ int mode;
 color roomFloor = 230;
 color roomTile = 210;
 color roomWall = #4B48B2;
+color door = #39407E;
 
-// Room valuesaa
+// Room values
 float wallSize;  
 float defaultwallSize;
 float roomScale;
 float defaultroomScale;
 float roomSize = 1000;
 float roomX, roomY;
+float doorSize;
+float defaultdoorSize;
 
 // Objects
 ArrayList<Room> myRooms; 
@@ -35,6 +38,8 @@ boolean leftWall, rightWall, upWall, downWall;  // true if touching wall
 boolean leftDoor, rightDoor, upDoor, downDoor;  // true if door exists
 boolean leftMove, rightMove, upMove, downMove;  // true if can move in that direction
 int newRoom = -1;
+float darknessSize;
+
 
 void setup() { 
   size(960, 540);
@@ -42,10 +47,9 @@ void setup() {
   scaleWindow();
   surface.setResizable(true);
   
-  defaultroomScale = 1;
-
+  defaultroomScale = 0.5;
   defaultwallSize = 100;
-
+  defaultdoorSize = 200;
   
   roomX = 0;
   roomY = 0;
@@ -62,8 +66,6 @@ void setup() {
 }
 
 void draw() {
-  if(keyQ) { keyQ = false; defaultroomScale += 0.1; }
-  //println(roomScale);
   detectClicks();
   scaleWindow();
   switch(mode) {  // Mode Framework
