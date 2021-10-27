@@ -31,9 +31,7 @@ void game() {
   line((width/2+roomX*scale-roomSize/2*roomScale),(height/2+roomY*scale+roomSize/2*roomScale), (width/2+roomX*scale-roomSize/2*roomScale),(height/2+roomY*scale-roomSize/2*roomScale));
   line(width/2+roomX*scale,height/2+roomY*scale, width/2,height/2);
   // */
- 
-  
-  
+
   /*
   noFill();
   stroke(255,255,0);
@@ -43,8 +41,13 @@ void game() {
   rect(width/2+(100*scale)+roomX*scale, height/2+(100*scale)+roomY*scale, 100*scale,100*scale);
   
   // */
+  
+  // Doors //
   upDoor = downDoor = leftDoor = rightDoor = true;  // All 4 directions have doors (testing)
-   
+  // Todo: add fixed-size doors, and only enter new room when touching door
+  // - lock player lateral position within door width when passing through door
+  // - fade in/out effect when adding/removing rooms 
+  
    
   // Motion rules //
   upMove = downMove = leftMove = rightMove = false;
