@@ -5,10 +5,24 @@ void game() {
   roomScale = defaultroomScale*scale;
   doorSize = defaultdoorSize*roomScale;
   
+  
   for(Room i : myRooms) {  // Show rooms
     i.show();
     i.act();
   }
+  
+  
+  
+  // /*
+  for(int i = 0; i < tempRooms.size(); i++) {  // Temoporary rooms
+    Room obj = tempRooms.get(i);
+    obj.show();
+    obj.act();
+    if(obj.lives == 0) tempRooms.remove(i);
+  }
+  // */
+  
+  
   
   // Doors //
   upDoor = downDoor = leftDoor = rightDoor = true;  // All 4 directions have doors (testing)
@@ -120,6 +134,8 @@ void game() {
     case 0:  // Top
       if(roomY*scale < (roomSize*roomScale)/2-myPlayer.rad) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
       else if(roomY*scale > (myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the bottom
+        tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y+roomSize*roomScale+wallSize, 30));
+        tempRooms.get(0).fade = "out";
         myRooms.remove(0);
         newRoom = -1;
         roomY = -roomY+(myPlayer.size+wallSize)/scale;  // Set new room to main room
@@ -129,6 +145,8 @@ void game() {
     case 1:  // Right
       if(roomX*scale > -((roomSize*roomScale)/2-myPlayer.rad)) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
       else if(roomX*scale < -(myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the left
+        tempRooms.add(new Room(myRooms.get(0).x-roomSize*roomScale-wallSize,myRooms.get(0).y, 30));
+        tempRooms.get(0).fade = "out";
         myRooms.remove(0);
         newRoom = -1;
         roomX = -roomX-(myPlayer.size+wallSize)/scale;  // Set new room to mai room
@@ -138,6 +156,8 @@ void game() {
     case 2:  // Bottom
       if(roomY*scale > -1*((roomSize*roomScale)/2-myPlayer.rad)) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
       else if(roomY*scale < -(myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the bottom
+        tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y-roomSize*roomScale-wallSize, 30));
+        tempRooms.get(0).fade = "out";
         myRooms.remove(0);
         newRoom = -1;
         roomY = -roomY-(myPlayer.size+wallSize)/scale;  // Set new room to main room
@@ -147,12 +167,19 @@ void game() {
     case 3:  // Left
       if(roomX*scale < (roomSize*roomScale)/2-myPlayer.rad) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
       else if(roomX*scale > (myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the left
+        tempRooms.add(new Room(myRooms.get(0).x+roomSize*roomScale+wallSize,myRooms.get(0).y, 30));
+        tempRooms.get(0).fade = "out";
         myRooms.remove(0);
         newRoom = -1;
         roomX = -roomX+(myPlayer.size+wallSize)/scale;  // Set new room to main room
         myRooms.get(0).x = 0;
       } break;
   }  
+  
+  
+  // Darkness //
+  darkness();
+  
 } 
 
 void door() {

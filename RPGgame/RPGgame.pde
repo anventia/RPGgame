@@ -2,6 +2,8 @@
 
 
 
+
+
 // Variables //
 
 // Mode Framework
@@ -27,6 +29,7 @@ float defaultdoorSize;
 
 // Objects
 ArrayList<Room> myRooms; 
+ArrayList<Room> tempRooms;
 ArrayList<gameObject> myObjects;
 Player myPlayer;
 
@@ -54,13 +57,14 @@ void setup() {
   roomX = 0;
   roomY = 0;
   
+  darknessSize = 5;
   
   myRooms = new ArrayList<Room>();
   myRooms.add(new Room(0,0));
   myObjects = new ArrayList<gameObject>();
   myPlayer = new Player();
   myObjects.add(myPlayer);
-  
+  tempRooms = new ArrayList<Room>();
   
   mode = GAME;
 }
