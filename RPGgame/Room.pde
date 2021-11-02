@@ -12,9 +12,10 @@ class Room {
   float fadeCount;
   float lives;
   boolean isTemporary;
+  int newRoom;
   
   // Constructor //
-  Room(float x, float y) {
+  Room(float x, float y, int newRoom) {
     this.x = x;
     this.y = y;
     lives = 1;
@@ -25,11 +26,13 @@ class Room {
     fade = "in";
     fadeCount = 0;
     
+    this.newRoom = newRoom;
+    
     tiles = 10;
     tileSize = (roomSize*roomScale)/tiles;
   }
   
-  Room(float x, float y, float c) {  // Alternate constructor for temporary rooms
+  Room(float x, float y, float c, int newRoom) {  // Alternate constructor for temporary rooms
     this.x = x;
     this.y = y;
     lives = 1;
@@ -41,6 +44,7 @@ class Room {
     fadeCount = c;
     
     isTemporary = true;
+    this.newRoom = newRoom;
     
     tiles = 10;
     tileSize = (roomSize*roomScale)/tiles;
@@ -82,8 +86,14 @@ class Room {
         if(tx > roomSize*roomScale/2) {if(tiles % 2 == 0) {checkerX = checkerX*-1;}tx = -roomSize/2*roomScale+tileSize/2; ty += tileSize;}
       }
       fill(0,map(fadeCount, 0,30, 255,0));
-      rect(0,0, ((roomSize)*roomScale), ((roomSize)*roomScale));  // Fade in
-      
+      if(newRoom != -2) {  // Draws rectangle for 'fade' effect (different orientation depending on which side the  
+        pushMatrix();
+        switch(newRoom) {
+          case 1: case 3: rotate(radians(90)); break;  // Left and right rotate 90°
+        }
+        rect(0,0, (roomSize*roomScale+wallSize*2),(roomSize*roomScale));  
+        popMatrix();
+      } else { rect(0,0, (roomSize*roomScale+wallSize*2),(roomSize*roomScale+wallSize*2)); }  // Starting room fade effect id -2
     popMatrix();
   }
 }

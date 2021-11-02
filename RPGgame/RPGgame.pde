@@ -41,7 +41,8 @@ boolean leftWall, rightWall, upWall, downWall;  // true if touching wall
 boolean leftDoor, rightDoor, upDoor, downDoor;  // true if door exists
 boolean leftMove, rightMove, upMove, downMove;  // true if can move in that direction
 int newRoom = -1;
-float darknessSize;
+float darknessSize;  // Size of darkness pixels
+int[][] rows;
 
 
 void setup() { 
@@ -60,11 +61,21 @@ void setup() {
   darknessSize = 5;
   
   myRooms = new ArrayList<Room>();
-  myRooms.add(new Room(0,0));
+  myRooms.add(new Room(0,0, -2));
   myObjects = new ArrayList<gameObject>();
   myPlayer = new Player();
   myObjects.add(myPlayer);
   tempRooms = new ArrayList<Room>();
+  
+  rows = new int[][]{
+    {0,0,0,0,0,0,0},
+    {0,1,1,1,1,1,0},
+    {0,1,0,1,0,1,0},
+    {0,1,1,1,1,1,0},
+    {0,1,0,1,0,1,0},
+    {0,1,1,1,1,1,0},
+    {0,0,0,0,0,0,0}
+  };
   
   mode = GAME;
 }

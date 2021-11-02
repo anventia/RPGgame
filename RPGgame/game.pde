@@ -26,9 +26,9 @@ void game() {
   
   // Doors //
   upDoor = downDoor = leftDoor = rightDoor = true;  // All 4 directions have doors (testing)
-  // Todo: add fixed-size doors, and only enter new room when touching door
+  // Todo: 
   // - lock player lateral position within door width when passing through door
-  // - fade in/out effect when adding/removing rooms 
+  // 
   
   pushMatrix();
     translate(width/2+roomX*scale, height/2+roomY*scale);
@@ -57,6 +57,7 @@ void game() {
   
   
   strokeWeight(5);
+  fill(255);
    /* debugging!!
   stroke(0,255,255); // width/2+(100*scale)+roomX*scale
   
@@ -76,24 +77,25 @@ void game() {
   rect(width/2+(100*scale)+roomX*scale, height/2+(100*scale)+roomY*scale, 100*scale,100*scale);
   
   // */
-  
+    
  
-  // Motion rules //
+  // Motion rules //   if((upWall && upDoor && roomX*scale < doorSize/2-myPlayer.rad && roomX*scale > -(doorSize/2-myPlayer.rad)) || !upWall)  upMove = true;   // Can move if touching door, or not touching wall
+
   upMove = downMove = leftMove = rightMove = false;
   if(upWall && !upDoor) upMove = false;  // Can't move if touching wall with no door
-  if((upWall && upDoor && roomX*scale < doorSize/2-myPlayer.rad && roomX*scale > -(doorSize/2-myPlayer.rad)) || !upWall)  upMove = true;   // Can move if touching door, or not touching wall
+  if((upWall && upDoor && roomX*scale < doorSize/2 && roomX*scale > -(doorSize/2) && dist(myPlayer.location.x,myPlayer.location.y, width/2+roomX*scale-doorSize/2, height/2+roomY*scale-roomSize*roomScale/2) > myPlayer.rad &&  dist(myPlayer.location.x,myPlayer.location.y, width/2+roomX*scale+doorSize/2, height/2+roomY*scale-roomSize*roomScale/2) > myPlayer.rad) || !upWall)  upMove = true;   // Can move if touching door, or not touching wall
   if((leftWall || rightWall) && !(roomY*scale < doorSize/2-myPlayer.rad )) upMove = false;  // Restricts movement inside door
   
   if(downWall && !downDoor) downMove = false;  // Can't move if touching wall with no door
-  if((downWall && downDoor && roomX*scale < doorSize/2-myPlayer.rad && roomX*scale > -(doorSize/2-myPlayer.rad)) || !downWall)  downMove = true;   // Can move if touching door, or not touching wall
+  if((downWall && downDoor && roomX*scale < doorSize/2 && roomX*scale > -(doorSize/2) && dist(myPlayer.location.x,myPlayer.location.y, width/2+roomX*scale-doorSize/2, height/2+roomY*scale+roomSize*roomScale/2) > myPlayer.rad &&  dist(myPlayer.location.x,myPlayer.location.y, width/2+roomX*scale+doorSize/2, height/2+roomY*scale+roomSize*roomScale/2) > myPlayer.rad) || !downWall)  downMove = true;   // Can move if touching door, or not touching wall
   if((leftWall || rightWall) && !(roomY*scale > -(doorSize/2-myPlayer.rad))) downMove = false;  // Restricts movement inside door
   
   if((leftWall && !leftDoor)) leftMove = false;  // Can't move if touching wall with no door
-  if((leftWall && leftDoor && roomY*scale < doorSize/2-myPlayer.rad && roomY*scale > -(doorSize/2-myPlayer.rad)) || !leftWall)  leftMove = true;   // Can move if touching door, or not touching wall
+  if((leftWall && leftDoor && roomY*scale < doorSize/2 && roomY*scale > -(doorSize/2) && dist(myPlayer.location.x, myPlayer.location.y, width/2+roomX*scale-roomSize*roomScale/2, height/2+roomY*scale-doorSize/2) > myPlayer.rad && dist(myPlayer.location.x, myPlayer.location.y, width/2+roomX*scale-roomSize*roomScale/2, height/2+roomY*scale+doorSize/2) > myPlayer.rad) || !leftWall)  leftMove = true;   // Can move if touching door, or not touching wall
   if((upWall || downWall) && !(roomX*scale < doorSize/2-myPlayer.rad )) leftMove = false;  // Restricts movement inside door
   
   if(rightWall && !rightDoor) rightMove = false;  // Can't move if touching wall with no door
-  if((rightWall && rightDoor && roomY*scale < doorSize/2-myPlayer.rad && roomY*scale > -(doorSize/2-myPlayer.rad)) || !rightWall)  rightMove = true;   // Can move if touching door, or not touching wall
+  if((rightWall && rightDoor && roomY*scale < doorSize/2 && roomY*scale > -(doorSize/2) && dist(myPlayer.location.x, myPlayer.location.y, width/2+roomX*scale+roomSize*roomScale/2, height/2+roomY*scale-doorSize/2) > myPlayer.rad && dist(myPlayer.location.x, myPlayer.location.y, width/2+roomX*scale+roomSize*roomScale/2, height/2+roomY*scale+doorSize/2) > myPlayer.rad) || !rightWall)  rightMove = true;   // Can move if touching door, or not touching wall
   if((upWall || downWall) && !(roomX*scale > -(doorSize/2-myPlayer.rad))) rightMove = false;  // Restricts movement inside door
 
 
@@ -105,25 +107,25 @@ void game() {
   if(keyD && rightMove) { roomX -= myPlayer.speed; }
   
   
-  // Add new rooms // (To be replaced with doors)
+  // Add new rooms // 
   if(upWall && newRoom == -1 && upDoor) {  // Top 
     newRoom = 0;
-    myRooms.add(new Room(0, -(roomSize*roomScale+wallSize)));
+    myRooms.add(new Room(0, -(roomSize*roomScale+wallSize), newRoom));
   }
   
   if(rightWall && newRoom == -1 && rightDoor) {  // Right
     newRoom = 1;
-    myRooms.add(new Room((roomSize*roomScale+wallSize), 0));
+    myRooms.add(new Room((roomSize*roomScale+wallSize), 0, newRoom));
   }
   
   if(downWall && newRoom == -1 && downDoor) {  // Bottom 
     newRoom = 2;
-    myRooms.add(new Room(0, (roomSize*roomScale+wallSize)));
+    myRooms.add(new Room(0, (roomSize*roomScale+wallSize), newRoom));
   }
   
   if(leftWall && newRoom == -1 && leftDoor) {  // Left 
     newRoom = 3;
-    myRooms.add(new Room(-(roomSize*roomScale+wallSize), 0));
+    myRooms.add(new Room(-(roomSize*roomScale+wallSize), 0, newRoom));
   }
   
   
@@ -134,7 +136,7 @@ void game() {
     case 0:  // Top
       if(roomY*scale < (roomSize*roomScale)/2-myPlayer.rad) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
       else if(roomY*scale > (myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the bottom
-        tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y+roomSize*roomScale+wallSize, 30));
+        tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y+roomSize*roomScale+wallSize, 30, newRoom));
         tempRooms.get(0).fade = "out";
         myRooms.remove(0);
         newRoom = -1;
@@ -145,7 +147,7 @@ void game() {
     case 1:  // Right
       if(roomX*scale > -((roomSize*roomScale)/2-myPlayer.rad)) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
       else if(roomX*scale < -(myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the left
-        tempRooms.add(new Room(myRooms.get(0).x-roomSize*roomScale-wallSize,myRooms.get(0).y, 30));
+        tempRooms.add(new Room(myRooms.get(0).x-roomSize*roomScale-wallSize,myRooms.get(0).y, 30, newRoom));
         tempRooms.get(0).fade = "out";
         myRooms.remove(0);
         newRoom = -1;
@@ -156,7 +158,7 @@ void game() {
     case 2:  // Bottom
       if(roomY*scale > -1*((roomSize*roomScale)/2-myPlayer.rad)) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
       else if(roomY*scale < -(myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the bottom
-        tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y-roomSize*roomScale-wallSize, 30));
+        tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y-roomSize*roomScale-wallSize, 30, newRoom));
         tempRooms.get(0).fade = "out";
         myRooms.remove(0);
         newRoom = -1;
@@ -167,7 +169,7 @@ void game() {
     case 3:  // Left
       if(roomX*scale < (roomSize*roomScale)/2-myPlayer.rad) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
       else if(roomX*scale > (myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the left
-        tempRooms.add(new Room(myRooms.get(0).x+roomSize*roomScale+wallSize,myRooms.get(0).y, 30));
+        tempRooms.add(new Room(myRooms.get(0).x+roomSize*roomScale+wallSize,myRooms.get(0).y, 30, newRoom));
         tempRooms.get(0).fade = "out";
         myRooms.remove(0);
         newRoom = -1;
