@@ -25,10 +25,9 @@ void game() {
   
   
   // Doors //
-  upDoor = downDoor = leftDoor = rightDoor = true;  // All 4 directions have doors (testing)
-  // Todo: 
-  // - lock player lateral position within door width when passing through door
-  // 
+  upDoor = downDoor = leftDoor = rightDoor = false;
+  if(minimap[currentRow-1][currentCol] == 1) upDoor = true;
+  println(currentRow-1);
   
   pushMatrix();
     translate(width/2+roomX*scale, height/2+roomY*scale);
@@ -135,52 +134,60 @@ void game() {
   switch(newRoom) {
     case 0:  // Top
       if(roomY*scale < (roomSize*roomScale)/2-myPlayer.rad) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
-      else if(roomY*scale > (myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the bottom
+      else if(roomY*scale > (myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the bottom [ENTER NEW ROOM: TOP]
         tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y+roomSize*roomScale+wallSize, 30, newRoom));
-        tempRooms.get(0).fade = "out";
+        tempRooms.get(0).fade = "out";  // Temporary room for fade-out effect
         myRooms.remove(0);
         newRoom = -1;
         roomY = -roomY+(myPlayer.size+wallSize)/scale;  // Set new room to main room
         myRooms.get(0).y = 0;
+        currentRow -= 1;  // Move current room up
       } break;
       
     case 1:  // Right
       if(roomX*scale > -((roomSize*roomScale)/2-myPlayer.rad)) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
-      else if(roomX*scale < -(myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the left
+      else if(roomX*scale < -(myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the left [ENTER NEW ROOM: RIGHT]
         tempRooms.add(new Room(myRooms.get(0).x-roomSize*roomScale-wallSize,myRooms.get(0).y, 30, newRoom));
-        tempRooms.get(0).fade = "out";
+        tempRooms.get(0).fade = "out";  // Temporary room for fade-out effect
         myRooms.remove(0);
         newRoom = -1;
-        roomX = -roomX-(myPlayer.size+wallSize)/scale;  // Set new room to mai room
+        roomX = -roomX-(myPlayer.size+wallSize)/scale;  // Set new room to main room
         myRooms.get(0).x = 0;  
+        currentCol += 1;  // Move current room right
       } break;
       
     case 2:  // Bottom
       if(roomY*scale > -1*((roomSize*roomScale)/2-myPlayer.rad)) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
-      else if(roomY*scale < -(myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the bottom
+      else if(roomY*scale < -(myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the top [ENTER NEW ROOM: BOTTOM]
         tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y-roomSize*roomScale-wallSize, 30, newRoom));
-        tempRooms.get(0).fade = "out";
+        tempRooms.get(0).fade = "out";  // Temporary room for fade-out effect
         myRooms.remove(0);
         newRoom = -1;
         roomY = -roomY-(myPlayer.size+wallSize)/scale;  // Set new room to main room
         myRooms.get(0).y = 0;
+        currentRow += 1;  // Move current room down
       } break;
       
     case 3:  // Left
       if(roomX*scale < (roomSize*roomScale)/2-myPlayer.rad) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
-      else if(roomX*scale > (myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the left
+      else if(roomX*scale > (myPlayer.rad+wallSize+roomSize*roomScale/2)) {  // Remove old room on the right [ENTER NEW ROOM: LEFT]
         tempRooms.add(new Room(myRooms.get(0).x+roomSize*roomScale+wallSize,myRooms.get(0).y, 30, newRoom));
-        tempRooms.get(0).fade = "out";
+        tempRooms.get(0).fade = "out";  // Temporary room for fade-out effect
         myRooms.remove(0);
         newRoom = -1;
         roomX = -roomX+(myPlayer.size+wallSize)/scale;  // Set new room to main room
         myRooms.get(0).x = 0;
+        currentCol -= 1;  // Move current room left
       } break;
   }  
   
   
   // Darkness //
-  darkness();
+  //darkness();
+  
+  
+  // Minimap //
+  minimap();
   
 } 
 

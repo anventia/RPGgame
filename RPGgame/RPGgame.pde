@@ -11,7 +11,7 @@ final int INTRO = 0;
 final int GAME = 1;
 int mode;
 
-  // Colors
+// Colors
 color roomFloor = 230;
 color roomTile = 210;
 color roomWall = #4B48B2;
@@ -33,17 +33,18 @@ ArrayList<Room> tempRooms;
 ArrayList<gameObject> myObjects;
 Player myPlayer;
 
-// Player
-  
-
 // Game
 boolean leftWall, rightWall, upWall, downWall;  // true if touching wall
 boolean leftDoor, rightDoor, upDoor, downDoor;  // true if door exists
 boolean leftMove, rightMove, upMove, downMove;  // true if can move in that direction
 int newRoom = -1;
 float darknessSize;  // Size of darkness pixels
-int[][] rows;
+int[][] minimap;  // Minimap array
+int rows, cols;
+int currentRow, currentCol;
 
+// Font
+PFont consolas;
 
 void setup() { 
   size(960, 540);
@@ -51,15 +52,17 @@ void setup() {
   scaleWindow();
   surface.setResizable(true);
   
+  // Mode Framework
+  mode = GAME;
+  
+  // Room values
   defaultroomScale = 0.5;
   defaultwallSize = 100;
   defaultdoorSize = 200;
-  
   roomX = 0;
   roomY = 0;
   
-  darknessSize = 5;
-  
+  // Objects
   myRooms = new ArrayList<Room>();
   myRooms.add(new Room(0,0, -2));
   myObjects = new ArrayList<gameObject>();
@@ -67,17 +70,24 @@ void setup() {
   myObjects.add(myPlayer);
   tempRooms = new ArrayList<Room>();
   
-  rows = new int[][]{
+   // Game
+  darknessSize = 5;
+  rows = cols = 7;
+  minimap = new int[][]{  // Initialize map
     {0,0,0,0,0,0,0},
     {0,1,1,1,1,1,0},
     {0,1,0,1,0,1,0},
-    {0,1,1,1,1,1,0},
+    {0,0,1,1,0,1,0},
     {0,1,0,1,0,1,0},
-    {0,1,1,1,1,1,0},
+    {0,1,1,1,0,1,0},
     {0,0,0,0,0,0,0}
   };
+  currentRow = 4;
+  currentCol = 3;
   
-  mode = GAME;
+  // Font
+  consolas = createFont("Consolas", 1);
+  
 }
 
 void draw() {
