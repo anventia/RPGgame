@@ -20,7 +20,7 @@ color door = #39407E;
 // Room values
 float wallSize;  
 float defaultwallSize;
-float roomScale;
+float gameScale;
 float defaultroomScale;
 float roomSize = 1000;
 float roomX, roomY;
@@ -42,6 +42,7 @@ float darknessSize;  // Size of darkness pixels
 int[][] minimap;  // Minimap array
 int rows, cols;
 int currentRow, currentCol;
+float objectOffsetX, objectOffsetY;
 
 // Font
 PFont consolas;

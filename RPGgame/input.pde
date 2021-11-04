@@ -22,3 +22,13 @@ void keyReleased() {
     case 'Q': case 'q': keyQ = false; break;
   }
 }
+
+boolean mouse;
+
+void mousePressed() {
+  mouse = true;
+}
+
+void mouseReleased() {
+  mouse = false; 
+}
