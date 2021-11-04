@@ -7,7 +7,7 @@ class Player extends gameObject {
   Player() {
     size = defaultSize*roomScale;
     rad = size/2;
-    speed = 5*roomScale;
+    speed = 10*roomScale;
     
     location = new PVector(width/2, height/2);
     velocity = new PVector(0,0);
@@ -20,7 +20,7 @@ class Player extends gameObject {
     location.y = height/2;
     size = defaultSize*roomScale;
     rad = size/2;
-    speed = 5*roomScale;
+    speed = 10*roomScale;
     super.act();
   }
   

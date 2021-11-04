@@ -26,8 +26,10 @@ void game() {
   
   // Doors //
   upDoor = downDoor = leftDoor = rightDoor = false;
-  if(minimap[currentRow-1][currentCol] == 1) upDoor = true;
-  println(currentRow-1);
+  if(minimap[currentRow-2][currentCol-1] == 1) upDoor = true;
+  if(minimap[currentRow][currentCol-1] == 1) downDoor = true;
+  if(minimap[currentRow-1][currentCol-2] == 1) leftDoor = true;
+  if(minimap[currentRow-1][currentCol] == 1) rightDoor = true;
   
   pushMatrix();
     translate(width/2+roomX*scale, height/2+roomY*scale);
@@ -83,19 +85,19 @@ void game() {
   upMove = downMove = leftMove = rightMove = false;
   if(upWall && !upDoor) upMove = false;  // Can't move if touching wall with no door
   if((upWall && upDoor && roomX*scale < doorSize/2 && roomX*scale > -(doorSize/2) && dist(myPlayer.location.x,myPlayer.location.y, width/2+roomX*scale-doorSize/2, height/2+roomY*scale-roomSize*roomScale/2) > myPlayer.rad &&  dist(myPlayer.location.x,myPlayer.location.y, width/2+roomX*scale+doorSize/2, height/2+roomY*scale-roomSize*roomScale/2) > myPlayer.rad) || !upWall)  upMove = true;   // Can move if touching door, or not touching wall
-  if((leftWall || rightWall) && !(roomY*scale < doorSize/2-myPlayer.rad )) upMove = false;  // Restricts movement inside door
+  if(((leftWall && leftDoor) || (rightWall && rightDoor)) && !(roomY*scale < doorSize/2-myPlayer.rad )) upMove = false;  // Restricts movement inside door
   
   if(downWall && !downDoor) downMove = false;  // Can't move if touching wall with no door
   if((downWall && downDoor && roomX*scale < doorSize/2 && roomX*scale > -(doorSize/2) && dist(myPlayer.location.x,myPlayer.location.y, width/2+roomX*scale-doorSize/2, height/2+roomY*scale+roomSize*roomScale/2) > myPlayer.rad &&  dist(myPlayer.location.x,myPlayer.location.y, width/2+roomX*scale+doorSize/2, height/2+roomY*scale+roomSize*roomScale/2) > myPlayer.rad) || !downWall)  downMove = true;   // Can move if touching door, or not touching wall
-  if((leftWall || rightWall) && !(roomY*scale > -(doorSize/2-myPlayer.rad))) downMove = false;  // Restricts movement inside door
+  if(((leftWall && leftDoor) || (rightWall && rightDoor)) && !(roomY*scale > -(doorSize/2-myPlayer.rad))) downMove = false;  // Restricts movement inside door
   
   if((leftWall && !leftDoor)) leftMove = false;  // Can't move if touching wall with no door
   if((leftWall && leftDoor && roomY*scale < doorSize/2 && roomY*scale > -(doorSize/2) && dist(myPlayer.location.x, myPlayer.location.y, width/2+roomX*scale-roomSize*roomScale/2, height/2+roomY*scale-doorSize/2) > myPlayer.rad && dist(myPlayer.location.x, myPlayer.location.y, width/2+roomX*scale-roomSize*roomScale/2, height/2+roomY*scale+doorSize/2) > myPlayer.rad) || !leftWall)  leftMove = true;   // Can move if touching door, or not touching wall
-  if((upWall || downWall) && !(roomX*scale < doorSize/2-myPlayer.rad )) leftMove = false;  // Restricts movement inside door
+  if(((upWall && upDoor) || (downWall && downDoor)) && !(roomX*scale < doorSize/2-myPlayer.rad )) leftMove = false;  // Restricts movement inside door
   
   if(rightWall && !rightDoor) rightMove = false;  // Can't move if touching wall with no door
   if((rightWall && rightDoor && roomY*scale < doorSize/2 && roomY*scale > -(doorSize/2) && dist(myPlayer.location.x, myPlayer.location.y, width/2+roomX*scale+roomSize*roomScale/2, height/2+roomY*scale-doorSize/2) > myPlayer.rad && dist(myPlayer.location.x, myPlayer.location.y, width/2+roomX*scale+roomSize*roomScale/2, height/2+roomY*scale+doorSize/2) > myPlayer.rad) || !rightWall)  rightMove = true;   // Can move if touching door, or not touching wall
-  if((upWall || downWall) && !(roomX*scale > -(doorSize/2-myPlayer.rad))) rightMove = false;  // Restricts movement inside door
+  if(((upWall && upDoor) || (downWall && downDoor)) && !(roomX*scale > -(doorSize/2-myPlayer.rad))) rightMove = false;  // Restricts movement inside door
 
 
    
@@ -183,7 +185,7 @@ void game() {
   
   
   // Darkness //
-  //darkness();
+  darkness();
   
   
   // Minimap //

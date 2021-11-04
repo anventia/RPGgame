@@ -11,9 +11,9 @@ void minimap() {
   for(int r = 0; r < rows; r++) {  
     for(int c = 0; c < cols; c++) {
       pixel = minimap[r][c];
-      if(pixel == 0) fill(100);
-      if(pixel == 1) fill(255);
-      noStroke();
+      if(pixel == 0) { fill(100); noStroke(); }
+      if(pixel == 1) { fill(255); stroke(100); }
+      strokeWeight(1);
       rect(px,py, ps,ps);
       px += ps;
     }
@@ -24,6 +24,7 @@ void minimap() {
   
   // Draw location //
   fill(255,0,255);
+  noStroke();
   float ls = 5;  // Location indicator size
   float lx = mapX+(currentCol-1)*ps + map(roomX*scale, -roomSize/2*roomScale+myPlayer.rad,roomSize/2*roomScale-myPlayer.rad, ps/2-ls/2, -ps/2+ls/2);  // Map location indicator X and Y
   float ly = mapY+(currentRow-1)*ps + map(roomY*scale, -roomSize/2*roomScale+myPlayer.rad,roomSize/2*roomScale-myPlayer.rad, ps/2-ls/2, -ps/2+ls/2);  // to coordinates within minimap

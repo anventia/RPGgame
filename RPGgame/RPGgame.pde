@@ -57,7 +57,7 @@ void setup() {
   
   // Room values
   defaultroomScale = 0.5;
-  defaultwallSize = 100;
+  defaultwallSize = 50;
   defaultdoorSize = 200;
   roomX = 0;
   roomY = 0;
@@ -72,17 +72,19 @@ void setup() {
   
    // Game
   darknessSize = 5;
-  rows = cols = 7;
+  rows = 8;
+  cols = 8;
   minimap = new int[][]{  // Initialize map
-    {0,0,0,0,0,0,0},
-    {0,1,1,1,1,1,0},
-    {0,1,0,1,0,1,0},
-    {0,0,1,1,0,1,0},
-    {0,1,0,1,0,1,0},
-    {0,1,1,1,0,1,0},
-    {0,0,0,0,0,0,0}
+    {0,0,0,0,0,0,0,0},
+    {0,0,0,0,1,1,1,0},
+    {0,0,1,1,1,1,1,0},  // To add: 0 = wall, 1 = room
+    {0,0,1,0,0,1,1,0},  // other numbers = rounded corners
+    {0,1,1,0,0,1,0,0},  // Rounded corners: wall < 0 < room
+    {0,1,1,1,1,1,0,0},
+    {0,1,1,1,0,0,0,0},
+    {0,0,0,0,0,0,0,0}
   };
-  currentRow = 4;
+  currentRow = 3;
   currentCol = 3;
   
   // Font
