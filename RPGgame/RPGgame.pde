@@ -42,7 +42,6 @@ float darknessSize;  // Size of darkness pixels
 int[][] minimap;  // Minimap array
 int rows, cols;
 int currentRow, currentCol;
-float objectOffsetX, objectOffsetY;
 
 // Font
 PFont consolas;
@@ -64,12 +63,14 @@ void setup() {
   roomY = 0;
   
   // Objects
-  myRooms = new ArrayList<Room>();
-  myRooms.add(new Room(0,0, -2));
+  myRooms   = new ArrayList<Room>();
   myObjects = new ArrayList<gameObject>();
-  myPlayer = new Player();
-  myObjects.add(myPlayer);
   tempRooms = new ArrayList<Room>();
+  myPlayer  = new Player();
+  myRooms  .add(new Room(0,0, -2));
+  myObjects.add(new Laser());
+  myObjects.add(myPlayer);
+  
   
    // Game
   darknessSize = 5;

@@ -8,12 +8,12 @@ class Player extends gameObject {
   Player() {
     size = defaultSize*gameScale;
     rad = size/2;
-    speed = 10*gameScale;
+    lives = 1;
     
     location = new PVector(width/2, height/2);
     velocity = new PVector(0,0);
     
-    weapon = new BasicGun();
+    weapon = new Rifle();
   }
   
   
@@ -26,7 +26,7 @@ class Player extends gameObject {
     location.y = height/2;
     size = defaultSize*gameScale;
     rad = size/2;
-    speed = 10*gameScale;
+    speed = 5*gameScale;
     super.act();
     
     

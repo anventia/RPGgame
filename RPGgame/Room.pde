@@ -1,7 +1,7 @@
 class Room {
   
   // Instance Variables //
-
+  PVector velocity;
   float x;
   float y;
   int tiles;
@@ -13,9 +13,11 @@ class Room {
   float lives;
   boolean isTemporary;
   int newRoom;
+ 
   
   // Constructor //
   Room(float x, float y, int newRoom) {
+    velocity = new PVector(0,0);
     this.x = x;
     this.y = y;
     lives = 1;

@@ -40,11 +40,18 @@ void game() {
   popMatrix();
  
   
-  for(gameObject i : myObjects) {  // Show objects
-    i.show();
-    i.act();
+  for(int i = 0; i < myObjects.size(); i++) {  // Show objects
+    gameObject obj = myObjects.get(i);
+    obj.show();
+    obj.act();
+    if(obj.lives <= 0) myObjects.remove(i);
   }
   
+  
+  noFill();
+  strokeWeight(5);
+  stroke(255,0,255);
+  //rect(width/2+(100*scale)+roomX*scale, height/2+(100*scale)+roomY*scale, 100*scale,100*scale);
   
   
   // Wall collisions //
@@ -76,10 +83,11 @@ void game() {
 
    
   // Movement //
-  if(keyW && upMove)    { roomY += myPlayer.speed; objectOffsetY += myPlayer.speed; } else objectOffsetY = 0;
-  if(keyA && leftMove)  { roomX += myPlayer.speed; objectOffsetX += myPlayer.speed; } else objectOffsetX = 0;
-  if(keyS && downMove)  { roomY -= myPlayer.speed; objectOffsetY -= myPlayer.speed; } else objectOffsetY = 0;
-  if(keyD && rightMove) { roomX -= myPlayer.speed; objectOffsetX -= myPlayer.speed; } else objectOffsetX = 0;
+  myRooms.get(0).velocity = new PVector(0,0);
+  if(keyW && upMove)    { roomY += myPlayer.speed; myRooms.get(0).velocity.y = -myPlayer.speed; }
+  if(keyA && leftMove)  { roomX += myPlayer.speed; myRooms.get(0).velocity.x = -myPlayer.speed; }
+  if(keyS && downMove)  { roomY -= myPlayer.speed; myRooms.get(0).velocity.y = myPlayer.speed; }
+  if(keyD && rightMove) { roomX -= myPlayer.speed; myRooms.get(0).velocity.x = myPlayer.speed; }
   
   
   // Add new rooms // 

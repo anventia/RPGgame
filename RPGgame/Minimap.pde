@@ -38,6 +38,5 @@ void minimap() {
   textAlign(CENTER);
   text("row: "+currentRow+" col: "+currentCol, mapX+ps*rows/2-ps/2, mapY+ps*rows+15);
   
-  text(myPlayer.weapon.bulletTimer, mapX+ps*rows/2-ps/2, mapY+ps*rows+30);
  
 }

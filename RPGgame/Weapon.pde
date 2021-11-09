@@ -1,21 +1,24 @@
 class Weapon {
   // Instance Variables //
   int bulletTimer;
-  int firerate;  // Shots per second
-  int bulletSpeed;
+  float firerate;  // Shots per second
+  float bulletSpeed;
+  float size;
+  color clr;
   
   // Constructor //
-  Weapon(int r, int s) {
+  Weapon(float firerate, float bulletSpeed, float size, color clr) {
     bulletTimer = 0;
-    firerate = r;
-    bulletSpeed = s;
+    this.firerate = firerate;
+    this.bulletSpeed = bulletSpeed;
+    this.size = size;
+    this.clr = clr;
   }
     
   // Update //
   void update() {
     bulletTimer++; 
     
-    println(myPlayer.location);
   }
   
   
@@ -24,7 +27,7 @@ class Weapon {
     if(bulletTimer >= 60/firerate) {
       PVector aim = new PVector(mouseX-myPlayer.location.x, mouseY-myPlayer.location.y);
       aim.setMag(bulletSpeed);
-      myObjects.add(new Bullet(width/2, height/2, aim));
+      myObjects.add(new Bullet(width/2, height/2, size, aim, clr));
       bulletTimer = 0;
     }
   }
