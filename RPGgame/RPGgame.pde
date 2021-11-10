@@ -19,13 +19,13 @@ color door = #39407E;
 
 // Room values
 float wallSize;  
-float defaultwallSize;
+float default_wallSize;
 float gameScale;
-float defaultroomScale;
-float roomSize = 1000;
+float default_roomScale;
+float roomSize;
 float roomX, roomY;
 float doorSize;
-float defaultdoorSize;
+float default_doorSize;
 
 // Objects
 ArrayList<Room> myRooms; 
@@ -41,7 +41,7 @@ int newRoom = -1;
 float darknessSize;  // Size of darkness pixels
 int[][] minimap;  // Minimap array
 int rows, cols;
-int currentRow, currentCol;
+int roomRow, roomCol;
 
 // Font
 PFont consolas;
@@ -56,9 +56,10 @@ void setup() {
   mode = GAME;
   
   // Room values
-  defaultroomScale = 0.5;
-  defaultwallSize = 50;
-  defaultdoorSize = 200;
+  roomSize = 1000;
+  default_roomScale = 0.5;
+  default_wallSize = 50;
+  default_doorSize = 200;
   roomX = 0;
   roomY = 0;
   
@@ -70,6 +71,8 @@ void setup() {
   myRooms  .add(new Room(0,0, -2));
   myObjects.add(new Laser());
   myObjects.add(myPlayer);
+  
+  myObjects.add(new Enemy());
   
   
    // Game
@@ -86,8 +89,8 @@ void setup() {
     {0,1,1,1,0,0,0,0},
     {0,0,0,0,0,0,0,0}
   };
-  currentRow = 3;
-  currentCol = 3;
+  roomRow = 3;  // Starting room
+  roomCol = 3;
   
   // Font
   consolas = createFont("Consolas", 1);

@@ -58,7 +58,7 @@ class Room {
     tw = width;
     th = height;
     tileSize = (roomSize*gameScale)/tiles;
-    wallSize = defaultwallSize*gameScale;
+    wallSize = default_wallSize*gameScale;
     
     if(fade.equals("in")) fadeCount++;
     if(fade.equals("out")) fadeCount --;

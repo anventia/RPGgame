@@ -1,14 +1,16 @@
 class Player extends gameObject {
   
   // Instance Variables //
-  float defaultSize = 100;
   Weapon weapon;
   
   // Constructor //
   Player() {
-    size = defaultSize*gameScale;
+    default_size = 100;
     rad = size/2;
     lives = 1;
+    
+    mapCol = roomCol;
+    mapRow = roomRow;
     
     location = new PVector(width/2, height/2);
     velocity = new PVector(0,0);
@@ -24,7 +26,7 @@ class Player extends gameObject {
   void act() {
     location.x = width/2;
     location.y = height/2;
-    size = defaultSize*gameScale;
+    size = default_size*gameScale;
     rad = size/2;
     speed = 5*gameScale;
     super.act();

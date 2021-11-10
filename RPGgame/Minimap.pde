@@ -26,8 +26,8 @@ void minimap() {
   fill(255,0,255);
   noStroke();
   float ls = 5;  // Location indicator size
-  float lx = mapX+(currentCol-1)*ps + map(roomX*scale, -roomSize/2*gameScale+myPlayer.rad,roomSize/2*gameScale-myPlayer.rad, ps/2-ls/2, -ps/2+ls/2);  // Map location indicator X and Y
-  float ly = mapY+(currentRow-1)*ps + map(roomY*scale, -roomSize/2*gameScale+myPlayer.rad,roomSize/2*gameScale-myPlayer.rad, ps/2-ls/2, -ps/2+ls/2);  // to coordinates within minimap
+  float lx = mapX+(roomCol-1)*ps + map(roomX*scale, -roomSize/2*gameScale+myPlayer.rad,roomSize/2*gameScale-myPlayer.rad, ps/2-ls/2, -ps/2+ls/2);  // Map location indicator X and Y
+  float ly = mapY+(roomRow-1)*ps + map(roomY*scale, -roomSize/2*gameScale+myPlayer.rad,roomSize/2*gameScale-myPlayer.rad, ps/2-ls/2, -ps/2+ls/2);  // to coordinates within minimap
   circle(lx,ly, ls);
   
   
@@ -36,7 +36,7 @@ void minimap() {
   textFont(consolas);
   textSize(15);
   textAlign(CENTER);
-  text("row: "+currentRow+" col: "+currentCol, mapX+ps*rows/2-ps/2, mapY+ps*rows+15);
+  text("row: "+roomRow+" col: "+roomCol, mapX+ps*rows/2-ps/2, mapY+ps*rows+15);
   
  
 }

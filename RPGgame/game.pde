@@ -1,8 +1,8 @@
 void game() {
   background(0);
 
-  gameScale = defaultroomScale*scale;
-  doorSize = defaultdoorSize*gameScale;
+  gameScale = default_roomScale*scale;
+  doorSize = default_doorSize*gameScale;
   
   
   // Rooms //
@@ -22,10 +22,10 @@ void game() {
   
   // Doors //
   upDoor = downDoor = leftDoor = rightDoor = false;
-  if(minimap[currentRow-2][currentCol-1] == 1) upDoor = true;
-  if(minimap[currentRow][currentCol-1] == 1) downDoor = true;
-  if(minimap[currentRow-1][currentCol-2] == 1) leftDoor = true;
-  if(minimap[currentRow-1][currentCol] == 1) rightDoor = true;
+  if(minimap[roomRow-2][roomCol-1] == 1) upDoor = true;
+  if(minimap[roomRow][roomCol-1] == 1) downDoor = true;
+  if(minimap[roomRow-1][roomCol-2] == 1) leftDoor = true;
+  if(minimap[roomRow-1][roomCol] == 1) rightDoor = true;
   
   pushMatrix();
     translate(width/2+roomX*scale, height/2+roomY*scale);
@@ -42,8 +42,8 @@ void game() {
   
   for(int i = 0; i < myObjects.size(); i++) {  // Show objects
     gameObject obj = myObjects.get(i);
-    obj.show();
     obj.act();
+    obj.show();
     if(obj.lives <= 0) myObjects.remove(i);
   }
   
@@ -123,7 +123,7 @@ void game() {
         newRoom = -1;
         roomY = -roomY+(myPlayer.size+wallSize)/scale;  // Set new room to main room
         myRooms.get(0).y = 0;
-        currentRow -= 1;  // Move current room up
+        roomRow -= 1;  // Move current room up
       } break;
       
     case 1:  // Right
@@ -135,7 +135,7 @@ void game() {
         newRoom = -1;
         roomX = -roomX-(myPlayer.size+wallSize)/scale;  // Set new room to main room
         myRooms.get(0).x = 0;  
-        currentCol += 1;  // Move current room right
+        roomCol += 1;  // Move current room right
       } break;
       
     case 2:  // Bottom
@@ -147,7 +147,7 @@ void game() {
         newRoom = -1;
         roomY = -roomY-(myPlayer.size+wallSize)/scale;  // Set new room to main room
         myRooms.get(0).y = 0;
-        currentRow += 1;  // Move current room down
+        roomRow += 1;  // Move current room down
       } break;
       
     case 3:  // Left
@@ -159,7 +159,7 @@ void game() {
         newRoom = -1;
         roomX = -roomX+(myPlayer.size+wallSize)/scale;  // Set new room to main room
         myRooms.get(0).x = 0;
-        currentCol -= 1;  // Move current room left
+        roomCol -= 1;  // Move current room left
       } break;
   }  
   

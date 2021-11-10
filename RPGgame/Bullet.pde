@@ -16,6 +16,8 @@ class Bullet extends gameObject {
     rad = size/2;  // radius
     this.clr = clr;
     lives = 1;
+    mapCol = myPlayer.mapCol;
+    mapRow = myPlayer.mapRow;
   }
   
   
