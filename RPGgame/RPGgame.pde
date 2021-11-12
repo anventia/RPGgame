@@ -72,7 +72,7 @@ void setup() {
   myObjects.add(new Laser());
   myObjects.add(myPlayer);
   
-  myObjects.add(new Enemy());
+  myObjects.add(new Enemy());  // Test enemy
   
   
    // Game

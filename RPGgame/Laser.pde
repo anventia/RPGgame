@@ -17,13 +17,11 @@ class Laser extends gameObject {
     size = 2*gameScale;
     rad = size/2;
     velocity = new PVector(mouseX-myPlayer.location.x, mouseY-myPlayer.location.y);
-    velocity.setMag(5);
+    velocity.setMag(10);
     location = myPlayer.location.copy();
     laser = location.copy();
     
     detect();
-    
-    
     while(!up && !down && !left && !right) {  // Finds final point touching wall
       laser.add(velocity);
       detect();

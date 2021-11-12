@@ -15,7 +15,9 @@ class Player extends gameObject {
     location = new PVector(width/2, height/2);
     velocity = new PVector(0,0);
     
-    weapon = new Rifle();
+    //weapon = new Rifle();
+    //weapon = new BasicGun();
+    weapon = new Shotgun();
   }
   
   

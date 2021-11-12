@@ -27,7 +27,7 @@ class Weapon {
     if(bulletTimer >= 60/firerate) {
       PVector aim = new PVector(mouseX-myPlayer.location.x, mouseY-myPlayer.location.y);
       aim.setMag(bulletSpeed);
-      myObjects.add(new Bullet(width/2, height/2, size, aim, clr));
+      myObjects.add(0, new Bullet(width/2, height/2, size, aim, clr));
       bulletTimer = 0;
     }
   }
