@@ -14,6 +14,7 @@ class gameObject {
   
   int mapRow, mapCol;  // Current room position in map
   
+  float dmg;  // Damage (for bullets)
   
   // Constructor //
   gameObject() {

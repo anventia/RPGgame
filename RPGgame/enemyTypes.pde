@@ -1,18 +1,48 @@
 class Follower extends Enemy {
-  Follower() {
+  Follower(float x, float y, int mapCol, int mapRow) {
     super(
-      new PVector(300*gameScale, -300*gameScale),  // Location
+      new PVector(width/2+x, height/2+y),  // Location
       75,  // Size
-      100,  // Lives
-      3,  // Map Column
-      3,  // Map Row
+      10,  // Lives
+      mapCol,  // Map Column
+      mapRow,  // Map Row
       #65E882,  // Color
       #0BE037  // Stroke Color
     );
   }
   
   void act() {
+    velocity = new PVector(myPlayer.location.x-location.x, myPlayer.location.y-location.y);
+    velocity.setMag(1);
     super.act();
-    
+  }
+}
+
+class Turret extends Enemy {
+  int bulletSpeed = 5;
+  
+  Turret(float x, float y, int mapCol, int mapRow) {
+    super(
+      new PVector(width/2+x, height/2+y),  // Location
+      100,  // Size
+      25,  // Lives
+      mapCol,  // Map Column
+      mapRow,  // Map Row
+      #FCC436,  // Color
+      #E5B12C  // Stroke Color
+    );
+  }
+  
+  void act() {
+    super.act();
+    bulletTimer++;
+    if(bulletTimer > 100) {
+      bulletTimer = 0;
+      PVector aim = new PVector(mouseX-myPlayer.location.x, mouseY-myPlayer.location.y);  // FIX
+      aim.setMag(bulletSpeed);
+      myObjects.add(0, new Bullet("PLAYER", width/2, height/2, size, aim, clr, dmg));
+      bulletTimer = 0;
+      
+    }
   }
 }

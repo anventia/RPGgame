@@ -5,25 +5,35 @@ class Bullet extends gameObject {
   float positionX;  // Location with offset
   float positionY;
   color clr;
+  String type;
   
   // Constructor //
-  Bullet(float x, float y, float size, PVector vel, color clr) {
-    location = new PVector(x, y);
+  Bullet(String type, float x, float y, float size, PVector vel, color clr, float dmg) {
+    default_location = new PVector(x, y);
+    location = new PVector(0,0);
     velocity = vel;
     velocity.add(myRooms.get(0).velocity.copy());
     offsetX = offsetY = 0;
-    this.size = size;
-    rad = size/2;  // radius
+    default_size = size;
     this.clr = clr;
     lives = 1;
     mapCol = myPlayer.mapCol;
     mapRow = myPlayer.mapRow;
+    this.dmg = dmg;
+    this.type = type;
   }
   
   
   // Act //
   void act() {
-    super.act();
+    
+    location.x = default_location.x+offsetX*scale;
+    location.y = default_location.y+offsetY*scale;
+    default_location.add(velocity);
+    this.size = default_size*gameScale;
+    rad = size/2;  // radius
+    
+    
     
     // Offset with room //
     if(keyW && upMove)    { offsetY += myPlayer.speed; }
@@ -31,14 +41,14 @@ class Bullet extends gameObject {
     if(keyS && downMove)  { offsetY -= myPlayer.speed; }
     if(keyD && rightMove) { offsetX -= myPlayer.speed; }
     
-    positionX = (location.x*scale)+offsetX*scale;
-    positionY = (location.y*scale)+offsetY*scale;
+    //positionX = (location.x*scale)+offsetX*scale;
+   // positionY = (location.y*scale)+offsetY*scale;
     
     // Collide with walls //
-    if((positionY - (height/2+roomY*scale-roomSize/2*gameScale)) <= rad) { lives = 0; }
-    if((positionX - (width/2+roomX*scale-roomSize/2*gameScale))  <= rad) { lives = 0; }
-    if(((height/2+roomY*scale+roomSize/2*gameScale) - positionY) <= rad) { lives = 0; }
-    if(((width/2+roomX*scale+roomSize/2*gameScale) - positionX)  <= rad) { lives = 0; }
+    if((location.y - (height/2+roomY*scale-roomSize/2*gameScale)) <= rad) { lives = 0; }
+    if((location.x - (width/2+roomX*scale-roomSize/2*gameScale))  <= rad) { lives = 0; }
+    if(((height/2+roomY*scale+roomSize/2*gameScale) - location.y) <= rad) { lives = 0; }
+    if(((width/2+roomX*scale+roomSize/2*gameScale) - location.x)  <= rad) { lives = 0; }
   }
   
   
@@ -46,6 +56,6 @@ class Bullet extends gameObject {
   void show() {
     fill(clr);
     noStroke();
-    circle(positionX, positionY, size*gameScale);
+    circle(location.x, location.y, size);
   }
 }
