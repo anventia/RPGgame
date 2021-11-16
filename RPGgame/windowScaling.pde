@@ -3,6 +3,5 @@ float scaleX, scaleY, scale;
 void scaleWindow() {
   scaleX = 1.0/960*width;
   scaleY = 1.0/540*height;
-  if(scaleX < scaleY) scale = scaleX;
-  else scale = scaleY;
+  scale = scaleX < scaleY ? scaleX : scaleY;  // Sets scale to the smaller of scaleX or scaleY
 }

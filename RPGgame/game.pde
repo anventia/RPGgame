@@ -175,7 +175,8 @@ void game() {
   darkness();
   
   
-  // Minimap //
+  // HUD //
   minimap();
+  healthBar();
   
 } 

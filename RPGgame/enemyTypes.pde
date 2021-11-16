@@ -36,7 +36,7 @@ class Turret extends Enemy {
   void act() {
     super.act();
     bulletTimer++;
-    if(bulletTimer > 100) {
+    if(bulletTimer > 30) {
       bulletTimer = 0;
       PVector aim = new PVector(myPlayer.location.x-location.x, myPlayer.location.y-location.y);  // FIX
       aim.setMag(bulletSpeed);

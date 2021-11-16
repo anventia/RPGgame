@@ -40,8 +40,6 @@ class Enemy extends gameObject {
         }
       }
     }
-    
-    println(lives);
   }
   
   

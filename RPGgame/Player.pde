@@ -7,7 +7,7 @@ class Player extends gameObject {
   Player() {
     default_size = 100;
     rad = size/2;
-    lives = 1;
+    lives = 100;
     
     mapCol = roomCol;
     mapRow = roomRow;
@@ -34,7 +34,15 @@ class Player extends gameObject {
     speed = 5*gameScale;
     super.act();
     
-    
+    // Collide with enemy bullets //
+    for(gameObject obj : myObjects) {
+      if(obj instanceof Bullet && obj.type.equals("TURRET")) {
+        if(dist(location.x, location.y, obj.location.x, obj.location.y) <= rad+obj.rad) {
+          lives -= obj.dmg;
+          obj.lives --;
+        }
+      }
+    }
   }
   
   
