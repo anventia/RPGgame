@@ -5,7 +5,6 @@ class Bullet extends gameObject {
   float positionX;  // Location with offset
   float positionY;
   color clr;
-  String type;
   
   // Constructor //
   Bullet(String type, float x, float y, float size, PVector vel, color clr, float dmg) {

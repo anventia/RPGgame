@@ -34,7 +34,7 @@ class Shotgun extends Weapon {
         PVector aim = new PVector(mouseX-myPlayer.location.x, mouseY-myPlayer.location.y);
         aim.setMag(bulletSpeed*random(0.9,1.1));
         aim.rotate(radians(random(-5,5)));
-        myObjects.add(0, new Bullet(width/2, height/2, size, aim, clr, dmg));
+        myObjects.add(0, new Bullet("PLAYER", width/2, height/2, size, aim, clr, dmg));
       }
       bulletTimer = 0;
     }

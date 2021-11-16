@@ -33,7 +33,7 @@ class Enemy extends gameObject {
     
     // Collide with bullets //
     for(gameObject obj : myObjects) {
-      if(obj instanceof Bullet) {
+      if(obj instanceof Bullet && obj.type.equals("PLAYER")) {
         if(dist(location.x, location.y, obj.location.x, obj.location.y) <= rad+obj.rad) {
           lives -= obj.dmg;
           obj.lives --;
