@@ -1,3 +1,4 @@
+
 // RPG Game //
 
 
@@ -46,11 +47,17 @@ int roomRow, roomCol;
 // Font
 PFont consolas;
 
+// Icons
+PImage basic_gun;  // IMPORTANT // : // Put these in Array, and switch weapon.name to weapon.nameIndex number
+PImage rapid;
+PImage rifle;
+PImage shotgun;
+
 void setup() { 
   size(960, 540);
   background(255);
   scaleWindow();
-  surface.setResizable(true);
+  surface.setResizable(false);
   
   // Mode Framework
   mode = GAME;
@@ -73,7 +80,7 @@ void setup() {
   myObjects.add(myPlayer);
   
   myObjects.add(new Turret(100, -100, 3,3));  // Test enemy
-  
+  myObjects.add(new Follower(100, 100, 3,4));  // Test enemy
   
    // Game
   darknessSize = 5;
@@ -82,9 +89,9 @@ void setup() {
   minimap = new int[][]{  // Initialize map
     {0,0,0,0,0,0,0,0},
     {0,0,0,0,1,1,1,0},
-    {0,0,1,1,1,1,1,0},  // To add: 0 = wall, 1 = room
-    {0,0,1,0,0,1,1,0},  // other numbers = rounded corners
-    {0,1,1,0,0,1,0,0},  // Rounded corners: wall < 0 < room
+    {0,0,1,1,1,1,1,0},  
+    {0,0,1,0,0,1,1,0},   
+    {0,1,1,0,0,1,0,0},  
     {0,1,1,1,1,1,0,0},
     {0,1,1,1,0,0,0,0},
     {0,0,0,0,0,0,0,0}

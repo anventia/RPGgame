@@ -11,7 +11,7 @@ class Bullet extends gameObject {
     default_location = new PVector(x, y);
     location = new PVector(0,0);
     velocity = vel;
-    velocity.add(myRooms.get(0).velocity.copy());
+    //velocity.add(myRooms.get(0).velocity.copy());
     offsetX = offsetY = 0;
     default_size = size;
     this.clr = clr;

@@ -179,4 +179,20 @@ void game() {
   minimap();
   healthBar();
   
+  fill(70);
+  stroke(255);
+  strokeWeight(2);
+  boolean test = false;
+  float slSize = 75*scale;  // Selector size
+  float slOffset = 20*scale;  // Selector offset 
+  WeaponSelector(myPlayer.myWeapons[0], width-slSize/2-slOffset, slSize/2+slOffset, slSize, slSize, 5*scale, test);
+  
 } 
+
+void WeaponSelector(Weapon weapon, float x, float y, float w, float h, float r, boolean trigger) {
+  rectMode(CENTER);
+  rect(x,y, w,h, r);
+  PImage icon = loadImage(weapon.name+".png");
+  imageMode(CENTER);
+  image(icon, x,y, w,h);
+}
