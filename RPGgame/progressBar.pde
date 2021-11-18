@@ -27,7 +27,7 @@ void progressBar(float ang, float percentage, float x, float y, float w, float h
     fill(borderFill);
     rect(0, 0, w+border*2, h+border*2, r+border);
   popMatrix();
-  
+  imageMode(CORNER);
   image(result, 0,0);
 
 }

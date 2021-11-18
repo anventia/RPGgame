@@ -179,20 +179,32 @@ void game() {
   minimap();
   healthBar();
   
-  fill(70);
-  stroke(255);
-  strokeWeight(2);
+  // Weapon Indicator 
   boolean test = false;
-  float slSize = 75*scale;  // Selector size
-  float slOffset = 20*scale;  // Selector offset 
-  WeaponSelector(myPlayer.myWeapons[0], width-slSize/2-slOffset, slSize/2+slOffset, slSize, slSize, 5*scale, test);
+  inSize = 75*scale;  // Indicator size
+  inOffset = 20*scale;  // Indicator offset 
+  for(int i = 0; i < myPlayer.myWeapons.length; i++) {
+    WeaponIndicator(myPlayer.myWeapons[i], width-inSize/2-inOffset, inSize/2+inOffset+(inSize+inOffset)*i, inSize, inSize, 5*scale, test);
+  }
   
+  // Weapon Selector
+  if(!key1 && !key2 && !key3 && !key4) slY = inSize/2+inOffset+(inSize+inOffset)*myPlayer.selectedWeapon;  // Set position to current selected weapon
+  if(key1) selectWeapon(0); else if(key2) selectWeapon(1);  // extend this!!!!!!
+
 } 
 
-void WeaponSelector(Weapon weapon, float x, float y, float w, float h, float r, boolean trigger) {
-  rectMode(CENTER);
+void selectWeapon(int index) {
+   myPlayer.selectedWeapon = 0;  // Basic Weapon
+   slTgY = inSize/2+inOffset+(inSize+inOffset)*myPlayer.selectedWeapon;
+}
+
+void WeaponIndicator(Weapon weapon, float x, float y, float w, float h, float r, boolean trigger) {
+  arcBox(x,y, w,h, r, -90+map(weapon.timer, 0, weapon.readyTime, 0, 360), -90+360, 0, 200);
+  stroke(255);
+  strokeWeight(5);
+  noFill();
   rect(x,y, w,h, r);
-  PImage icon = loadImage(weapon.name+".png");
+  PImage icon = gunIcons[weapon.index];
   imageMode(CENTER);
   image(icon, x,y, w,h);
 }

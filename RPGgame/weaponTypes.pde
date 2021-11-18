@@ -1,23 +1,23 @@
 
-// FireRate, speed, size, color, damage //
+// index, FireRate, speed, size, color, damage //
 
 class BasicGun extends Weapon { 
   BasicGun() {
-    super("basic_gun", 3, 5, 20, #94F5F2, 10);
+    super(0, 3, 5, 20, #94F5F2, 10);
   }
   
 }
 
 class Rapid extends Weapon { 
   Rapid() {
-    super("rapid", 10, 5, 10, #F24084, 1);
+    super(1, 10, 5, 10, #F24084, 1);
   }
   
 }
 
 class Rifle extends Weapon {
   Rifle() {
-    super("rifle", 1, 10, 20, #3E30E3, 10); 
+    super(2, 1, 10, 20, #3E30E3, 10); 
   }
 }
 
@@ -25,7 +25,7 @@ class Shotgun extends Weapon {
   int numShots = 7;
   
   Shotgun() {
-    super("shotgun", 1, 7, 10, #3E3E3E, 1);
+    super(3, 1, 7, 10, #3E3E3E, 1);
   }
   
   void shoot() {

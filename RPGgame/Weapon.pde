@@ -6,23 +6,25 @@ class Weapon {
   float size;
   color clr;
   float dmg;
-  String name;
+  int index;
+  int readyTime;
   
   // Constructor //
-  Weapon(String name, float firerate, float bulletSpeed, float size, color clr, float dmg) {
-    timer = 0;
-    this.name = name;
+  Weapon(int index, float firerate, float bulletSpeed, float size, color clr, float dmg) {
+    this.index = index;
     this.firerate = firerate;
     this.bulletSpeed = bulletSpeed;
     this.size = size;
     this.clr = clr;
     this.dmg = dmg;
+    readyTime = ceil((60/firerate));  // The value of the timer when weapon is ready
+    timer = readyTime;
   }
+    
     
   // Update //
   void update() {
-    timer++; 
-    
+    if(timer < 60/firerate) timer++; 
   }
   
   

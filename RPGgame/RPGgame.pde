@@ -1,4 +1,3 @@
-
 // RPG Game //
 
 
@@ -43,15 +42,15 @@ float darknessSize;  // Size of darkness pixels
 int[][] minimap;  // Minimap array
 int rows, cols;
 int roomRow, roomCol;
+float inSize, inOffset;  // Weapon indicator
+float slY, slTgY;  // Weapon selector
 
 // Font
 PFont consolas;
 
 // Icons
-PImage basic_gun;  // IMPORTANT // : // Put these in Array, and switch weapon.name to weapon.nameIndex number
-PImage rapid;
-PImage rifle;
-PImage shotgun;
+PImage[] gunIcons;
+
 
 void setup() { 
   size(960, 540);
@@ -101,6 +100,14 @@ void setup() {
   
   // Font
   consolas = createFont("Consolas", 1);
+  
+  // Icons
+  gunIcons = new PImage[] {
+    loadImage("basic_gun.png"),
+    loadImage("rapid.png"),
+    loadImage("rifle.png"),
+    loadImage("shotgun.png")
+  };
   
 }
 
