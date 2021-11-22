@@ -25,7 +25,7 @@ class Player extends gameObject {
     };
 
     selectedWeapon = 0;  // Default weapon: BasicGun
-    weapon = myWeapons[selectedWeapon];
+    
   }
   
   
@@ -38,8 +38,11 @@ class Player extends gameObject {
     location.y = height/2;
     size = default_size*gameScale;
     rad = size/2;
+    mapCol = roomCol;
+    mapRow = roomRow;
     speed = 5*gameScale;
     super.act();
+    weapon = myWeapons[selectedWeapon];
     
     // Collide with enemy bullets //
     for(gameObject obj : myObjects) {

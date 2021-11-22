@@ -42,8 +42,8 @@ float darknessSize;  // Size of darkness pixels
 int[][] minimap;  // Minimap array
 int rows, cols;
 int roomRow, roomCol;
-float inSize, inOffset;  // Weapon indicator
-float slY, slTgY;  // Weapon selector
+float inSize, inOffset; // Weapon indicator
+float slY, slTargetY, default_slSpeed, slSpeed;  // Weapon selector
 
 // Font
 PFont consolas;
@@ -56,7 +56,6 @@ void setup() {
   size(960, 540);
   background(255);
   scaleWindow();
-  surface.setResizable(false);
   
   // Mode Framework
   mode = GAME;
@@ -97,6 +96,7 @@ void setup() {
   };
   roomRow = 3;  // Starting room
   roomCol = 3;
+  default_slSpeed = slSpeed = 10;
   
   // Font
   consolas = createFont("Consolas", 1);
@@ -109,13 +109,32 @@ void setup() {
     loadImage("shotgun.png")
   };
   
+  InitializeEnemies();
 }
 
+
 void draw() {
+  //println(frameRate);
   detectClicks();
   scaleWindow();
   switch(mode) {  // Mode Framework
     case INTRO: intro(); break;
     case GAME:  game();  break;
+  }
+}
+
+
+void InitializeEnemies() {
+  for(int r = 0; r < rows; r++) {  // Scan
+    for(int c = 0; c < cols; c++) {
+      int cell = minimap[r][c];
+      switch(cell) {
+        case 1: case 0: break;  // No enemies
+        case 2:  // 4 turrets
+          
+          break;
+      }
+
+    }
   }
 }

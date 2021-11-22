@@ -8,11 +8,10 @@ void minimap() {
   
   
   // Draw map //
-  for(int r = 0; r < rows; r++) {  
+  for(int r = 0; r < rows; r++) {  // Scan 
     for(int c = 0; c < cols; c++) {
       pixel = minimap[r][c];
-      if(pixel == 0) { fill(100); noStroke(); }
-      if(pixel == 1) { fill(255); stroke(100); }
+      fill( pixel == 0 ? 100 : 255 );  // pixel == 0 => no room, fill grey. else, there's a room, fill white  
       strokeWeight(1);
       rect(px,py, ps,ps);
       px += ps;

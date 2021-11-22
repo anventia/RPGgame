@@ -24,7 +24,6 @@ class Enemy extends gameObject {
   
   // Act //
   void act() {
-    if(mapCol != roomCol || mapRow != roomRow) return;  // Don't show when player is not in room
     location.x = default_location.x+roomX*scale;
     location.y = default_location.y+roomY*scale;
     default_location.add(velocity);
@@ -47,7 +46,6 @@ class Enemy extends gameObject {
   
   // Show //
   void show() {
-    if(mapCol != roomCol || mapRow != roomRow)  return;  // Don't show when player is not in room
     fill(clr);
     noStroke();
     circle(location.x, location.y, size);

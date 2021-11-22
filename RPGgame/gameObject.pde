@@ -15,7 +15,7 @@ class gameObject {
   int mapRow, mapCol;  // Current room position in map
   
   float dmg;  // Damage (for bullets)
-   String type;  // Type (for bullets)
+  String type;  // Type (for bullets)
   
   // Constructor //
   gameObject() {
@@ -26,6 +26,12 @@ class gameObject {
   // Act //
   void act() {
     location.add(velocity);
+  }
+  
+  
+  // Check if in room with another object //
+  boolean roomWith(gameObject obj) {
+    return mapRow == obj.mapRow && mapCol == obj.mapCol;
   }
   
   
