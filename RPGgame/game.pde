@@ -21,10 +21,10 @@ void game() {
   
   // Doors //
   upDoor = downDoor = leftDoor = rightDoor = false;
-  if(minimap[roomRow-2][roomCol-1] == 1) upDoor = true;
-  if(minimap[roomRow][roomCol-1] == 1) downDoor = true;
-  if(minimap[roomRow-1][roomCol-2] == 1) leftDoor = true;
-  if(minimap[roomRow-1][roomCol] == 1) rightDoor = true;
+  if(minimap[roomRow-2][roomCol-1] != 0) upDoor = true;
+  if(minimap[roomRow][roomCol-1] != 0) downDoor = true;
+  if(minimap[roomRow-1][roomCol-2] != 0) leftDoor = true;
+  if(minimap[roomRow-1][roomCol] != 0) rightDoor = true;
   
   pushMatrix();
     translate(width/2+roomX*scale, height/2+roomY*scale);
@@ -42,7 +42,7 @@ void game() {
   // GameObjects //
   for(int i = 0; i < myObjects.size(); i++) {
     gameObject obj = myObjects.get(i);
-    if(!obj.roomWith(myPlayer) && (obj instanceof Enemy || obj instanceof Bullet)) { println(obj.mapRow+", "+obj.mapCol+" | "+myPlayer.mapRow+", "+myPlayer.mapCol); continue;  }
+    if(!obj.roomWith(myPlayer) && (obj instanceof Enemy || obj instanceof Bullet)) continue;
     obj.act();
     obj.show();
     if(obj.lives <= 0) myObjects.remove(i);
@@ -178,7 +178,7 @@ void game() {
   
   // HUD //
   minimap();
-  //healthBar();
+  healthBar();
   
   // Weapon Indicator 
   boolean test = false;

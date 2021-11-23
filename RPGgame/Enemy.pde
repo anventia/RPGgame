@@ -55,9 +55,19 @@ class Enemy extends gameObject {
     polygon(location.x, location.y, rad*0.8, int(lives)); 
     
     push();  // Health bar
-      colorMode(HSB, 360, 100,100);
+      colorMode(HSB, 360, 100, 100);
       color healthbarColor =  color(map(lives, 0,base_lives, 0,100), 52, 98);
-      progressBar(0, map(lives, 0, base_lives, 0, 1), location.x, location.y-size/2-10*scale, size*1.5, 5, 2.5, 2, healthbarColor, 100, 50);
+      rectMode(CENTER);
+      fill(0);
+      stroke(0);
+      strokeWeight(3);
+      float barX = location.x; float barY = location.y-size/2-10*scale;
+      rect(barX,barY, size*1.5, 10*gameScale);
+      rectMode(CORNER);
+      fill(healthbarColor);
+      noStroke();
+      rect(barX-size*0.75,barY-5*gameScale, size*1.5*map(lives ,0, base_lives, 0, 1), 10*gameScale);
+      //progressBar(0, map(lives, 0, base_lives, 0, 1), location.x, location.y-size/2-10*scale, size*1.5, 5, 2.5, 2, healthbarColor, 100, 50);
     pop();
   } 
 }

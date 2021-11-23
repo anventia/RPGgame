@@ -13,6 +13,7 @@ void minimap() {
       pixel = minimap[r][c];
       fill( pixel == 0 ? 100 : 255 );  // pixel == 0 => no room, fill grey. else, there's a room, fill white  
       strokeWeight(1);
+      stroke(100);
       rect(px,py, ps,ps);
       px += ps;
     }

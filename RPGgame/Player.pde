@@ -63,7 +63,6 @@ class Player extends gameObject {
       noStroke();
       fill(240,100,150);
       circle(0,0, size);
-      //rect(0,0, size,size);
     popMatrix();
   }
 }

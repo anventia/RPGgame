@@ -77,8 +77,6 @@ void setup() {
   myObjects.add(new Laser());
   myObjects.add(myPlayer);
   
-  myObjects.add(new Turret(100, -100, 3,3));  // Test enemy
-  myObjects.add(new Follower(100, 100, 3,4));  // Test enemy
   
    // Game
   darknessSize = 5;
@@ -87,7 +85,7 @@ void setup() {
   minimap = new int[][]{  // Initialize map
     {0,0,0,0,0,0,0,0},
     {0,0,0,0,1,1,1,0},
-    {0,0,1,1,1,1,1,0},  
+    {0,0,2,3,1,1,1,0},  
     {0,0,1,0,0,1,1,0},   
     {0,1,1,0,0,1,0,0},  
     {0,1,1,1,1,1,0,0},
@@ -114,7 +112,7 @@ void setup() {
 
 
 void draw() {
-  //println(frameRate);
+  println(frameRate);
   detectClicks();
   scaleWindow();
   switch(mode) {  // Mode Framework
@@ -125,16 +123,20 @@ void draw() {
 
 
 void InitializeEnemies() {
-  for(int r = 0; r < rows; r++) {  // Scan
-    for(int c = 0; c < cols; c++) {
-      int cell = minimap[r][c];
+  for(int r = 1; r <= rows; r++) {  // Scan
+    for(int c = 1; c <= cols; c++) {
+      int cell = minimap[r-1][c-1];
       switch(cell) {
         case 1: case 0: break;  // No enemies
         case 2:  // 4 turrets
-          
+          myObjects.add(new Turret(-200,-200, c,r));
+          myObjects.add(new Turret(200,-200, c,r));
+          myObjects.add(new Turret(-200,200, c,r));
+          myObjects.add(new Turret(200,200, c,r));
           break;
+        case 3:  // Followers
+          for(int i = 0; i < 10; i++) myObjects.add(new Follower(random(-100,100),random(-100,100), c,r));
       }
-
     }
   }
 }

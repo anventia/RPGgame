@@ -4,7 +4,7 @@ void selectWeapon(int index) {
 }
 
 void WeaponIndicator(Weapon weapon, float x, float y, float w, float h, float r, boolean trigger) {
-  //arcBox(x,y, w,h, r, -90+map(weapon.timer, 0, weapon.readyTime, 0, 360), -90+360, 0, 200);
+  arcBox(x,y, w,h, r, -90+map(weapon.timer, 0, weapon.readyTime, 0, 360), -90+360, 0, 200);
   stroke(255);
   strokeWeight(2);
   noFill();
