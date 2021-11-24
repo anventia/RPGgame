@@ -165,7 +165,6 @@ void game() {
   }  
   
   
-  myPlayer.weapon.update();
   if(mouse) {
     myPlayer.weapon.shoot(); 
   }
@@ -186,6 +185,7 @@ void game() {
   inOffset = 20*scale;  // Indicator offset 
   for(int i = 0; i < myPlayer.myWeapons.length; i++) {
     WeaponIndicator(myPlayer.myWeapons[i], width-inSize/2-inOffset, inSize/2+inOffset+(inSize+inOffset)*i, inSize, inSize, 2*scale, test);
+    myPlayer.myWeapons[i].update();
   }
   
   // Weapon Selector
