@@ -1,7 +1,5 @@
 class Bullet extends gameObject {
   // Instance Variables //
-  float offsetX;  // Offset with room
-  float offsetY;
   float positionX;  // Location with offset
   float positionY;
   color clr;
@@ -34,11 +32,7 @@ class Bullet extends gameObject {
     
     
     
-    // Offset with room //
-    if(keyW && upMove)    { offsetY += myPlayer.speed; }
-    if(keyA && leftMove)  { offsetX += myPlayer.speed; }
-    if(keyS && downMove)  { offsetY -= myPlayer.speed; }
-    if(keyD && rightMove) { offsetX -= myPlayer.speed; }
+    super.offset();
     
     //positionX = (location.x*scale)+offsetX*scale;
    // positionY = (location.y*scale)+offsetY*scale;

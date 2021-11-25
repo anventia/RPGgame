@@ -60,10 +60,9 @@ int debug = 1;
 
 
 void setup() { 
-  size(960, 540);
+  size(960, 540, FX2D);
   background(255);
   scaleWindow();
-  surface.setResizable(false);
   
   // Mode Framework
   mode = GAME;

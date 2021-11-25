@@ -42,7 +42,7 @@ void game() {
   // GameObjects //
   for(int i = 0; i < myObjects.size(); i++) {
     gameObject obj = myObjects.get(i);
-    if(!obj.roomWith(myPlayer) && (obj instanceof Enemy || obj instanceof Bullet)) continue;
+    if(!obj.roomWith(myPlayer) && !(obj instanceof Player || obj instanceof Laser)) continue;
     obj.act();
     obj.show();
     if(obj.lives <= 0) myObjects.remove(i);

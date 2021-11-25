@@ -16,11 +16,12 @@ class Item extends gameObject {
   
   // Act //
   void act() {
-    location.x = default_location.x+roomX*scale;
-    location.y = default_location.y+roomY*scale;
+    location.x = default_location.x+offsetX*scale;
+    location.y = default_location.y+offsetY*scale;
     size = default_size*gameScale;
     rad = size/2;
     
+    super.offset();
   }
   
   
