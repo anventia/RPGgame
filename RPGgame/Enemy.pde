@@ -24,8 +24,8 @@ class Enemy extends gameObject {
   
   // Act //
   void act() {
-    location.x = default_location.x+roomX*scale;
-    location.y = default_location.y+roomY*scale;
+    location.x = default_location.x*scale+roomX*scale;
+    location.y = default_location.y*scale+roomY*scale;
     default_location.add(velocity);
     size = default_size*gameScale;
     rad = size/2;

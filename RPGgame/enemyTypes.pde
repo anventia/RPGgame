@@ -31,18 +31,23 @@ class Turret extends Enemy {
       #FCC436,  // Color
       #E5B12C  // Stroke Color
     );
+    
   }
   
+  // Act //
   void act() {
     super.act();
     bulletTimer++;
-    if(bulletTimer > 60) {
+    if(bulletTimer > 60) {  // Shoot
       bulletTimer = 0;
       PVector aim = new PVector(myPlayer.location.x-location.x, myPlayer.location.y-location.y);  // FIX
       aim.setMag(bulletSpeed);
       myObjects.add(0, new Bullet("TURRET", location.x, location.y, 15, aim, clr, 5));
       bulletTimer = 0;
-      
+    }
+    
+    if(lives < 1) {
+      myObjects.add(new Item("HEALTH", location.x, location.y, mapCol, mapRow));
     }
   }
 }

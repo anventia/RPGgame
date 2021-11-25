@@ -15,7 +15,7 @@ class gameObject {
   int mapRow, mapCol;  // Current room position in map
   
   float dmg;  // Damage (for bullets)
-  String type;  // Type (for bullets)
+  String type;  // Type (for bullets + items)
   
   // Constructor //
   gameObject() {

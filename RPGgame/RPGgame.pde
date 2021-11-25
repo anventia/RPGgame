@@ -16,6 +16,10 @@ color roomFloor = 230;
 color roomTile = 210;
 color roomWall = #4B48B2;
 color door = #39407E;
+color iWeapon = 75;  // Item weapon
+color iWeapon_s = 0;  // Stroke
+color iHealth = #3EFF49;  // Health pack item
+color iHealth_s = #48ED51; // Stroke
 
 // Room values
 float wallSize;  
@@ -51,11 +55,15 @@ PFont consolas;
 // Icons
 PImage[] gunIcons;
 
+// Other
+int debug = 1;
+
 
 void setup() { 
   size(960, 540);
   background(255);
   scaleWindow();
+  surface.setResizable(false);
   
   // Mode Framework
   mode = GAME;
@@ -112,7 +120,6 @@ void setup() {
 
 
 void draw() {
-  println(frameRate);
   detectClicks();
   scaleWindow();
   switch(mode) {  // Mode Framework

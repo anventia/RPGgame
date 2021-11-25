@@ -19,7 +19,7 @@ void healthBar() {  // Player health bar
   textSize(15*scale);
   textAlign(CENTER);
   
-  text(myPlayer.lives+" / 100", width/2-1*scale, height-21*scale);
+  text(myPlayer.lives+" / 100", width/2-1*scale, height-19*scale);
   fill(255);
   text(myPlayer.lives+" / 100", width/2, height-20*scale);
 }

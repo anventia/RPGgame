@@ -164,13 +164,12 @@ void game() {
       } break;
   }  
   
-  
+  // Player shoot //
   if(mouse) {
     myPlayer.weapon.shoot(); 
   }
-  
-  
-  
+
+
   // Darkness //
   darkness();
   
@@ -178,6 +177,7 @@ void game() {
   // HUD //
   minimap();
   healthBar();
+  if(debug == 1) debugConsole();
   
   // Weapon Indicator 
   boolean test = false;
