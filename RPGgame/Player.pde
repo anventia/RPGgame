@@ -9,19 +9,18 @@ class Player extends gameObject {
   Player() {
     default_size = 100;
     rad = size/2;
-    lives = 100;
-    
+    lives = maxHealth;
     mapCol = roomCol;
     mapRow = roomRow;
     
     location = new PVector(width/2, height/2);
     velocity = new PVector(0,0);
     
-    myWeapons = new Weapon[]{
-      new BasicGun(),
-      new Rapid(),
-      new Rifle(),
-      new Shotgun()
+    myWeapons = new Weapon[]{  // 1 = unlocked
+      new BasicGun(1),
+      new Rapid(0),
+      new Rifle(0),
+      new Shotgun(0)
     };
 
     selectedWeapon = 0;  // Default weapon: BasicGun

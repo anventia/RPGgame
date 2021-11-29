@@ -191,9 +191,13 @@ void game() {
   // Weapon Selector
   slSpeed += 5;
   if(dist(0,slY, 0,slTargetY) < slSpeed) { slY = slTargetY; slSpeed = default_slSpeed; } // Set position to current selected weapon
-  if(key1) selectWeapon(0); else if(key2) selectWeapon(1); else if(key3) selectWeapon(2); else if(key4) selectWeapon(3);
-  if(!(slY == slTargetY)) slY = slTargetY > slY ? slY+slSpeed : slY-slSpeed;
+  if(key1 && myPlayer.myWeapons[0].unlocked == 1) selectWeapon(0); 
+  if(key2 && myPlayer.myWeapons[1].unlocked == 1) selectWeapon(1); 
+  if(key3 && myPlayer.myWeapons[2].unlocked == 1) selectWeapon(2); 
+  if(key4 && myPlayer.myWeapons[3].unlocked == 1) selectWeapon(3);
+  if(!(slY == slTargetY)) slY = slTargetY > slY ? slY+slSpeed : slY-slSpeed;  // Move selector dot
   
+  // Draw selector dot
   fill(255);
   noStroke();
   circle(width-inOffset-inSize-10, slY, 10);

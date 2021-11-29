@@ -42,12 +42,12 @@ class Turret extends Enemy {
       bulletTimer = 0;
       PVector aim = new PVector(myPlayer.location.x-location.x, myPlayer.location.y-location.y);  // FIX
       aim.setMag(bulletSpeed);
-      myObjects.add(0, new Bullet("TURRET", location.x, location.y, 15, aim, clr, 5));
+      myObjects.add(0, new Bullet("TURRET", location.x, location.y, 15, aim, clr, 1));
       bulletTimer = 0;
     }
     
     if(lives < 1) {
-      myObjects.add(new Item("HEALTH", location.x, location.y, mapCol, mapRow));
+      myObjects.add(new Item("WEAPON", location.x, location.y, mapCol, mapRow));
     }
   }
 }

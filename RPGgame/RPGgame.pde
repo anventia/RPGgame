@@ -31,12 +31,6 @@ float roomX, roomY;
 float doorSize;
 float default_doorSize;
 
-// Objects
-ArrayList<Room> myRooms; 
-ArrayList<Room> tempRooms;
-ArrayList<gameObject> myObjects;
-Player myPlayer;
-
 // Game
 boolean leftWall, rightWall, upWall, downWall;  // true if touching wall
 boolean leftDoor, rightDoor, upDoor, downDoor;  // true if door exists
@@ -48,6 +42,14 @@ int rows, cols;
 int roomRow, roomCol;
 float inSize, inOffset; // Weapon indicator
 float slY, slTargetY, default_slSpeed, slSpeed;  // Weapon selector
+int healAmount;  // Item healing amount
+int maxHealth;  // Player maximum lives
+
+// Objects
+ArrayList<Room> myRooms; 
+ArrayList<Room> tempRooms;
+ArrayList<gameObject> myObjects;
+Player myPlayer;
 
 // Font
 PFont consolas;
@@ -74,18 +76,8 @@ void setup() {
   default_doorSize = 200;
   roomX = 0;
   roomY = 0;
-  
-  // Objects
-  myRooms   = new ArrayList<Room>();
-  myObjects = new ArrayList<gameObject>();
-  tempRooms = new ArrayList<Room>();
-  myPlayer  = new Player();
-  myRooms  .add(new Room(0,0, -2));
-  myObjects.add(new Laser());
-  myObjects.add(myPlayer);
-  
-  
-   // Game
+   
+  // Game
   darknessSize = 5;
   rows = 8;
   cols = 8;
@@ -102,6 +94,17 @@ void setup() {
   roomRow = 3;  // Starting room
   roomCol = 3;
   default_slSpeed = slSpeed = 10;
+  healAmount = 5;
+  maxHealth = 100;
+  
+  // Objects
+  myRooms   = new ArrayList<Room>();
+  myObjects = new ArrayList<gameObject>();
+  tempRooms = new ArrayList<Room>();
+  myPlayer  = new Player();
+  myRooms  .add(new Room(0,0, -2));
+  myObjects.add(new Laser());
+  myObjects.add(myPlayer);
   
   // Font
   consolas = createFont("Consolas", 1);

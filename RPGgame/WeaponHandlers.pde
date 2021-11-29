@@ -13,4 +13,9 @@ void WeaponIndicator(Weapon weapon, float x, float y, float w, float h, float r,
   PImage icon = gunIcons[weapon.index];
   imageMode(CENTER);
   image(icon, x,y, w,h);
+  if(weapon.unlocked != 1) {  // If unlocked, grey out the weapon
+    fill(100, 75);
+    stroke(100, 75);
+    rect(x,y, w,h, r);
+  }
 }
