@@ -9,9 +9,15 @@ class Item extends gameObject {
     this.type = type;
     this.mapCol = mapCol;
     this.mapRow = mapRow;
-    default_size = 100;
+    default_size = type == "WEAPON" ? 100 : 50;
     lives = 1;
-    if(type == "WEAPON") addIndex = int(random(0, myPlayer.myWeapons.length));  // Add a random weapon!
+    if(type == "WEAPON") {  // Add a random weapon!
+       for(int i = 0; i < myPlayer.myWeapons.length; i++) {
+         addIndex = int(random(0, myPlayer.myWeapons.length));
+         if(myPlayer.myWeapons[addIndex].unlocked == 1) continue;
+         break;
+       }
+    }
   }
   
   

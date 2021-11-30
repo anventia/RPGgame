@@ -15,6 +15,10 @@ class Follower extends Enemy {
     velocity = new PVector(myPlayer.location.x-location.x, myPlayer.location.y-location.y);
     velocity.setMag(1);
     super.act();
+    
+    if(lives < 1 && int(random(0,100)) <75) {  // Drop weapon item 3/4 of the time
+      myObjects.add(new Item("HEALTH", location.x, location.y, mapCol, mapRow));
+    }
   }
 }
 
@@ -46,7 +50,7 @@ class Turret extends Enemy {
       bulletTimer = 0;
     }
     
-    if(lives < 1) {
+    if(lives < 1 && int(random(0,100)) >50) {  // Drop weapon item 1/2 of the time
       myObjects.add(new Item("WEAPON", location.x, location.y, mapCol, mapRow));
     }
   }
