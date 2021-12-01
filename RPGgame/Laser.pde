@@ -6,7 +6,7 @@ class Laser extends gameObject {
   // Constructor //
   Laser() {
     location = myPlayer.location.copy();
-
+    
     
     lives = 1;
   }
@@ -20,6 +20,8 @@ class Laser extends gameObject {
     velocity.setMag(10);
     location = myPlayer.location.copy();
     laser = location.copy();
+    mapCol = myPlayer.mapCol;
+    mapRow = myPlayer.mapRow;
     
     detect();
     while(!up && !down && !left && !right) {  // Finds final point touching wall

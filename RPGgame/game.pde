@@ -42,8 +42,9 @@ void game() {
   // GameObjects //
   for(int i = 0; i < myObjects.size(); i++) {
     gameObject obj = myObjects.get(i);
-    if(!obj.roomWith(myPlayer) && !(obj instanceof Player || obj instanceof Laser)) continue;
+    if(!obj.roomWith(myPlayer) && !(obj instanceof Player || obj instanceof Laser || obj instanceof Item) || obj instanceof Laser && myPlayer.myWeapons[myPlayer.selectedWeapon].index == 4) continue;
     obj.act();
+    if(!obj.roomWith(myPlayer)) continue;
     obj.show();
     if(obj.lives <= 0) myObjects.remove(i);
   }
@@ -195,6 +196,7 @@ void game() {
   if(key2 && myPlayer.myWeapons[1].unlocked == 1) selectWeapon(1); 
   if(key3 && myPlayer.myWeapons[2].unlocked == 1) selectWeapon(2); 
   if(key4 && myPlayer.myWeapons[3].unlocked == 1) selectWeapon(3);
+  if(key5 && myPlayer.myWeapons[4].unlocked == 1) selectWeapon(4);
   if(!(slY == slTargetY)) slY = slTargetY > slY ? slY+slSpeed : slY-slSpeed;  // Move selector dot
   
   // Draw selector dot

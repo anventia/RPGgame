@@ -14,8 +14,8 @@ void WeaponIndicator(Weapon weapon, float x, float y, float w, float h, float r,
   imageMode(CENTER);
   image(icon, x,y, w,h);
   if(weapon.unlocked != 1) {  // If unlocked, grey out the weapon
-    fill(100, 75);
-    stroke(100, 75);
+    fill(0, 100);
+    stroke(0, 100);
     rect(x,y, w,h, r);
   }
 }

@@ -20,7 +20,8 @@ class Player extends gameObject {
       new BasicGun(1),
       new Rapid(0),
       new Rifle(0),
-      new Shotgun(0)
+      new Shotgun(0),
+      new Sword(1)
     };
 
     selectedWeapon = 0;  // Default weapon: BasicGun

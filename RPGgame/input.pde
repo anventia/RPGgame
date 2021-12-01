@@ -1,7 +1,6 @@
 
-
 boolean keyW, keyA, keyS, keyD, keyQ;
-boolean key1, key2, key3, key4;
+boolean key1, key2, key3, key4, key5;
 
 void keyPressed() {
   switch(key) {
@@ -14,11 +13,11 @@ void keyPressed() {
     case '2': key2 = true; break;
     case '3': key3 = true; break;
     case '4': key4 = true; break;
+    case '5': key5 = true; break;
     
     case 'Q': case 'q': keyQ = true; break;
   }
 }
-
 
 void keyReleased() {
   switch(key) {
@@ -31,6 +30,7 @@ void keyReleased() {
     case '2': key2 = false; break;
     case '3': key3 = false; break;
     case '4': key4 = false; break;
+    case '5': key5 = false; break;
     
     case 'Q': case 'q': keyQ = false; break;
   }

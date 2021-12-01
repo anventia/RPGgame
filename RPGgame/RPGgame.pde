@@ -1,8 +1,5 @@
 // RPG Game //
-
-
-
-
+ 
 
 // Variables //
 
@@ -12,6 +9,7 @@ final int GAME = 1;
 int mode;
 
 // Colors
+color debug = #FF00FF;
 color roomFloor = 230;
 color roomTile = 210;
 color roomWall = #4B48B2;
@@ -58,7 +56,6 @@ PFont consolas;
 PImage[] gunIcons;
 
 // Other
-int debug = 1;
 
 
 void setup() { 
@@ -83,9 +80,9 @@ void setup() {
   cols = 8;
   minimap = new int[][]{  // Initialize map
     {0,0,0,0,0,0,0,0},
-    {0,0,0,0,1,1,1,0},
-    {0,0,2,3,1,1,1,0},  
-    {0,0,1,0,0,1,1,0},   
+    {0,0,0,0,2,1,1,0},
+    {0,0,2,3,3,1,1,0},  
+    {0,0,2,0,0,1,1,0},   
     {0,1,1,0,0,1,0,0},  
     {0,1,1,1,1,1,0,0},
     {0,1,1,1,0,0,0,0},
@@ -114,7 +111,8 @@ void setup() {
     loadImage("basic_gun.png"),
     loadImage("rapid.png"),
     loadImage("rifle.png"),
-    loadImage("shotgun.png")
+    loadImage("shotgun.png"),
+    loadImage("sword.png")
   };
   
   InitializeEnemies();
