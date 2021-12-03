@@ -38,23 +38,16 @@ void game() {
     if(leftDoor) door();
   popMatrix();
  
-  
-  // GameObjects //
-  for(int i = 0; i < myObjects.size(); i++) {
-    gameObject obj = myObjects.get(i);
-    if(!obj.roomWith(myPlayer) && !(obj instanceof Player || obj instanceof Laser || obj instanceof Item) || obj instanceof Laser && myPlayer.myWeapons[myPlayer.selectedWeapon].index == 4) continue;
-    obj.act();
-    if(!obj.roomWith(myPlayer)) continue;
-    obj.show();
-    if(obj.lives <= 0) myObjects.remove(i);
-  }
-  
-  
-  noFill();
-  strokeWeight(5);
-  stroke(255,0,255);
-  //rect(width/2+(100*scale)+roomX*scale, height/2+(100*scale)+roomY*scale, 100*scale,100*scale);
-  
+  /* // Weird rotate: rotate((atan((height/2-mouseY)-(width/2-mouseX))));
+  pushMatrix();  // Debug line 
+    translate(width/2, height/2);
+    rotate((atan2((mouseY-height/2), (mouseX-width/2))));
+    noFill();
+    strokeWeight(5);
+    stroke(255,0,255);
+    line(0,0, 100,0);
+  popMatrix();
+  */
   
   // Wall collisions //
   upWall    = (myPlayer.location.y - (height/2+roomY*scale-roomSize/2*gameScale)) <= myPlayer.rad;
@@ -165,12 +158,23 @@ void game() {
       } break;
   }  
   
-  // Player shoot //
-  if(mouse) {
-    myPlayer.weapon.shoot(); 
+  // Render sword for <weapon index 4>
+  for(int i = 0; i < myWeapons.length; i++) {
+    if(i == 4) myWeapons[i].sword();
   }
-
-
+  
+  
+  // GameObjects //
+  for(int i = 0; i < myObjects.size(); i++) {
+    gameObject obj = myObjects.get(i);
+    if(!obj.roomWith(myPlayer) && !(obj instanceof Player || obj instanceof Laser || obj instanceof Item) || obj instanceof Laser && myWeapons[myPlayer.selectedWeapon].index == 4) continue;
+    obj.act();
+    if(!obj.roomWith(myPlayer)) continue;
+    obj.show();
+    if(obj.lives <= 0) myObjects.remove(i);
+  }
+  
+   
   // Darkness //
   darkness();
   
@@ -178,29 +182,35 @@ void game() {
   // HUD //
   minimap();
   healthBar();
-  if(debug == 1) debugConsole();
+  if(debugconsole == 1) debugConsole();
+  
   
   // Weapon Indicator 
-  boolean test = false;
   inSize = 75*scale;  // Indicator size
   inOffset = 20*scale;  // Indicator offset 
-  for(int i = 0; i < myPlayer.myWeapons.length; i++) {
-    WeaponIndicator(myPlayer.myWeapons[i], width-inSize/2-inOffset, inSize/2+inOffset+(inSize+inOffset)*i, inSize, inSize, 2*scale, test);
-    myPlayer.myWeapons[i].update();
+  for(int i = 0; i < myWeapons.length; i++) {
+    WeaponIndicator(myWeapons[i], width-inSize/2-inOffset, inSize/2+inOffset+(inSize+inOffset)*i, inSize, inSize, 2*scale);
+    myWeapons[i].update();
   }
   
-  // Weapon Selector
+  
+  // Player shoot //
+  if(mouse) {
+    myPlayer.weapon.shoot(); 
+  }
+   
+  
+  // Weapon Selector //
   slSpeed += 5;
   if(dist(0,slY, 0,slTargetY) < slSpeed) { slY = slTargetY; slSpeed = default_slSpeed; } // Set position to current selected weapon
-  if(key1 && myPlayer.myWeapons[0].unlocked == 1) selectWeapon(0); 
-  if(key2 && myPlayer.myWeapons[1].unlocked == 1) selectWeapon(1); 
-  if(key3 && myPlayer.myWeapons[2].unlocked == 1) selectWeapon(2); 
-  if(key4 && myPlayer.myWeapons[3].unlocked == 1) selectWeapon(3);
-  if(key5 && myPlayer.myWeapons[4].unlocked == 1) selectWeapon(4);
+  if(key1 && myWeapons[0].unlocked == 1) selectWeapon(0); 
+  if(key2 && myWeapons[1].unlocked == 1) selectWeapon(1); 
+  if(key3 && myWeapons[2].unlocked == 1) selectWeapon(2); 
+  if(key4 && myWeapons[3].unlocked == 1) selectWeapon(3);
+  if(key5 && myWeapons[4].unlocked == 1) selectWeapon(4);
   if(!(slY == slTargetY)) slY = slTargetY > slY ? slY+slSpeed : slY-slSpeed;  // Move selector dot
   
-  // Draw selector dot
-  fill(255);
+  fill(255);  // Draw selector dot
   noStroke();
   circle(width-inOffset-inSize-10, slY, 10);
 } 

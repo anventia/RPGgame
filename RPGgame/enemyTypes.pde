@@ -46,7 +46,7 @@ class Turret extends Enemy {
       bulletTimer = 0;
       PVector aim = new PVector(myPlayer.location.x-location.x, myPlayer.location.y-location.y);  // FIX
       aim.setMag(bulletSpeed);
-      myObjects.add(0, new Bullet("TURRET", location.x, location.y, 15, aim, clr, 1));
+      myObjects.add(0, new Bullet("TURRET", location.x, location.y, 15, aim, clr, 4));
       bulletTimer = 0;
     }
     

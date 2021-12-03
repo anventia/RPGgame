@@ -85,7 +85,7 @@ class Room {
         if(checkerX == 1) rect(tx,ty, tileSize,tileSize);
         checkerX = checkerX*-1;
         tx += tileSize;
-        if(tx > roomSize*gameScale/2) {if(tiles % 2 == 0) {checkerX = checkerX*-1;}tx = -roomSize/2*gameScale+tileSize/2; ty += tileSize;}
+        if(tx > roomSize*gameScale/2) { if(tiles % 2 == 0) {checkerX = checkerX*-1;}tx = -roomSize/2*gameScale+tileSize/2; ty += tileSize; }
       }
       fill(0,map(fadeCount, 0,30, 255,0));
       if(newRoom != -2) {  // Draws rectangle for 'fade' effect (different orientation depending on which side the  

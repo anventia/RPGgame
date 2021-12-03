@@ -10,9 +10,13 @@ class Weapon {
   int index;
   int readyTime;
   int unlocked;
+  boolean attacking;  // For sword
+  float increment;  // For sword
+  PVector[] swordPoint;
   
   // Constructor //
   Weapon(int index, float firerate, float bulletSpeed, float size, color clr, float dmg) {
+   
     this.index = index;
     this.fireRate = firerate;
     this.bulletSpeed = bulletSpeed;
@@ -31,14 +35,18 @@ class Weapon {
   }
   
   
-  // Shoot //
-  void shoot() {
+  // Attack //
+  void shoot() {  // Guns
     if(timer >= 60/fireRate) {
       PVector aim = new PVector(mouseX-myPlayer.location.x, mouseY-myPlayer.location.y);
       aim.setMag(bulletSpeed);
       myObjects.add(0, new Bullet("PLAYER", width/2, height/2, size, aim, clr, dmg));
       timer = 0;
     }
+  }
+  
+  void sword() {  // Swords
+    
   }
   
   

@@ -17,7 +17,7 @@ class Laser extends gameObject {
     size = 2*gameScale;
     rad = size/2;
     velocity = new PVector(mouseX-myPlayer.location.x, mouseY-myPlayer.location.y);
-    velocity.setMag(10);
+    velocity.setMag(5);
     location = myPlayer.location.copy();
     laser = location.copy();
     mapCol = myPlayer.mapCol;

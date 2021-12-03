@@ -2,7 +2,6 @@ class Player extends gameObject {
   
   // Instance Variables //
   Weapon weapon;
-  Weapon[] myWeapons;
   int selectedWeapon;
   
   // Constructor //
@@ -16,13 +15,7 @@ class Player extends gameObject {
     location = new PVector(width/2, height/2);
     velocity = new PVector(0,0);
     
-    myWeapons = new Weapon[]{  // 1 = unlocked
-      new BasicGun(1),
-      new Rapid(0),
-      new Rifle(0),
-      new Shotgun(0),
-      new Sword(1)
-    };
+    
 
     selectedWeapon = 0;  // Default weapon: BasicGun
     

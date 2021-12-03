@@ -12,9 +12,9 @@ class Item extends gameObject {
     default_size = type == "WEAPON" ? 100 : 50;
     lives = 1;
     if(type == "WEAPON") {  // Add a random weapon!
-       for(int i = 0; i < myPlayer.myWeapons.length; i++) {
-         addIndex = int(random(0, myPlayer.myWeapons.length));
-         if(myPlayer.myWeapons[addIndex].unlocked == 1) continue;
+       for(int i = 0; i < myWeapons.length; i++) {
+         addIndex = int(random(0, myWeapons.length));
+         if(myWeapons[addIndex].unlocked == 1) continue;
          break;
        }
     }
@@ -34,8 +34,8 @@ class Item extends gameObject {
       switch(type) {  // Different result for different item types
         case "WEAPON":
           lives = 0;
-          if(myPlayer.myWeapons[addIndex].unlocked == 0) {  // Not unlocked -> unlock it
-            myPlayer.myWeapons[addIndex].unlocked = 1;
+          if(myWeapons[addIndex].unlocked == 0) {  // Not unlocked -> unlock it
+            myWeapons[addIndex].unlocked = 1;
           } else {  // Already unlocked, refresh ammunition???
             
           }

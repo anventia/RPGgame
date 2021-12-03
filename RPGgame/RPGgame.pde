@@ -47,6 +47,7 @@ int maxHealth;  // Player maximum lives
 ArrayList<Room> myRooms; 
 ArrayList<Room> tempRooms;
 ArrayList<gameObject> myObjects;
+Weapon[] myWeapons;
 Player myPlayer;
 
 // Font
@@ -56,9 +57,10 @@ PFont consolas;
 PImage[] gunIcons;
 
 // Other
-
+int debugconsole = 1;
 
 void setup() { 
+  frameRate(60);
   size(960, 540, FX2D);
   background(255);
   scaleWindow();
@@ -81,10 +83,10 @@ void setup() {
   minimap = new int[][]{  // Initialize map
     {0,0,0,0,0,0,0,0},
     {0,0,0,0,2,1,1,0},
-    {0,0,2,3,3,1,1,0},  
+    {0,0,1,3,3,1,1,0},  
     {0,0,2,0,0,1,1,0},   
-    {0,1,1,0,0,1,0,0},  
-    {0,1,1,1,1,1,0,0},
+    {0,2,2,0,0,1,0,0},  
+    {0,3,3,1,1,1,0,0},
     {0,1,1,1,0,0,0,0},
     {0,0,0,0,0,0,0,0}
   };
@@ -98,6 +100,13 @@ void setup() {
   myRooms   = new ArrayList<Room>();
   myObjects = new ArrayList<gameObject>();
   tempRooms = new ArrayList<Room>();
+  myWeapons = new Weapon[]{  // 1 = unlocked
+    new BasicGun(1),
+    new Rapid(0),
+    new Rifle(0),
+    new Shotgun(0),
+    new Sword(1)
+  };
   myPlayer  = new Player();
   myRooms  .add(new Room(0,0, -2));
   myObjects.add(new Laser());

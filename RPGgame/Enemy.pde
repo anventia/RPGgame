@@ -32,8 +32,8 @@ class Enemy extends gameObject {
     
 
     
-    // Collide with bullets //
-    for(gameObject obj : myObjects) {
+    // Collide with player weapons //
+    for(gameObject obj : myObjects) {  // Player Bullets
       if(obj instanceof Bullet && obj.type.equals("PLAYER")) {
         if(dist(location.x, location.y, obj.location.x, obj.location.y) <= rad+obj.rad) {
           lives -= obj.dmg;
@@ -41,6 +41,15 @@ class Enemy extends gameObject {
         }
       }
     }
+    
+    if(myWeapons[myPlayer.selectedWeapon].attacking == true) {  // Player sword
+      for(PVector i : myWeapons[myPlayer.selectedWeapon].swordPoint) {
+        if(dist(location.x, location.y, i.x, i.y) < rad) {
+          lives -= myWeapons[myPlayer.selectedWeapon].dmg;
+        }
+      }
+    }
+    
   }
   
   
