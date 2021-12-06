@@ -1,6 +1,7 @@
 
 boolean keyW, keyA, keyS, keyD, keyQ;
 boolean key1, key2, key3, key4, key5;
+boolean esc, escWas;
 
 void keyPressed() {
   switch(key) {
@@ -14,6 +15,8 @@ void keyPressed() {
     case '3': key3 = true; break;
     case '4': key4 = true; break;
     case '5': key5 = true; break;
+    
+    case ESC: key = 0; escWas = true; break; 
     
     case 'Q': case 'q': keyQ = true; break;
   }
@@ -31,6 +34,8 @@ void keyReleased() {
     case '3': key3 = false; break;
     case '4': key4 = false; break;
     case '5': key5 = false; break;
+    
+    case ESC: if(escWas) { key = 0; esc = true; escWas = false; } break;
     
     case 'Q': case 'q': keyQ = false; break;
   }

@@ -3,7 +3,7 @@
 
 class BasicGun extends Weapon { 
   BasicGun(int unlocked) {
-    super(0, 2, 5, 20, #94F5F2, 5);
+    super(0, 2, 5, 40, #94F5F2, 5);
     super.checkUnlocked(unlocked);
   }
   
@@ -11,7 +11,7 @@ class BasicGun extends Weapon {
 
 class Rapid extends Weapon { 
   Rapid(int unlocked) {
-    super(1, 10, 5, 10, #F24084, 1);
+    super(1, 10, 5, 20, #F24084, 1);
     super.checkUnlocked(unlocked);
   }
   
@@ -28,7 +28,7 @@ class Shotgun extends Weapon {
   int numBullets = 7;  // Number of bullets to fire per shot
   
   Shotgun(int unlocked) {
-    super(3, 1.5, 7, 10, #3E3E3E, 1);
+    super(3, 1.5, 7, 15, #3E3E3E, 1);
     super.checkUnlocked(unlocked);
   }
   
@@ -50,10 +50,10 @@ class Sword extends Weapon {
   float angle;
   
   Sword(int unlocked) {
-    super(4, 1, 5, 75, #6139EA, 5);
+    super(4, 0.3, 5, 75, #000000, 5);
     super.checkUnlocked(unlocked);
     attacking = false;
-    increment = 30;  // Swing speed
+    increment = 15;  // Swing speed
   }
   
   void sword() {
@@ -88,13 +88,15 @@ class Sword extends Weapon {
 }
 
 class swordBlur extends gameObject {  // Blur effect for sword swing
-  float increment = 30;  // Angle per frame (equal to swingSpeed)
+  float increment;  // Angle per frame (equal to swingSpeed)
   float alpha;  // Transparency
   float angle;  // Start angle
   
   swordBlur(float angle) {
+    default_location = new PVector(width/2, height/2);
     this.increment = myWeapons[4].increment;
     this.angle = angle;
+    offsetX = offsetY = 0;
     location = myPlayer.location.copy();
     alpha = 200;
     lives = 1;
@@ -105,24 +107,20 @@ class swordBlur extends gameObject {  // Blur effect for sword swing
   
   // Act //
   void act() {
-    alpha -= 20;
+    super.offset();
+    location.x = default_location.x+offsetX*scale;
+    location.y = default_location.y+offsetY*scale;
+    
+    alpha -= 10;
     if(alpha <= 0) lives = 0;
   }
   
   
   // Show //
   void show() {
-    fill(myWeapons[4].clr, alpha);
+    fill(#555555, alpha);
     noStroke();
-    arc(myPlayer.location.x, myPlayer.location.y, (myPlayer.rad+myWeapons[4].size)*2, (myPlayer.rad+myWeapons[4].size)*2, angle-(radians(increment)*2), angle-radians(increment));
-    
-    push();
-      stroke(255,0,255);
-      translate(width/2, height/2);
-      rotate(angle);
-      //line(0,0, 100,0);
-    pop();
-    
+    arc(location.x, location.y, (myPlayer.rad+myWeapons[4].size)*2, (myPlayer.rad+myWeapons[4].size)*2, angle-(radians(increment)*2), angle-radians(increment));    
   }
   
 }

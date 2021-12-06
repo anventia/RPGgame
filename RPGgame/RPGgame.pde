@@ -7,6 +7,8 @@
 final int INTRO = 0;  
 final int GAME = 1;
 int mode;
+boolean paused;
+boolean pauseMenu;
 
 // Colors
 color debug = #FF00FF;
@@ -42,6 +44,8 @@ float inSize, inOffset; // Weapon indicator
 float slY, slTargetY, default_slSpeed, slSpeed;  // Weapon selector
 int healAmount;  // Item healing amount
 int maxHealth;  // Player maximum lives
+int points;  // Number of points to spend
+boolean[] PauseMenuHover;
 
 // Objects
 ArrayList<Room> myRooms; 
@@ -67,6 +71,8 @@ void setup() {
   
   // Mode Framework
   mode = GAME;
+  paused = false;
+  pauseMenu = false;
   
   // Room values
   roomSize = 1000;
@@ -80,7 +86,7 @@ void setup() {
   darknessSize = 5;
   rows = 8;
   cols = 8;
-  minimap = new int[][]{  // Initialize map
+  minimap = new int[][] {  // Initialize map
     {0,0,0,0,0,0,0,0},
     {0,0,0,0,2,1,1,0},
     {0,0,1,3,3,1,1,0},  
@@ -95,12 +101,14 @@ void setup() {
   default_slSpeed = slSpeed = 10;
   healAmount = 5;
   maxHealth = 100;
+  points = 0;
+  PauseMenuHover = new boolean[] {false, false, false};  // Is mouse hovering over buttons
   
   // Objects
   myRooms   = new ArrayList<Room>();
   myObjects = new ArrayList<gameObject>();
   tempRooms = new ArrayList<Room>();
-  myWeapons = new Weapon[]{  // 1 = unlocked
+  myWeapons = new Weapon[] {  // 1 = unlocked
     new BasicGun(1),
     new Rapid(0),
     new Rifle(0),

@@ -5,25 +5,31 @@ r: Corner radius
 mode: Mouse hover tactility mode
 c: Highlight color
 d: Pop out distance
+sw: stroke weight
 */
 
 
-boolean button(String shape, float x,float y, float w,float h, float r, String mode, color c, float d) {
+boolean button(String shape, float x,float y, float w,float h, float r, String mode, color c, float d, float sw, int hoverIndex) {
   rectMode(CENTER);
   drawButton(shape, x,y, w,h, r);
+  PauseMenuHover[hoverIndex] = false;
   switch(shape) {  // Detects mouse hover differently for different shapes
     case "rect":
       if(mouseX >= x-w/2 && mouseX <= x+w/2 && mouseY >= y-h/2 && mouseY <= y+h/2) {  // Mouse within button boundaries (RECTANGLE)
         highlight(shape, x,y, w,h, r, mode, c, d);
+        PauseMenuHover[hoverIndex] = true;
         return mouseClick;
       } break;
       
     case "circle":
-      if(dist(mouseX,mouseY, x,y) <= w/2) {  // Mouse within button boundaries
+      if(dist(mouseX,mouseY, x,y) <= w/2+sw/2) {  // Mouse within button boundaries
         highlight(shape, x,y, w,h, r, mode, c, d);
+        PauseMenuHover[hoverIndex] = true;
         return mouseClick;
       } break; 
   }
+  
+  
   return false;
 }
 

@@ -6,6 +6,7 @@ void debugConsole() {
        "\ngameObjects: "+myObjects.size()+
        "\nFramerate: "+round(frameRate)+
        "\nmx: "+mouseX+
-       "\nmy: "+mouseY
+       "\nmy: "+mouseY+
+       "\n"+esc
        , 20*scale, 240*scale);
 }

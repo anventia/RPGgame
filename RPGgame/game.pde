@@ -8,13 +8,13 @@ void game() {
   // Rooms //
   for(Room i : myRooms) {  // Show rooms
     i.show();
-    i.act();
+    if(!paused) i.act();
   }
     
   for(int i = 0; i < tempRooms.size(); i++) {  // Temoporary rooms
     Room obj = tempRooms.get(i);
     obj.show();
-    obj.act();
+    if(!paused) obj.act();
     if(obj.lives == 0) tempRooms.remove(i);
   }
   
@@ -168,7 +168,7 @@ void game() {
   for(int i = 0; i < myObjects.size(); i++) {
     gameObject obj = myObjects.get(i);
     if(!obj.roomWith(myPlayer) && !(obj instanceof Player || obj instanceof Laser || obj instanceof Item) || obj instanceof Laser && myWeapons[myPlayer.selectedWeapon].index == 4) continue;
-    obj.act();
+    if(!paused) obj.act();
     if(!obj.roomWith(myPlayer)) continue;
     obj.show();
     if(obj.lives <= 0) myObjects.remove(i);
@@ -183,6 +183,11 @@ void game() {
   minimap();
   healthBar();
   if(debugconsole == 1) debugConsole();
+  fill(255);
+  textFont(consolas);
+  textSize(15);
+  textAlign(LEFT);
+  text("> "+points, 20*scale, height-20*scale);
   
   
   // Weapon Indicator 
@@ -190,27 +195,58 @@ void game() {
   inOffset = 20*scale;  // Indicator offset 
   for(int i = 0; i < myWeapons.length; i++) {
     WeaponIndicator(myWeapons[i], width-inSize/2-inOffset, inSize/2+inOffset+(inSize+inOffset)*i, inSize, inSize, 2*scale);
-    myWeapons[i].update();
+    if(!paused) myWeapons[i].update();
   }
   
   
   // Player shoot //
-  if(mouse) {
+  if(mouse && !paused) {
     myPlayer.weapon.shoot(); 
   }
    
   
   // Weapon Selector //
-  slSpeed += 5;
-  if(dist(0,slY, 0,slTargetY) < slSpeed) { slY = slTargetY; slSpeed = default_slSpeed; } // Set position to current selected weapon
-  if(key1 && myWeapons[0].unlocked == 1) selectWeapon(0); 
-  if(key2 && myWeapons[1].unlocked == 1) selectWeapon(1); 
-  if(key3 && myWeapons[2].unlocked == 1) selectWeapon(2); 
-  if(key4 && myWeapons[3].unlocked == 1) selectWeapon(3);
-  if(key5 && myWeapons[4].unlocked == 1) selectWeapon(4);
-  if(!(slY == slTargetY)) slY = slTargetY > slY ? slY+slSpeed : slY-slSpeed;  // Move selector dot
-  
+  if(!paused) {
+    slSpeed += 5;
+    if(dist(0,slY, 0,slTargetY) < slSpeed) { slY = slTargetY; slSpeed = default_slSpeed; } // Set position to current selected weapon
+    if(key1 && myWeapons[0].unlocked == 1) selectWeapon(0); 
+    if(key2 && myWeapons[1].unlocked == 1) selectWeapon(1); 
+    if(key3 && myWeapons[2].unlocked == 1) selectWeapon(2); 
+    if(key4 && myWeapons[3].unlocked == 1) selectWeapon(3);
+    if(key5 && myWeapons[4].unlocked == 1) selectWeapon(4);
+    if(!(slY == slTargetY)) slY = slTargetY > slY ? slY+slSpeed : slY-slSpeed;  // Move selector dot
+  }
   fill(255);  // Draw selector dot
   noStroke();
   circle(width-inOffset-inSize-10, slY, 10);
+  
+  
+  // Pause //
+  if(!paused && esc) paused = true;
+  if(paused) {
+    fill(0,200);
+    noStroke();
+    rectMode(CORNER);
+    rect(0,0, width,height);  // ADD ANIMATION HERE!!
+    pauseMenu = true;  // Finish animation, load menu
+    if(pauseMenu) {  // menu
+      noFill();  // Middle Button
+      stroke(200);
+      strokeWeight(10*scale);
+      button("circle", width/2,height/2, 150*scale,150*scale, 0, "stroke", 255, 20*scale, 10*scale, 1);
+      if(PauseMenuHover[1]) {
+        fill(255);
+        textFont(consolas);
+        textSize(45*scale);
+        textAlign(CENTER);
+        text("HEALTH", width/2, height/2-150*scale);
+        textSize(10*scale);
+        text("$5", width/2, height/2-130*scale);
+        textSize(45*scale);
+        text("+10", width/2, height/2+150*scale);
+      }
+    }
+    
+  }
+  
 } 
