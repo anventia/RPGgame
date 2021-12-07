@@ -44,8 +44,10 @@ float inSize, inOffset; // Weapon indicator
 float slY, slTargetY, default_slSpeed, slSpeed;  // Weapon selector
 int healAmount;  // Item healing amount
 int maxHealth;  // Player maximum lives
-int points;  // Number of points to spend
-boolean[] PauseMenuHover;
+float speedPercentage;  // Player speed multiplier
+float damagePercentage;  // Player damage multiplier
+int money;  // Number of points to spend
+boolean[] pauseMenuHover;
 
 // Objects
 ArrayList<Room> myRooms; 
@@ -59,6 +61,7 @@ PFont consolas;
 
 // Icons
 PImage[] gunIcons;
+PImage[] otherIcons;
 
 // Other
 int debugconsole = 1;
@@ -101,8 +104,10 @@ void setup() {
   default_slSpeed = slSpeed = 10;
   healAmount = 5;
   maxHealth = 100;
-  points = 0;
-  PauseMenuHover = new boolean[] {false, false, false};  // Is mouse hovering over buttons
+  speedPercentage = 1;
+  damagePercentage = 1;
+  money = 0;
+  pauseMenuHover = new boolean[] {false, false, false};  // Is mouse hovering over buttons
   
   // Objects
   myRooms   = new ArrayList<Room>();
@@ -130,6 +135,11 @@ void setup() {
     loadImage("rifle.png"),
     loadImage("shotgun.png"),
     loadImage("sword.png")
+  };
+  otherIcons = new PImage[] {
+    loadImage("damage.png"),
+    loadImage("heart.png"),
+    loadImage("speed.png")
   };
   
   InitializeEnemies();

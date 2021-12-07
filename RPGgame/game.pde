@@ -79,10 +79,12 @@ void game() {
    
   // Movement //
   myRooms.get(0).velocity = new PVector(0,0);
-  if(keyW && upMove)    { roomY += myPlayer.speed; myRooms.get(0).velocity.y = -myPlayer.speed; }
-  if(keyA && leftMove)  { roomX += myPlayer.speed; myRooms.get(0).velocity.x = -myPlayer.speed; }
-  if(keyS && downMove)  { roomY -= myPlayer.speed; myRooms.get(0).velocity.y = myPlayer.speed; }
-  if(keyD && rightMove) { roomX -= myPlayer.speed; myRooms.get(0).velocity.x = myPlayer.speed; }
+  if(!paused) {
+    if(keyW && upMove)    { roomY += myPlayer.speed; myRooms.get(0).velocity.y = -myPlayer.speed; }
+    if(keyA && leftMove)  { roomX += myPlayer.speed; myRooms.get(0).velocity.x = -myPlayer.speed; }
+    if(keyS && downMove)  { roomY -= myPlayer.speed; myRooms.get(0).velocity.y = myPlayer.speed; }
+    if(keyD && rightMove) { roomX -= myPlayer.speed; myRooms.get(0).velocity.x = myPlayer.speed; }
+  }
   
   
   // Add new rooms // 
@@ -183,12 +185,7 @@ void game() {
   minimap();
   healthBar();
   if(debugconsole == 1) debugConsole();
-  fill(255);
-  textFont(consolas);
-  textSize(15);
-  textAlign(LEFT);
-  text("> "+points, 20*scale, height-20*scale);
-  
+   
   
   // Weapon Indicator 
   inSize = 75*scale;  // Indicator size
@@ -222,7 +219,7 @@ void game() {
   
   
   // Pause //
-  if(!paused && esc) paused = true;
+  if(!paused && esc) { esc = false; paused = true; }
   if(paused) {
     fill(0,200);
     noStroke();
@@ -230,23 +227,61 @@ void game() {
     rect(0,0, width,height);  // ADD ANIMATION HERE!!
     pauseMenu = true;  // Finish animation, load menu
     if(pauseMenu) {  // menu
-      noFill();  // Middle Button
+      noFill(); 
       stroke(200);
       strokeWeight(10*scale);
-      button("circle", width/2,height/2, 150*scale,150*scale, 0, "stroke", 255, 20*scale, 10*scale, 1);
-      if(PauseMenuHover[1]) {
-        fill(255);
-        textFont(consolas);
-        textSize(45*scale);
-        textAlign(CENTER);
-        text("HEALTH", width/2, height/2-150*scale);
-        textSize(10*scale);
-        text("$5", width/2, height/2-130*scale);
-        textSize(45*scale);
-        text("+10", width/2, height/2+150*scale);
+      imageMode(CENTER);
+      if(button("circle", width*0.2,height/2, 150*scale,150*scale, 0, "stroke", 255, 20*scale, 10*scale, 0) && money >= 70) { damagePercentage += 0.05; money -= 70; }  // Left
+      image(otherIcons[0], width*0.2, height/2, 150*scale, 150*scale);
+      stroke(200);
+      if(button("circle", width/2,height/2, 150*scale,150*scale, 0, "stroke", 255, 20*scale, 10*scale, 1) && money >= 50) { maxHealth += 10; money -= 50; }  // Middle
+      image(otherIcons[1], width/2, height/2, 150*scale, 150*scale);
+      stroke(200);
+      if(button("circle", width*0.8,height/2, 150*scale,150*scale, 0, "stroke", 255, 20*scale, 10*scale, 2) && money >= 30) { speedPercentage += 0.05; money -= 30; }  // Right
+      image(otherIcons[2], width*0.8, height/2, 150*scale, 150*scale);
+      int hoveredButtonIndex = -1; for(int i = 0; i < pauseMenuHover.length; i++) { if(pauseMenuHover[i]) hoveredButtonIndex = i; }  // Get the index of the button currently being hovered
+      fill(255);
+      textFont(consolas);
+      textSize(45*scale);
+      textAlign(CENTER);
+      switch(hoveredButtonIndex) {  // Show text on hovered button
+        case 0:  // Left button
+          text("DAMAGE", width*0.2, height/2-150*scale);
+          textSize(30*scale);
+          text("$70", width*0.2, height/2-115*scale);
+          textSize(45*scale);
+          text("+5%", width*0.2, height/2+150*scale);
+          textSize(30*scale);
+          text(round(damagePercentage*100)+"% -> "+round((damagePercentage+0.05)*100)+"%", width*0.2, height/2+185*scale);
+          break;
+        case 1:  // Middle button
+          text("MAX HP", width/2, height/2-150*scale);
+          textSize(30*scale);
+          text("$50", width/2, height/2-115*scale);
+          textSize(45*scale);
+          text("+10", width/2, height/2+150*scale);
+          textSize(30*scale);
+          text(maxHealth+" -> "+(maxHealth+10), width/2, height/2+185*scale);
+          break;
+        case 2:  // Right button
+          text("SPEED", width*0.8, height/2-150*scale);
+          textSize(30*scale);
+          text("$30", width*0.8, height/2-115*scale);
+          textSize(45*scale);
+          text("+5%", width*0.8, height/2+150*scale);
+          textSize(30*scale);
+          text(round(speedPercentage*100)+"% -> "+round((speedPercentage+0.05)*100)+"%", width*0.8, height/2+185*scale);
+          break;
       }
+      
     }
-    
+    if(paused && esc) { esc = pauseMenu = paused = false; }
   }
+  
+  fill(255);
+  textFont(consolas);
+  textSize(15);
+  textAlign(LEFT);
+  text("$ "+money, 20*scale, height-20*scale);
   
 } 

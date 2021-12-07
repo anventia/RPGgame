@@ -18,7 +18,7 @@ class Follower extends Enemy {
     
     if(lives < 1 && int(random(0,100)) <75) {  // Drop weapon item 3/4 of the time
       myObjects.add(new Item("HEALTH", location.x, location.y, mapCol, mapRow));
-      points += 5;
+      money += 5;
     }
   }
 }
@@ -53,7 +53,7 @@ class Turret extends Enemy {
     
     if(lives < 1 && int(random(0,100)) >50) {  // Drop weapon item 1/2 of the time
       myObjects.add(new Item("WEAPON", location.x, location.y, mapCol, mapRow));
-      points += 20;
+      money += 20;
     }
   }
 }
