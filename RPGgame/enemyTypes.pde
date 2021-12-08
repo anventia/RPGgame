@@ -15,6 +15,9 @@ class Follower extends Enemy {
     velocity = new PVector(myPlayer.location.x-location.x, myPlayer.location.y-location.y);
     velocity.setMag(1);
     super.act();
+    if(dist(location.x, location.y, myPlayer.location.x, myPlayer.location.y) <= myPlayer.rad+rad) {  // Deal damage to player when touching it
+      myPlayer.damage(15);
+    }
     
     if(lives < 1 && int(random(0,100)) <75) {  // Drop weapon item 3/4 of the time
       myObjects.add(new Item("HEALTH", location.x, location.y, mapCol, mapRow));

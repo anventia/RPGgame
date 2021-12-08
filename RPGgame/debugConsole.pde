@@ -7,6 +7,6 @@ void debugConsole() {
        "\nFramerate: "+round(frameRate)+
        "\nmx: "+mouseX+
        "\nmy: "+mouseY+
-       "\n"+esc
+       "\n"+tempRoom
        , 20*scale, 240*scale);
 }

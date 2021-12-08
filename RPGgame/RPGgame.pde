@@ -36,6 +36,7 @@ boolean leftWall, rightWall, upWall, downWall;  // true if touching wall
 boolean leftDoor, rightDoor, upDoor, downDoor;  // true if door exists
 boolean leftMove, rightMove, upMove, downMove;  // true if can move in that direction
 int newRoom = -1;
+PVector tempRoom;
 float darknessSize;  // Size of darkness pixels
 int[][] minimap;  // Minimap array
 int rows, cols;
@@ -86,6 +87,7 @@ void setup() {
   roomY = 0;
    
   // Game
+  tempRoom = new PVector(0,0);
   darknessSize = 5;
   rows = 8;
   cols = 8;
@@ -118,7 +120,7 @@ void setup() {
     new Rapid(0),
     new Rifle(0),
     new Shotgun(0),
-    new Sword(1)
+    new Sword(0)
   };
   myPlayer  = new Player();
   myRooms  .add(new Room(0,0, -2));
@@ -156,8 +158,9 @@ void draw() {
 }
 
 
+// Spawn enemies //
 void InitializeEnemies() {
-  for(int r = 1; r <= rows; r++) {  // Scan
+  for(int r = 1; r <= rows; r++) {  // Scan matrix
     for(int c = 1; c <= cols; c++) {
       int cell = minimap[r-1][c-1];
       switch(cell) {

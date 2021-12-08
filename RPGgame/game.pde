@@ -80,12 +80,11 @@ void game() {
   // Movement //
   myRooms.get(0).velocity = new PVector(0,0);
   if(!paused) {
-    if(keyW && upMove)    { roomY += myPlayer.speed; myRooms.get(0).velocity.y = -myPlayer.speed; }
-    if(keyA && leftMove)  { roomX += myPlayer.speed; myRooms.get(0).velocity.x = -myPlayer.speed; }
-    if(keyS && downMove)  { roomY -= myPlayer.speed; myRooms.get(0).velocity.y = myPlayer.speed; }
-    if(keyD && rightMove) { roomX -= myPlayer.speed; myRooms.get(0).velocity.x = myPlayer.speed; }
+    if(keyW && upMove)    { roomY += myPlayer.speed*speedPercentage; }
+    if(keyA && leftMove)  { roomX += myPlayer.speed*speedPercentage; }
+    if(keyS && downMove)  { roomY -= myPlayer.speed*speedPercentage; }
+    if(keyD && rightMove) { roomX -= myPlayer.speed*speedPercentage; }
   }
-  
   
   // Add new rooms // 
   if(upWall && newRoom == -1 && upDoor) {  // Top 
@@ -109,12 +108,13 @@ void game() {
   }
   
   
-  // Remove unneeded rooms // 
+  // Remove unneeded rooms  / Show temporary rooms // 
   switch(newRoom) {
     case 0:  // Top
-      if(roomY*scale < (roomSize*gameScale)/2-myPlayer.rad) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
+      if(roomY*scale < (roomSize*gameScale)/2-myPlayer.rad) { myRooms.remove(1); newRoom = -1; break; }  // Remove new room if player doesn't enter it
       else if(roomY*scale > (myPlayer.rad+wallSize+roomSize*gameScale/2)) {  // Remove old room on the bottom [ENTER NEW ROOM: TOP]
         tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y+roomSize*gameScale+wallSize, 30, newRoom));
+        tempRoom = new PVector(myPlayer.mapRow, myPlayer.mapCol);
         tempRooms.get(0).fade = "out";  // Temporary room for fade-out effect
         myRooms.remove(0);
         newRoom = -1;
@@ -124,9 +124,10 @@ void game() {
       } break;
       
     case 1:  // Right
-      if(roomX*scale > -((roomSize*gameScale)/2-myPlayer.rad)) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
+      if(roomX*scale > -((roomSize*gameScale)/2-myPlayer.rad)) { myRooms.remove(1); newRoom = -1; break; }  // Remove new room if player doesn't enter it
       else if(roomX*scale < -(myPlayer.rad+wallSize+roomSize*gameScale/2)) {  // Remove old room on the left [ENTER NEW ROOM: RIGHT]
         tempRooms.add(new Room(myRooms.get(0).x-roomSize*gameScale-wallSize,myRooms.get(0).y, 30, newRoom));
+        tempRoom = new PVector(myPlayer.mapRow, myPlayer.mapCol);
         tempRooms.get(0).fade = "out";  // Temporary room for fade-out effect
         myRooms.remove(0);
         newRoom = -1;
@@ -136,9 +137,10 @@ void game() {
       } break;
       
     case 2:  // Bottom
-      if(roomY*scale > -1*((roomSize*gameScale)/2-myPlayer.rad)) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
+      if(roomY*scale > -1*((roomSize*gameScale)/2-myPlayer.rad)) { myRooms.remove(1); newRoom = -1; break; }  // Remove new room if player doesn't enter it
       else if(roomY*scale < -(myPlayer.rad+wallSize+roomSize*gameScale/2)) {  // Remove old room on the top [ENTER NEW ROOM: BOTTOM]
         tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y-roomSize*gameScale-wallSize, 30, newRoom));
+        tempRoom = new PVector(myPlayer.mapRow, myPlayer.mapCol);
         tempRooms.get(0).fade = "out";  // Temporary room for fade-out effect
         myRooms.remove(0);
         newRoom = -1;
@@ -148,9 +150,10 @@ void game() {
       } break;
       
     case 3:  // Left
-      if(roomX*scale < (roomSize*gameScale)/2-myPlayer.rad) {myRooms.remove(1); newRoom = -1; break;}  // Remove new room if player doesn't enter it
+      if(roomX*scale < (roomSize*gameScale)/2-myPlayer.rad) { myRooms.remove(1); newRoom = -1; break; }  // Remove new room if player doesn't enter it
       else if(roomX*scale > (myPlayer.rad+wallSize+roomSize*gameScale/2)) {  // Remove old room on the right [ENTER NEW ROOM: LEFT]
         tempRooms.add(new Room(myRooms.get(0).x+roomSize*gameScale+wallSize,myRooms.get(0).y, 30, newRoom));
+        tempRoom = new PVector(myPlayer.mapRow, myPlayer.mapCol);
         tempRooms.get(0).fade = "out";  // Temporary room for fade-out effect
         myRooms.remove(0);
         newRoom = -1;
@@ -169,7 +172,7 @@ void game() {
   // GameObjects //
   for(int i = 0; i < myObjects.size(); i++) {
     gameObject obj = myObjects.get(i);
-    if(!obj.roomWith(myPlayer) && !(obj instanceof Player || obj instanceof Laser || obj instanceof Item) || obj instanceof Laser && myWeapons[myPlayer.selectedWeapon].index == 4) continue;
+    if((!obj.roomWith(myPlayer) || (!(obj.mapRow == tempRoom.x && obj.mapCol == tempRoom.y) && !obj.roomWith(myPlayer))) && !(obj instanceof Player || obj instanceof Laser || obj instanceof Item) || obj instanceof Laser && myWeapons[myPlayer.selectedWeapon].index == 4) continue;
     if(!paused) obj.act();
     if(!obj.roomWith(myPlayer)) continue;
     obj.show();
@@ -282,6 +285,6 @@ void game() {
   textFont(consolas);
   textSize(15);
   textAlign(LEFT);
-  text("$ "+money, 20*scale, height-20*scale);
+  text("$ "+money, 20*scale, height-20*scale);  // Show money
   
 } 

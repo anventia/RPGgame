@@ -33,11 +33,13 @@ class Enemy extends gameObject {
 
     
     // Collide with player weapons //
-    for(gameObject obj : myObjects) {  // Player Bullets
+    for(int i = 0; i < myObjects.size(); i++) {  // Player Bullets
+      gameObject obj = myObjects.get(i);
       if(obj instanceof Bullet && obj.type.equals("PLAYER")) {
         if(dist(location.x, location.y, obj.location.x, obj.location.y) <= rad+obj.rad) {
           lives -= obj.dmg;
           obj.lives --;
+          myObjects.add(new Message("DAMAGE", "-"+round(obj.dmg), location.x, location.y, 45*gameScale, #C12F2F));
         }
       }
     }
@@ -46,6 +48,7 @@ class Enemy extends gameObject {
       for(PVector i : myWeapons[myPlayer.selectedWeapon].swordPoint) {
         if(dist(location.x, location.y, i.x, i.y) < rad) {
           lives -= myWeapons[myPlayer.selectedWeapon].dmg;
+          myObjects.add(new Message("DAMAGE", "-"+round(myWeapons[myPlayer.selectedWeapon].dmg), location.x, location.y, 45*gameScale, #C12F2F));
         }
       }
     }
