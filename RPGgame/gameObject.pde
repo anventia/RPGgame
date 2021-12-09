@@ -33,10 +33,10 @@ class gameObject {
   // Offset // (for bullets and items)
   void offset() {
     // Offset with room //
-    if(keyW && upMove)    { offsetY += myPlayer.speed; }
-    if(keyA && leftMove)  { offsetX += myPlayer.speed; }
-    if(keyS && downMove)  { offsetY -= myPlayer.speed; }
-    if(keyD && rightMove) { offsetX -= myPlayer.speed; } 
+    if(keyW && upMove)    { offsetY += myPlayer.speed*speedPercentage; }
+    if(keyA && leftMove)  { offsetX += myPlayer.speed*speedPercentage; }
+    if(keyS && downMove)  { offsetY -= myPlayer.speed*speedPercentage; }
+    if(keyD && rightMove) { offsetX -= myPlayer.speed*speedPercentage; } 
   }
   
   // Check if in room with another object //

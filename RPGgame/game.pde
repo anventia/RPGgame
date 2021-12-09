@@ -170,15 +170,21 @@ void game() {
   
   
   // GameObjects //
-  for(int i = 0; i < myObjects.size(); i++) {
+  for(int i = 0; i < myObjects.size(); i++) {  // Main loop
     gameObject obj = myObjects.get(i);
-    if((!obj.roomWith(myPlayer) || (!(obj.mapRow == tempRoom.x && obj.mapCol == tempRoom.y) && !obj.roomWith(myPlayer))) && !(obj instanceof Player || obj instanceof Laser || obj instanceof Item) || obj instanceof Laser && myWeapons[myPlayer.selectedWeapon].index == 4) continue;
+    if(!obj.roomWith(myPlayer) && !(obj instanceof Player || obj instanceof Laser || obj instanceof Item) || obj instanceof Laser && myWeapons[myPlayer.selectedWeapon].index == 4) continue;
     if(!paused) obj.act();
     if(!obj.roomWith(myPlayer)) continue;
     obj.show();
     if(obj.lives <= 0) myObjects.remove(i);
   }
   
+  for(gameObject obj : myObjects) {  // Show enemies when peeking into another room (Temporary Rooms)
+    boolean InTempRoom = (obj.mapRow == int(tempRoom.x) && obj.mapCol == int(tempRoom.y));
+    if(InTempRoom) { push(); translate(100,0); obj.show(); pop(); }
+  }
+  
+  // TODO: Put temp enemies behind darkness, add temp object to store temp enemy offsetX/Y
    
   // Darkness //
   darkness();
