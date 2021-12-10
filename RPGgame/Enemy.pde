@@ -37,7 +37,7 @@ class Enemy extends gameObject {
       gameObject obj = myObjects.get(i);
       if(obj instanceof Bullet && obj.type.equals("PLAYER")) {
         if(dist(location.x, location.y, obj.location.x, obj.location.y) <= rad+obj.rad) {
-          lives -= obj.dmg;
+          lives -= obj.dmg*damagePercentage;
           obj.lives --;
           myObjects.add(new Message("DAMAGE", "-"+round(obj.dmg), location.x, location.y, 45*gameScale, #C12F2F));
         }

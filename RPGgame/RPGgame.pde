@@ -56,6 +56,7 @@ ArrayList<Room> tempRooms;
 ArrayList<gameObject> myObjects;
 Weapon[] myWeapons;
 Player myPlayer;
+gameObject offset;
 
 // Font
 PFont consolas;
@@ -104,6 +105,9 @@ void setup() {
   roomRow = 3;  // Starting room
   roomCol = 3;
   default_slSpeed = slSpeed = 10;
+  inSize = 75*scale;  // Indicator size
+  inOffset = 20*scale;  // Indicator offset 
+  slTargetY = inSize/2+inOffset;  // Start on first (default) weapon
   healAmount = 5;
   maxHealth = 100;
   speedPercentage = 1;
@@ -126,7 +130,8 @@ void setup() {
   myRooms  .add(new Room(0,0, -2));
   myObjects.add(new Laser());
   myObjects.add(myPlayer);
-  
+  offset = new Offset();
+    
   // Font
   consolas = createFont("Consolas", 1);
   

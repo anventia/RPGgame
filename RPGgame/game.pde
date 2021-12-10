@@ -115,6 +115,7 @@ void game() {
       else if(roomY*scale > (myPlayer.rad+wallSize+roomSize*gameScale/2)) {  // Remove old room on the bottom [ENTER NEW ROOM: TOP]
         tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y+roomSize*gameScale+wallSize, 30, newRoom));
         tempRoom = new PVector(myPlayer.mapRow, myPlayer.mapCol);
+        offset.offsetX = offset.offsetY = 0;
         tempRooms.get(0).fade = "out";  // Temporary room for fade-out effect
         myRooms.remove(0);
         newRoom = -1;
@@ -128,6 +129,7 @@ void game() {
       else if(roomX*scale < -(myPlayer.rad+wallSize+roomSize*gameScale/2)) {  // Remove old room on the left [ENTER NEW ROOM: RIGHT]
         tempRooms.add(new Room(myRooms.get(0).x-roomSize*gameScale-wallSize,myRooms.get(0).y, 30, newRoom));
         tempRoom = new PVector(myPlayer.mapRow, myPlayer.mapCol);
+        offset.offsetX = offset.offsetY = 0;
         tempRooms.get(0).fade = "out";  // Temporary room for fade-out effect
         myRooms.remove(0);
         newRoom = -1;
@@ -141,6 +143,7 @@ void game() {
       else if(roomY*scale < -(myPlayer.rad+wallSize+roomSize*gameScale/2)) {  // Remove old room on the top [ENTER NEW ROOM: BOTTOM]
         tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y-roomSize*gameScale-wallSize, 30, newRoom));
         tempRoom = new PVector(myPlayer.mapRow, myPlayer.mapCol);
+        offset.offsetX = offset.offsetY = 0;
         tempRooms.get(0).fade = "out";  // Temporary room for fade-out effect
         myRooms.remove(0);
         newRoom = -1;
@@ -154,6 +157,7 @@ void game() {
       else if(roomX*scale > (myPlayer.rad+wallSize+roomSize*gameScale/2)) {  // Remove old room on the right [ENTER NEW ROOM: LEFT]
         tempRooms.add(new Room(myRooms.get(0).x+roomSize*gameScale+wallSize,myRooms.get(0).y, 30, newRoom));
         tempRoom = new PVector(myPlayer.mapRow, myPlayer.mapCol);
+        offset.offsetX = offset.offsetY = 0;
         tempRooms.get(0).fade = "out";  // Temporary room for fade-out effect
         myRooms.remove(0);
         newRoom = -1;
@@ -163,7 +167,8 @@ void game() {
       } break;
   }  
   
-  // Render sword for <weapon index 4>
+  
+  // Render sword for <weapon index 4> //
   for(int i = 0; i < myWeapons.length; i++) {
     if(i == 4) myWeapons[i].sword();
   }
@@ -178,14 +183,27 @@ void game() {
     obj.show();
     if(obj.lives <= 0) myObjects.remove(i);
   }
-  
-  for(gameObject obj : myObjects) {  // Show enemies when peeking into another room (Temporary Rooms)
+     
+    
+  // Show enemies when peeking into another room (Temporary Rooms) //
+  offset.offset();
+  for(gameObject obj : myObjects) {  
     boolean InTempRoom = (obj.mapRow == int(tempRoom.x) && obj.mapCol == int(tempRoom.y));
-    if(InTempRoom) { push(); translate(100,0); obj.show(); pop(); }
+    if(InTempRoom && tempRooms.size() > 0 && !tempRooms.get(0).fade.equals("off")) { 
+      pushMatrix(); 
+        translate(offset.offsetX, offset.offsetY); 
+        if(!(obj instanceof Item)) obj.show();  // Items don't offset properly (FIX)
+      popMatrix(); 
+    }
   }
   
-  // TODO: Put temp enemies behind darkness, add temp object to store temp enemy offsetX/Y
-   
+  
+  for(int i = 0; i < tempRooms.size(); i++) {  // Temoporary rooms
+    Room obj = tempRooms.get(i);
+    obj.fade();
+  }
+  
+  
   // Darkness //
   darkness();
   
@@ -197,8 +215,6 @@ void game() {
    
   
   // Weapon Indicator 
-  inSize = 75*scale;  // Indicator size
-  inOffset = 20*scale;  // Indicator offset 
   for(int i = 0; i < myWeapons.length; i++) {
     WeaponIndicator(myWeapons[i], width-inSize/2-inOffset, inSize/2+inOffset+(inSize+inOffset)*i, inSize, inSize, 2*scale);
     if(!paused) myWeapons[i].update();
@@ -294,3 +310,8 @@ void game() {
   text("$ "+money, 20*scale, height-20*scale);  // Show money
   
 } 
+
+class Offset extends gameObject {  // Temporary object to store values for temporary enemies
+ Offset() {
+ }
+}

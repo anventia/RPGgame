@@ -68,7 +68,7 @@ class Player extends gameObject {
   void damage(float amount) {
     if(immunityTimer > 40) {
       lives -= amount;
-      myObjects.add(new Message("DAMAGE", "-"+amount, location.x, location.y, 45*gameScale, #C12F2F));
+      myObjects.add(new Message("DAMAGE", "-"+int(amount), location.x, location.y, 45*gameScale, #C12F2F));
       immunityTimer = 0;
     }
   }
