@@ -47,7 +47,10 @@ class gameObject {
   
   // Show //
   void show() {
-    
+    stroke(255,0,255);
+    strokeWeight(5);
+    line(0, location.y, width, location.y);
+    line(location.x, 0, location.x, height);
   }
   
 }

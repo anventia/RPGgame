@@ -6,9 +6,10 @@ void game() {
   
   
   // Rooms //
-  for(Room i : myRooms) {  // Main rooms
-    i.show();
-    if(!paused) i.act();
+  for(Room obj : myRooms) {  // Main rooms
+    obj.show();
+    obj.fade();
+    if(!paused) obj.act();
   }
     
   for(int i = 0; i < tempRooms.size(); i++) {  // Temporary rooms
@@ -20,10 +21,10 @@ void game() {
   
   // Doors //
   upDoor = downDoor = leftDoor = rightDoor = false;
-  if(minimap[roomRow-2][roomCol-1] != 0) upDoor = true;
-  if(minimap[roomRow][roomCol-1] != 0) downDoor = true;
-  if(minimap[roomRow-1][roomCol-2] != 0) leftDoor = true;
-  if(minimap[roomRow-1][roomCol] != 0) rightDoor = true;
+  if(minimap[roomRow-2] [roomCol-1] != 0) upDoor = true;
+  if(minimap[roomRow]   [roomCol-1] != 0) downDoor = true;
+  if(minimap[roomRow-1] [roomCol-2] != 0) leftDoor = true;
+  if(minimap[roomRow-1] [roomCol]   != 0) rightDoor = true;
   
   pushMatrix();
     translate(width/2+roomX*scale, height/2+roomY*scale);
@@ -99,6 +100,7 @@ void game() {
   if(downWall && newRoom == -1 && downDoor) {  // Bottom 
     newRoom = 2;
     myRooms.add(new Room(0, (roomSize*gameScale+wallSize), newRoom));
+    tempRoom2 = new PVector(myPlayer.mapRow+1, myPlayer.mapCol);
   }
   
   if(leftWall && newRoom == -1 && leftDoor) {  // Left 
@@ -187,11 +189,13 @@ void game() {
   // Show enemies when peeking into another room (Temporary Rooms) //
   offset.offset();
   for(gameObject obj : myObjects) {  
-    boolean InTempRoom = (obj.mapRow == int(tempRoom.x) && obj.mapCol == int(tempRoom.y));
+    boolean InTempRoom = (obj.mapRow == int(tempRoom.x) && obj.mapCol == int(tempRoom.y)) || (obj.mapRow == int(tempRoom2.x) && obj.mapCol == int(tempRoom2.y)) ;
+        
     if(InTempRoom && tempRooms.size() > 0 && !tempRooms.get(0).fade.equals("off")) { 
       pushMatrix(); 
+      
         translate(offset.offsetX, offset.offsetY); 
-        if(!(obj instanceof Item)) obj.show();  // Items don't offset properly (FIX!)
+        if(!(obj instanceof Item)) { obj.show(); }  // Items don't offset properly (FIX!)
       popMatrix(); 
     }
   }

@@ -36,7 +36,7 @@ boolean leftWall, rightWall, upWall, downWall;  // true if touching wall
 boolean leftDoor, rightDoor, upDoor, downDoor;  // true if door exists
 boolean leftMove, rightMove, upMove, downMove;  // true if can move in that direction
 int newRoom = -1;
-PVector tempRoom;
+PVector tempRoom, tempRoom2;
 float darknessSize;  // Size of darkness pixels
 int[][] minimap;  // Minimap array
 int rows, cols;
@@ -89,6 +89,7 @@ void setup() {
    
   // Game
   tempRoom = new PVector(0,0);
+  tempRoom2 = new PVector(0,0);
   darknessSize = 5;
   rows = 8;
   cols = 8;
