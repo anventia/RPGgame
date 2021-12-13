@@ -6,16 +6,15 @@ void game() {
   
   
   // Rooms //
-  for(Room i : myRooms) {  // Show rooms
+  for(Room i : myRooms) {  // Main rooms
     i.show();
     if(!paused) i.act();
   }
     
-  for(int i = 0; i < tempRooms.size(); i++) {  // Temoporary rooms
+  for(int i = 0; i < tempRooms.size(); i++) {  // Temporary rooms
     Room obj = tempRooms.get(i);
     obj.show();
     if(!paused) obj.act();
-    if(obj.lives == 0) tempRooms.remove(i);
   }
   
   
@@ -192,7 +191,7 @@ void game() {
     if(InTempRoom && tempRooms.size() > 0 && !tempRooms.get(0).fade.equals("off")) { 
       pushMatrix(); 
         translate(offset.offsetX, offset.offsetY); 
-        if(!(obj instanceof Item)) obj.show();  // Items don't offset properly (FIX)
+        if(!(obj instanceof Item)) obj.show();  // Items don't offset properly (FIX!)
       popMatrix(); 
     }
   }
@@ -201,6 +200,7 @@ void game() {
   for(int i = 0; i < tempRooms.size(); i++) {  // Temoporary rooms
     Room obj = tempRooms.get(i);
     obj.fade();
+    if(obj.lives == 0) tempRooms.remove(i);
   }
   
   
