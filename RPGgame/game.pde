@@ -12,7 +12,7 @@ void game() {
     if(!paused) obj.act();
   }
     
-  for(int i = 0; i < tempRooms.size(); i++) {  // Temporary rooms
+  for(int i = 0; i < tempRooms.size(); i++) {  // Temporary rooms (show + act only)
     Room obj = tempRooms.get(i);
     obj.show();
     if(!paused) obj.act();
@@ -57,7 +57,6 @@ void game() {
      
  
   // Motion rules // - Can move if touching door, or not touching wall
-
   upMove = downMove = leftMove = rightMove = false;
   if(upWall && !upDoor) upMove = false;  // Can't move if touching wall with no door
   if((upWall && upDoor && roomX*scale < doorSize/2 && roomX*scale > -(doorSize/2) && dist(myPlayer.location.x,myPlayer.location.y, width/2+roomX*scale-doorSize/2, height/2+roomY*scale-roomSize*gameScale/2) > myPlayer.rad &&  dist(myPlayer.location.x,myPlayer.location.y, width/2+roomX*scale+doorSize/2, height/2+roomY*scale-roomSize*gameScale/2) > myPlayer.rad) || !upWall)  upMove = true;   // Can move if touching door, or not touching wall
@@ -75,7 +74,6 @@ void game() {
   if((rightWall && rightDoor && roomY*scale < doorSize/2 && roomY*scale > -(doorSize/2) && dist(myPlayer.location.x, myPlayer.location.y, width/2+roomX*scale+roomSize*gameScale/2, height/2+roomY*scale-doorSize/2) > myPlayer.rad && dist(myPlayer.location.x, myPlayer.location.y, width/2+roomX*scale+roomSize*gameScale/2, height/2+roomY*scale+doorSize/2) > myPlayer.rad) || !rightWall)  rightMove = true;   // Can move if touching door, or not touching wall
   if(((upWall && upDoor) || (downWall && downDoor)) && !(roomX*scale > -(doorSize/2-myPlayer.rad))) rightMove = false;  // Restricts movement inside door
 
-
    
   // Movement //
   myRooms.get(0).velocity = new PVector(0,0);
@@ -85,6 +83,7 @@ void game() {
     if(keyS && downMove)  { roomY -= myPlayer.speed*speedPercentage; }
     if(keyD && rightMove) { roomX -= myPlayer.speed*speedPercentage; }
   }
+  
   
   // Add new rooms // 
   if(upWall && newRoom == -1 && upDoor) {  // Top 
@@ -185,15 +184,14 @@ void game() {
     if(obj.lives <= 0) myObjects.remove(i);
   }
      
+  // println(myObjects.get(25).offsetX);
     
   // Show enemies when peeking into another room (Temporary Rooms) //
   offset.offset();
   for(gameObject obj : myObjects) {  
     boolean InTempRoom = (obj.mapRow == int(tempRoom.x) && obj.mapCol == int(tempRoom.y)) || (obj.mapRow == int(tempRoom2.x) && obj.mapCol == int(tempRoom2.y)) ;
-        
     if(InTempRoom && tempRooms.size() > 0 && !tempRooms.get(0).fade.equals("off")) { 
       pushMatrix(); 
-      
         translate(offset.offsetX, offset.offsetY); 
         if(!(obj instanceof Item)) { obj.show(); }  // Items don't offset properly (FIX!)
       popMatrix(); 
@@ -201,7 +199,8 @@ void game() {
   }
   
   
-  for(int i = 0; i < tempRooms.size(); i++) {  // Temoporary rooms
+  // Fade temporary rooms //
+  for(int i = 0; i < tempRooms.size(); i++) {
     Room obj = tempRooms.get(i);
     obj.fade();
     if(obj.lives == 0) tempRooms.remove(i);
@@ -268,7 +267,7 @@ void game() {
       stroke(200);
       if(button("circle", width*0.8,height/2, 150*scale,150*scale, 0, "stroke", 255, 20*scale, 10*scale, 2) && money >= 30) { speedPercentage += 0.05; money -= 30; }  // Right
       image(otherIcons[2], width*0.8, height/2, 150*scale, 150*scale);
-      int hoveredButtonIndex = -1; for(int i = 0; i < pauseMenuHover.length; i++) { if(pauseMenuHover[i]) hoveredButtonIndex = i; }  // Get the index of the button currently being hovered
+      int hoveredButtonIndex = -1; for(int i = 0; i < 3; i++) { if(buttonHover[i]) hoveredButtonIndex = i; }  // Get the index of the button currently being hovered
       fill(255);
       textFont(consolas);
       textSize(45*scale);

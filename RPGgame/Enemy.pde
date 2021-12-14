@@ -58,7 +58,6 @@ class Enemy extends gameObject {
   
   // Show //
   void show() {
-    super.show();
     fill(clr);
     noStroke();
     circle(location.x, location.y, size);

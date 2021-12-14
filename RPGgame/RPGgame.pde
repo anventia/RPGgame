@@ -48,7 +48,7 @@ int maxHealth;  // Player maximum lives
 float speedPercentage;  // Player speed multiplier
 float damagePercentage;  // Player damage multiplier
 int money;  // Number of points to spend
-boolean[] pauseMenuHover;
+boolean[] buttonHover;
 
 // Objects
 ArrayList<Room> myRooms; 
@@ -75,7 +75,7 @@ void setup() {
   scaleWindow();
   
   // Mode Framework
-  mode = GAME;
+  mode = INTRO;
   paused = false;
   pauseMenu = false;
   
@@ -114,7 +114,12 @@ void setup() {
   speedPercentage = 1;
   damagePercentage = 1;
   money = 0;
-  pauseMenuHover = new boolean[] {false, false, false};  // Is mouse hovering over buttons
+  buttonHover = new boolean[] {  // Is mouse hovering over buttons
+    false,  // 0: Left pause button
+    false,  // 1: Middle pause button
+    false,  // 2: Right pause button
+    false   // 3: Intro screen button
+  };  
   
   // Objects
   myRooms   = new ArrayList<Room>();
