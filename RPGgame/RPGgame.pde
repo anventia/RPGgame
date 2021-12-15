@@ -37,6 +37,7 @@ boolean leftDoor, rightDoor, upDoor, downDoor;  // true if door exists
 boolean leftMove, rightMove, upMove, downMove;  // true if can move in that direction
 int newRoom = -1;
 PVector tempRoom, tempRoom2;
+boolean InTempRoom, InTempRoom2;
 float darknessSize;  // Size of darkness pixels
 int[][] minimap;  // Minimap array
 int rows, cols;

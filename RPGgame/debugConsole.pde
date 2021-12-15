@@ -7,7 +7,8 @@ void debugConsole() {
        "\nFramerate: "+round(frameRate)+
        "\nmx: "+mouseX+
        "\nmy: "+mouseY+
-       "\n"+tempRoom+
-       "\n"+tempRoom2
+       "\n"+tempRoom+" 1"+
+       "\n"+tempRoom2+" 2"+
+       "\n"+myRooms.size()
        , 20*scale, 240*scale);
 }
