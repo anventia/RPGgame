@@ -23,6 +23,7 @@ class gameObject {
     
   }
   
+  void temp() {}
   
   // Act //
   void act() {

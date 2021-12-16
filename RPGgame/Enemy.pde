@@ -22,6 +22,16 @@ class Enemy extends gameObject {
   }
   
   
+  // Show in temp rooms //
+  void temp() {
+    location.x = default_location.x*scale+roomX*scale;
+    location.y = default_location.y*scale+roomY*scale;
+    default_location.add(velocity);
+    size = default_size*gameScale;
+    rad = size/2;
+  }
+  
+  
   // Act //
   void act() {
     location.x = default_location.x*scale+roomX*scale;
@@ -29,9 +39,7 @@ class Enemy extends gameObject {
     default_location.add(velocity);
     size = default_size*gameScale;
     rad = size/2;
-    
 
-    
     // Collide with player weapons //
     for(int i = 0; i < myObjects.size(); i++) {  // Player Bullets
       gameObject obj = myObjects.get(i);
@@ -58,6 +66,7 @@ class Enemy extends gameObject {
   
   // Show //
   void show() {
+
     fill(clr);
     noStroke();
     circle(location.x, location.y, size);

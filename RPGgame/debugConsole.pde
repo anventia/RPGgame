@@ -9,6 +9,7 @@ void debugConsole() {
        "\nmy: "+mouseY+
        "\n"+tempRoom+" 1"+
        "\n"+tempRoom2+" 2"+
-       "\n"+myRooms.size()
+       "\n"+myRooms.size()+
+       "\n"+offset.offsetX+" "+offset.offsetY
        , 20*scale, 240*scale);
 }

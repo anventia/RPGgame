@@ -89,24 +89,32 @@ void game() {
     newRoom = 0;
     myRooms.add(new Room(0, -(roomSize*gameScale+wallSize), newRoom));
     tempRoom2 = new PVector(myPlayer.mapRow-1, myPlayer.mapCol);
+    offset.offsetX = roomX;
+    offset.offsetY = 0;
   }
   
   if(rightWall && newRoom == -1 && rightDoor) {  // Right
     newRoom = 1;
     myRooms.add(new Room((roomSize*gameScale+wallSize), 0, newRoom));
     tempRoom2 = new PVector(myPlayer.mapRow, myPlayer.mapCol+1);
+    offset.offsetX = 0;
+    offset.offsetY = roomY;
   }
   
   if(downWall && newRoom == -1 && downDoor) {  // Bottom 
     newRoom = 2;
     myRooms.add(new Room(0, (roomSize*gameScale+wallSize), newRoom));
     tempRoom2 = new PVector(myPlayer.mapRow+1, myPlayer.mapCol);
+    offset.offsetX = roomX;
+    offset.offsetY = 0;
   }
   
   if(leftWall && newRoom == -1 && leftDoor) {  // Left 
     newRoom = 3;
     myRooms.add(new Room(-(roomSize*gameScale+wallSize), 0, newRoom));
     tempRoom2 = new PVector(myPlayer.mapRow, myPlayer.mapCol-1);
+    offset.offsetX = 0;
+    offset.offsetY = roomY;
   }
   
   
@@ -159,7 +167,8 @@ void game() {
       else if(roomX*scale > (myPlayer.rad+wallSize+roomSize*gameScale/2)) {  // Remove old room on the right [ENTER NEW ROOM: LEFT]
         tempRooms.add(new Room(myRooms.get(0).x+roomSize*gameScale+wallSize,myRooms.get(0).y, 30, newRoom));
         //tempRoom = tempRoom2 = new PVector(myPlayer.mapRow, myPlayer.mapCol);
-        offset.offsetX = offset.offsetY = 0;
+        offset.offsetX = 0;
+        offset.offsetY = -roomY;
         tempRooms.get(0).fade = "out";  // Temporary room for fade-out effect
         myRooms.remove(0);
         newRoom = -1;
@@ -190,17 +199,26 @@ void game() {
     
   // Show enemies when peeking into another room (Temporary Rooms) //
   offset.offset();
-  for(gameObject obj : myObjects) {  
+  for(int i = 0; i < myObjects.size(); i++) {  // Main loop
+    gameObject obj = myObjects.get(i);
     InTempRoom = (obj.mapRow == int(tempRoom.x) && obj.mapCol == int(tempRoom.y));
     InTempRoom2 = (obj.mapRow == int(tempRoom2.x) && obj.mapCol == int(tempRoom2.y));
     if(tempRooms.size() > 0) println(tempRooms.get(0).fade);
     //if((InTempRoom && tempRooms.size() > 0 && !tempRooms.get(0).fade.equals("off")) || (InTempRoom2 && myRooms.size() > 1)) { 
+      
+      if(obj instanceof Enemy) {
+        println(InTempRoom2);
+        println(obj.location.x + " " + obj.location.y);
+      }
+      
     if(InTempRoom2) {
-      println(obj.mapRow+" "+int(tempRoom2.x)+" // "+obj.mapCol+" "+int(tempRoom2.y));
+      //println(obj.mapRow+" "+int(tempRoom2.x)+" // "+obj.mapCol+" "+int(tempRoom2.y));
+     
+     // todo: give enemies location value when showing in adjacent rooms
      
       pushMatrix(); 
         translate(offset.offsetX, offset.offsetY); 
-        if(!(obj instanceof Item)) { obj.show(); }  // Items don't offset properly (FIX!)
+        if(!(obj instanceof Item)) { obj.show();  }  // Items don't offset properly (FIX!)
       popMatrix(); 
     }
   }
@@ -219,7 +237,7 @@ void game() {
   
   
   // Darkness //
-  darkness();
+  //darkness();
   
   
   // HUD //

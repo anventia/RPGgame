@@ -156,7 +156,8 @@ void setup() {
     loadImage("speed.png")
   };
   
-  InitializeEnemies();
+  //InitializeEnemies();
+  myObjects.add(new Turret(-200, 0, 4, 3));
 }
 
 
