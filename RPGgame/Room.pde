@@ -34,7 +34,7 @@ class Room {
     tileSize = (roomSize*gameScale)/tiles;
   }
   
-  Room(float x, float y, float c, int newRoom) {  // Alternate constructor for temporary rooms
+  Room(float x, float y, float c, int newRoom, String fade) {  // Alternate constructor for temporary rooms
     this.x = x;
     this.y = y;
     lives = 1;
@@ -42,7 +42,7 @@ class Room {
     tw = width;
     th = height;
     
-    fade = "in";
+    this.fade = fade;
     fadeCount = c;
     
     isTemporary = true;
