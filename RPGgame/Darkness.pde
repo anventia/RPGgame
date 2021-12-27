@@ -1,38 +1,12 @@
 void darkness() {
-  ///*
-  noStroke();
-  ArrayList<Integer> pxColors = new ArrayList<Integer>();
-  
-  
-  // get pixels //
-  for(float y = darknessSize/2; y <= height; y += darknessSize) {
-    for( float x = darknessSize/2; x < width; x += darknessSize) {
-      color clr = get(int(x),int(y));
-      pxColors.add(clr);
-    }
-  }
+  noStroke();  
   println(color(roomWall));  
-  
-  int pxIndex = 0;
   for(float y = darknessSize/2; y <= height; y += darknessSize) {
-    for( float x = darknessSize/2; x < width; x += darknessSize) {
-      
+    for( float x = darknessSize/2; x < width; x += darknessSize) {   
       fill(0,map(dist(myPlayer.location.x,myPlayer.location.y, x,y), 150*gameScale,900*gameScale, 0, 255 ));  // Transparency based on distance to player
-      
-      float ang = ((atan((height/2-y)+(width/2-x))));
-      PVector lineV = new PVector(x-myPlayer.location.x, y-myPlayer.location.y).setMag(5);
-      PVector lineL = myPlayer.location.copy();
-      
-      //while(!(pxColors.get(pxIndex) == color(roomWall))) {  // While the pixel is not
-        
-      //}
-      
       rect(x,y, darknessSize,darknessSize);
-      pxIndex++;
     }
-  }
-  //*/
-  
+  }  
   darknessTraced();
 }
 
@@ -154,7 +128,6 @@ void darknessTraced_broken() {  // "raytracing" effect (does not work!!!)
           //fill(255,0,0);
           //rect(x, y, tSize,tSize);
           while(dist(tLoc.x,tLoc.y, x, y) > tSize) {  // Increment tracer location from player towards location
-            //points.get(pointIndex).add(color(get(int(x), int(y))));  // Add color to the ArrayList<Integer>
             if((int)(points.get(pointIndex).get(clrIndex)) == (int)-11843406) {
               fill = 0;  // For some reason, this fills it to 0 for one square, then it fills to 255 again... Instead of it being 0 for the remaining squares outward.
             }           
