@@ -5,6 +5,16 @@ void game() {
   doorSize = default_doorSize*gameScale;
   
   
+  // Movement //
+  myRooms.get(0).velocity = new PVector(0,0);
+  if(!paused) {
+    if(keyW && upMove)    { roomY += myPlayer.speed*speedPercentage; }
+    if(keyA && leftMove)  { roomX += myPlayer.speed*speedPercentage; }
+    if(keyS && downMove)  { roomY -= myPlayer.speed*speedPercentage; }
+    if(keyD && rightMove) { roomX -= myPlayer.speed*speedPercentage; }
+  }
+  
+  
   // Rooms //
   for(Room obj : myRooms) {  // Main rooms
     obj.show();
@@ -73,17 +83,7 @@ void game() {
   if((rightWall && rightDoor && roomY*scale < doorSize/2 && roomY*scale > -(doorSize/2) && dist(myPlayer.location.x, myPlayer.location.y, width/2+roomX*scale+roomSize*gameScale/2, height/2+roomY*scale-doorSize/2) > myPlayer.rad && dist(myPlayer.location.x, myPlayer.location.y, width/2+roomX*scale+roomSize*gameScale/2, height/2+roomY*scale+doorSize/2) > myPlayer.rad) || !rightWall)  rightMove = true;   // Can move if touching door, or not touching wall
   if(((upWall && upDoor) || (downWall && downDoor)) && !(roomX*scale > -(doorSize/2-myPlayer.rad))) rightMove = false;  // Restricts movement inside door
 
-   
-  // Movement //
-  myRooms.get(0).velocity = new PVector(0,0);
-  if(!paused) {
-    if(keyW && upMove)    { roomY += myPlayer.speed*speedPercentage; }
-    if(keyA && leftMove)  { roomX += myPlayer.speed*speedPercentage; }
-    if(keyS && downMove)  { roomY -= myPlayer.speed*speedPercentage; }
-    if(keyD && rightMove) { roomX -= myPlayer.speed*speedPercentage; }
-  }
-  
-  
+ 
   // Add new rooms // 
   if(upWall && newRoom == -1 && upDoor) {  // Top 
     newRoom = 0;
