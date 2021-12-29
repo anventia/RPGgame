@@ -13,9 +13,21 @@ void game() {
     if(keyS && downMove)  { roomY -= myPlayer.speed*speedPercentage; }
     if(keyD && rightMove) { roomX -= myPlayer.speed*speedPercentage; }
   }
+
   
+  // Rooms //  
+  for(int i = 0; i < sideRooms.size(); i++) {  
+    Room obj = sideRooms.get(i);
+    println(i);
+    switch(i) {
+      case 0: if(upDoor)    obj.show(); break;
+      case 1: if(rightDoor) obj.show(); break;
+      case 2: if(downDoor)  obj.show(); break;
+      case 3: if(leftDoor)  obj.show(); break;
+    }
+    if(!paused) obj.act();
+  }  
   
-  // Rooms //
   for(Room obj : myRooms) {  // Main rooms
     obj.show();
     if(!paused) obj.act();
@@ -46,17 +58,18 @@ void game() {
     rotate(radians(90));
     if(leftDoor) door();
   popMatrix();
+  
  
-  /* // Weird rotate: rotate((atan((height/2-mouseY)-(width/2-mouseX))));
+   // Weird rotate: rotate((atan((height/2-mouseY)-(width/2-mouseX))));
   pushMatrix();  // Debug line 
     translate(width/2, height/2);
-    rotate((atan((height/2-mouseY)+(width/2-mouseX))));
+    rotate((atan2((mouseY-height/2), (mouseX-width/2))));
     noFill();
-    strokeWeight(5);
+    strokeWeight(2);
     stroke(255,0,255);
-    line(0,0, 100,0);
+    line(0,0, 450,0);
   popMatrix();
-  */
+  // */
   
   // Wall collisions //
   upWall    = (myPlayer.location.y - (height/2+roomY*scale-roomSize/2*gameScale)) <= myPlayer.rad;
@@ -118,17 +131,17 @@ void game() {
   }
   
   
-  // Remove unneeded rooms  / Show temporary rooms // 
+  // Remove unneeded rooms  / Show temporary rooms // (changed how moving between rooms displays, temprooms might be unneeded now)
   switch(newRoom) {
     case 0:  // Top
       if(roomY*scale < (roomSize*gameScale)/2-myPlayer.rad) {  // Remove new room if player doesn't enter it
         myRooms.remove(1); 
         newRoom = -1; 
-        tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y-roomSize*gameScale-wallSize, 30, 0, "out"));
+        //tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y-roomSize*gameScale-wallSize, 30, 0, "out"));
         tempRoom = tempRoom2 = new PVector(0,0);
         break; 
       } else if(roomY*scale > (myPlayer.rad+wallSize+roomSize*gameScale/2)) {  // Remove old room on the bottom [ENTER NEW ROOM: TOP]
-        tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y+roomSize*gameScale+wallSize, 30, newRoom, "out"));
+        //tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y+roomSize*gameScale+wallSize, 30, newRoom, "out"));
         tempRoom = tempRoom2 = new PVector(myPlayer.mapRow, myPlayer.mapCol);
         offset.offsetX = offset.offsetY = 0;
         //tempRooms.get(0).fade = "out";  // Temporary room for fade-out effect
@@ -143,11 +156,11 @@ void game() {
       if(roomX*scale > -((roomSize*gameScale)/2-myPlayer.rad)) {  // Remove new room if player doesn't enter it
         myRooms.remove(1); 
         newRoom = -1; 
-        tempRooms.add(new Room(myRooms.get(0).x+roomSize*gameScale+wallSize,myRooms.get(0).y, 30, 1, "out"));
+        //tempRooms.add(new Room(myRooms.get(0).x+roomSize*gameScale+wallSize,myRooms.get(0).y, 30, 1, "out"));
         tempRoom = tempRoom2 = new PVector(0,0);
         break; 
       } else if(roomX*scale < -(myPlayer.rad+wallSize+roomSize*gameScale/2)) {  // Remove old room on the left [ENTER NEW ROOM: RIGHT]
-        tempRooms.add(new Room(myRooms.get(0).x-roomSize*gameScale-wallSize,myRooms.get(0).y, 30, newRoom, "out"));
+        //tempRooms.add(new Room(myRooms.get(0).x-roomSize*gameScale-wallSize,myRooms.get(0).y, 30, newRoom, "out"));
         tempRoom = tempRoom2 = new PVector(myPlayer.mapRow, myPlayer.mapCol);
         offset.offsetX = offset.offsetY = 0;
         //tempRooms.get(0).fade = "out";  // Temporary room for fade-out effect
@@ -162,11 +175,11 @@ void game() {
       if(roomY*scale > -1*((roomSize*gameScale)/2-myPlayer.rad)) {  // Remove new room if player doesn't enter it
         myRooms.remove(1); 
         newRoom = -1; 
-        tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y+roomSize*gameScale+wallSize, 30, 2, "out"));
+        //tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y+roomSize*gameScale+wallSize, 30, 2, "out"));
         tempRoom = tempRoom2 = new PVector(0,0);
         break; 
       } else if(roomY*scale < -(myPlayer.rad+wallSize+roomSize*gameScale/2)) {  // Remove old room on the top [ENTER NEW ROOM: BOTTOM]
-        tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y-roomSize*gameScale-wallSize, 30, newRoom, "out"));
+        //tempRooms.add(new Room(myRooms.get(0).x,myRooms.get(0).y-roomSize*gameScale-wallSize, 30, newRoom, "out"));
         tempRoom = tempRoom2 = new PVector(myPlayer.mapRow, myPlayer.mapCol);
         offset.offsetX = offset.offsetY = 0;
         //tempRooms.get(0).fade = "out";  // Temporary room for fade-out effect
@@ -181,11 +194,11 @@ void game() {
       if(roomX*scale < (roomSize*gameScale)/2-myPlayer.rad) {  // Remove new room if player doesn't enter it
         myRooms.remove(1); 
         newRoom = -1; 
-        tempRooms.add(new Room(myRooms.get(0).x-roomSize*gameScale-wallSize,myRooms.get(0).y, 30, 3, "out"));
+        //tempRooms.add(new Room(myRooms.get(0).x-roomSize*gameScale-wallSize,myRooms.get(0).y, 30, 3, "out"));
         tempRoom = tempRoom2 = new PVector(0,0);
         break; 
       } else if(roomX*scale > (myPlayer.rad+wallSize+roomSize*gameScale/2)) {  // Remove old room on the right [ENTER NEW ROOM: LEFT]
-        tempRooms.add(new Room(myRooms.get(0).x+roomSize*gameScale+wallSize,myRooms.get(0).y, 30, newRoom, "out"));
+        //tempRooms.add(new Room(myRooms.get(0).x+roomSize*gameScale+wallSize,myRooms.get(0).y, 30, newRoom, "out"));
         tempRoom = tempRoom2 = new PVector(myPlayer.mapRow, myPlayer.mapCol);
         offset.offsetX = 0;
         offset.offsetY = -roomY;
@@ -217,7 +230,7 @@ void game() {
      
   // println(myObjects.get(25).offsetX);
     
-  // Show enemies when peeking into another room (Temporary Rooms) //
+  // Show enemies when peeking into another room (Temporary Rooms) // does not work!!
   offset.offset();
   for(int i = 0; i < myObjects.size(); i++) {  // Main loop
     gameObject obj = myObjects.get(i);
@@ -254,7 +267,7 @@ void game() {
   }
   
   for(Room obj : myRooms) {
-    obj.fade();
+    //obj.fade();
   }
   
   

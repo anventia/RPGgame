@@ -1,6 +1,5 @@
 void darkness() {
   noStroke();  
-  println(color(roomWall));  
   for(float y = darknessSize/2; y <= height; y += darknessSize) {
     for( float x = darknessSize/2; x < width; x += darknessSize) {   
       fill(0,map(dist(myPlayer.location.x,myPlayer.location.y, x,y), 150*gameScale,900*gameScale, 0, 255 ));  // Transparency based on distance to player
@@ -24,7 +23,7 @@ void darknessTraced() {  // better "raytracing" light effect without raytracing?
         vertex(-doorSize/2, -roomSize*gameScale/2-wallSize);
         vertex(-roomSize*gameScale/2-wallSize, -roomSize*gameScale/2-wallSize);
         vertex(-roomSize*gameScale/2-wallSize, -roomSize*gameScale*1.5-wallSize);
-        vertex((-doorSize/2-pX)/((-roomSize*gameScale/2-wallSize)-pY)*((-roomSize*gameScale*1.5-wallSize)-(roomSize*gameScale/2+wallSize)), -roomSize*gameScale*1.5-wallSize);
+        vertex((-doorSize/2-pX)/((-roomSize*gameScale/2-wallSize)-pY)*((-roomSize*gameScale*1.5-wallSize)-(-roomSize*gameScale/2-wallSize)), -roomSize*gameScale*1.5-wallSize);
         vertex(-doorSize/2, -roomSize*gameScale/2-wallSize);
       endShape();
       
@@ -32,9 +31,28 @@ void darknessTraced() {  // better "raytracing" light effect without raytracing?
         vertex(doorSize/2, -roomSize*gameScale/2-wallSize);
         vertex(roomSize*gameScale/2+wallSize, -roomSize*gameScale/2-wallSize);
         vertex(roomSize*gameScale/2+wallSize, -roomSize*gameScale*1.5-wallSize);
-        vertex((doorSize/2-pX)/((-roomSize*gameScale/2-wallSize)-pY)*((-roomSize*gameScale*1.5-wallSize)-(roomSize*gameScale/2+wallSize)), -roomSize*gameScale*1.5-wallSize);
+        vertex((doorSize/2-pX)/((-roomSize*gameScale/2-wallSize)-pY)*((-roomSize*gameScale*1.5-wallSize)-(-roomSize*gameScale/2-wallSize)), -roomSize*gameScale*1.5-wallSize);
         vertex(doorSize/2, -roomSize*gameScale/2-wallSize);
       endShape();
+    }
+    
+    // EXIT UP DOOR //
+    if(pY <= -roomSize*gameScale/2) {
+      beginShape(); // Left
+        vertex(-doorSize/2, -roomSize*gameScale/2);
+        vertex(-roomSize*gameScale/2-wallSize, -roomSize*gameScale/2);
+        vertex(-roomSize*gameScale/2-wallSize, roomSize*gameScale/2);
+        vertex((-doorSize/2-pX)/((-roomSize*gameScale/2)-pY)*((roomSize*gameScale*1.5)-(roomSize*gameScale/2)), roomSize*gameScale/2);
+        vertex(-doorSize/2, -roomSize*gameScale/2);
+      endShape();
+      
+      beginShape(); // Right
+        vertex(doorSize/2, -roomSize*gameScale/2);
+        vertex(roomSize*gameScale/2+wallSize, -roomSize*gameScale/2);
+        vertex(roomSize*gameScale/2+wallSize, roomSize*gameScale/2);
+        vertex((doorSize/2-pX)/((-roomSize*gameScale/2)-pY)*((roomSize*gameScale*1.5)-(roomSize*gameScale/2)), roomSize*gameScale/2);
+        vertex(doorSize/2, -roomSize*gameScale/2);
+      endShape(); 
     }
     
     
@@ -57,6 +75,25 @@ void darknessTraced() {  // better "raytracing" light effect without raytracing?
       endShape();
     }
     
+    // EXIT DOWN DOOR //
+    if(pY >= roomSize*gameScale/2) {
+      beginShape(); // Left
+        vertex(-doorSize/2, roomSize*gameScale/2);
+        vertex(-roomSize*gameScale/2-wallSize, roomSize*gameScale/2);
+        vertex(-roomSize*gameScale/2-wallSize, -roomSize*gameScale/2);
+        vertex((-doorSize/2-pX)/((roomSize*gameScale/2)-pY)*((-roomSize*gameScale*1.5)-(-roomSize*gameScale/2)), -roomSize*gameScale/2);
+        vertex(-doorSize/2, roomSize*gameScale/2);
+      endShape();
+      
+      beginShape(); // Right
+        vertex(doorSize/2, roomSize*gameScale/2);
+        vertex(roomSize*gameScale/2+wallSize, roomSize*gameScale/2);
+        vertex(roomSize*gameScale/2+wallSize, -roomSize*gameScale/2);
+        vertex((doorSize/2-pX)/((roomSize*gameScale/2)-pY)*((-roomSize*gameScale*1.5)-(-roomSize*gameScale/2)), -roomSize*gameScale/2);
+        vertex(doorSize/2, roomSize*gameScale/2);
+      endShape(); 
+    }
+    
     
     // LEFT DOOR //
     if(pX >= -roomSize*gameScale/2-wallSize) {
@@ -77,6 +114,25 @@ void darknessTraced() {  // better "raytracing" light effect without raytracing?
       endShape();
     }
     
+    // EXIT LEFT DOOR //
+    if(pX <= -roomSize*gameScale/2) {
+      beginShape();  // Top
+        vertex(-roomSize*gameScale/2, -doorSize/2);
+        vertex(-roomSize*gameScale/2, -roomSize*gameScale/2-wallSize);
+        vertex(roomSize*gameScale/2, -roomSize*gameScale/2-wallSize);
+        vertex(roomSize*gameScale/2, (-doorSize/2-pY)/((-roomSize*gameScale/2)-pX)*((roomSize*gameScale*1.5)-(roomSize*gameScale/2)));
+        vertex(-roomSize*gameScale/2, -doorSize/2);
+      endShape();
+      
+     beginShape();  // Bottom
+        vertex(-roomSize*gameScale/2, doorSize/2);
+        vertex(-roomSize*gameScale/2, roomSize*gameScale/2+wallSize);
+        vertex(roomSize*gameScale/2, roomSize*gameScale/2+wallSize);
+        vertex(roomSize*gameScale/2, (doorSize/2-pY)/((-roomSize*gameScale/2)-pX)*((roomSize*gameScale*1.5)-(roomSize*gameScale/2)));  
+        vertex(-roomSize*gameScale/2, doorSize/2);
+      endShape();
+    }
+    
     
     // RIGHT DOOR //
     if(pX <= roomSize*gameScale/2+wallSize) {
@@ -94,6 +150,25 @@ void darknessTraced() {  // better "raytracing" light effect without raytracing?
         vertex(roomSize*gameScale*1.5+wallSize, roomSize*gameScale/2+wallSize);
         vertex(roomSize*gameScale*1.5+wallSize, (doorSize/2-pY)/((roomSize*gameScale/2+wallSize)-pX)*((roomSize*gameScale*1.5+wallSize)-(roomSize*gameScale/2+wallSize)));
         vertex(roomSize*gameScale/2+wallSize, doorSize/2);
+      endShape();
+    }
+
+    // EXIT RIGHT DOOR //
+    if(pX >= roomSize*gameScale/2) {
+      beginShape();  // Top
+        vertex(roomSize*gameScale/2, -doorSize/2);
+        vertex(roomSize*gameScale/2, -roomSize*gameScale/2-wallSize);
+        vertex(-roomSize*gameScale/2, -roomSize*gameScale/2-wallSize);
+        vertex(-roomSize*gameScale/2, (-doorSize/2-pY)/((roomSize*gameScale/2)-pX)*((-roomSize*gameScale*1.5)-(-roomSize*gameScale/2)));
+        vertex(roomSize*gameScale/2, -doorSize/2);
+      endShape();
+      
+     beginShape();  // Bottom
+        vertex(roomSize*gameScale/2, doorSize/2);
+        vertex(roomSize*gameScale/2, roomSize*gameScale/2+wallSize);
+        vertex(-roomSize*gameScale/2, roomSize*gameScale/2+wallSize);
+        vertex(-roomSize*gameScale/2, (doorSize/2-pY)/((roomSize*gameScale/2)-pX)*((-roomSize*gameScale*1.5)-(-roomSize*gameScale/2)));
+        vertex(roomSize*gameScale/2, doorSize/2);
       endShape();
     }
     

@@ -4,18 +4,20 @@ class Room {
   PVector velocity;
   float x;
   float y;
+  float default_x;
+  float default_y;
   int tiles;
   float tileSize;
   float tw;
   float th;
-  String fade;
+  String fade = "";
   float fadeCount;
   float lives;
   boolean isTemporary;
   int newRoom;
  
   
-  // Constructor //
+  // Constructors //
   Room(float x, float y, int newRoom) {
     velocity = new PVector(0,0);
     this.x = x;
@@ -25,7 +27,7 @@ class Room {
     tw = width;
     th = height;
     
-    fade = "in";
+    fade = "";
     fadeCount = 0;
     
     this.newRoom = newRoom;
@@ -52,9 +54,25 @@ class Room {
     tileSize = (roomSize*gameScale)/tiles;
   }
   
+  Room(float x, float y) {  // Alternate constructor for side rooms
+    this.default_x = x;
+    this.default_y = y;
+    
+    tw = width;
+    th = height;
+    
+    tiles = 10;
+    tileSize = (roomSize*gameScale)/tiles;
+  }
+  
   
   // Act //
   void act() {    
+    if(fade.equals("")) {  // Side rooms
+      this.x = default_x*(roomSize*gameScale+wallSize);
+      this.y = default_y*(roomSize*gameScale+wallSize);
+    }
+    
     tw = width;
     th = height;
     tileSize = (roomSize*gameScale)/tiles;
@@ -87,7 +105,17 @@ class Room {
         checkerX = checkerX*-1;
         tx += tileSize;
         if(tx > roomSize*gameScale/2) { if(tiles % 2 == 0) {checkerX = checkerX*-1;}tx = -roomSize/2*gameScale+tileSize/2; ty += tileSize; }
-      }  
+      }    
+   if(newRoom != -2) {
+     switch(newRoom) {
+        case 0: fill(255, upDoor    ? 0 : 255); break;
+        case 1: fill(255, rightDoor ? 0 : 255); break;
+        case 2: fill(255, downDoor  ? 0 : 255); break;
+        case 3: fill(255, leftDoor  ? 0 : 255); break;
+      }
+      //rect(0,0, roomSize*gameScale, roomSize*gameScale);
+   }
+      
     popMatrix();
   }
   

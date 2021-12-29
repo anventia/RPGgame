@@ -54,6 +54,7 @@ boolean[] buttonHover;
 // Objects
 ArrayList<Room> myRooms; 
 ArrayList<Room> tempRooms;
+ArrayList<Room> sideRooms;
 ArrayList<gameObject> myObjects;
 Weapon[] myWeapons;
 Player myPlayer;
@@ -126,6 +127,8 @@ void setup() {
   myRooms   = new ArrayList<Room>();
   myObjects = new ArrayList<gameObject>();
   tempRooms = new ArrayList<Room>();
+  sideRooms = new ArrayList<Room>(); 
+  offset = new Offset();
   myWeapons = new Weapon[] {  // 1 = unlocked
     new BasicGun(1),
     new Rapid(0),
@@ -137,8 +140,11 @@ void setup() {
   myRooms  .add(new Room(0,0, -2));
   myObjects.add(new Laser());
   myObjects.add(myPlayer);
-  offset = new Offset();
-    
+  sideRooms.add(new Room(0, -1));
+  sideRooms.add(new Room(1 , 0));
+  sideRooms.add(new Room(0, 1));
+  sideRooms.add(new Room(-1, 0));
+  
   // Font
   consolas = createFont("Consolas", 1);
   
@@ -156,7 +162,7 @@ void setup() {
     loadImage("speed.png")
   };
   
-  InitializeEnemies();
+  //InitializeEnemies();
   //myObjects.add(new Turret(-200, 0, 4, 3));
 }
 

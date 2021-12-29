@@ -29,7 +29,7 @@ class Player extends gameObject {
     rad = size/2;
     mapCol = roomCol;
     mapRow = roomRow;
-    speed = 5*gameScale;
+    speed = 7*gameScale;
     super.act();
     weapon = myWeapons[selectedWeapon];
     immunityTimer++;
