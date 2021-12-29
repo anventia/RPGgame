@@ -59,7 +59,7 @@ void game() {
   popMatrix();
   
  
-   // Weird rotate: rotate((atan((height/2-mouseY)-(width/2-mouseX))));
+  // Weird rotate: rotate((atan((height/2-mouseY)-(width/2-mouseX))));
   pushMatrix();  // Debug line 
     translate(width/2, height/2);
     rotate((atan2((mouseY-height/2), (mouseX-width/2))));
@@ -311,7 +311,7 @@ void game() {
   
   // Pause //
   if(!paused && esc) { esc = false; paused = true; }
-  if(paused) {
+  if(paused && !gameOver) {
     fill(0,200);
     noStroke();
     rectMode(CORNER);
@@ -366,7 +366,7 @@ void game() {
       }
       
     }
-    if(paused && esc) { esc = pauseMenu = paused = false; }
+    if(paused && esc) esc = pauseMenu = paused = false;
   }
   
   fill(255);
@@ -375,9 +375,39 @@ void game() {
   textAlign(LEFT);
   text("$ "+money, 20*scale, height-20*scale);  // Show money
   
+  
+  // Death //
+  if(myPlayer.lives <= 0 && !gameOver) {
+    gameOver = paused = true;
+    fade = 0;
+  }
+  if(gameOver) {
+    fill(255,0,0, map(fade, 0,100, 0, 175));
+    rect(width/2,height/2, width,height);
+    
+    fill(255, map(fade, 0,100, 0, 255));
+    textAlign(CENTER);
+    textSize(100*scale);
+    text("You Died!", width/2, height/2);
+    
+    textSize(25*scale);
+    text("< return to main menu >", width/2, height*0.61);
+    
+    stroke(0, 0);
+    strokeWeight(3*scale);
+    noFill();
+    if(button("rect", width/2,height*0.595, 340*scale,45*scale, 0, "stroke", 255, 20*scale, 10*scale, 1)) {
+      initialize();
+    }
+    
+    
+    fade = fade >= 100 ? fade : fade+1;  // Increase fade up to 100
+  }
+  
+  
 } 
 
 class Offset extends gameObject {  // Temporary object to store values for temporary enemies
- Offset() {
- }
+  Offset() {
+  }
 }

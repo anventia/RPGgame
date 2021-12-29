@@ -9,6 +9,7 @@ final int GAME = 1;
 int mode;
 boolean paused;
 boolean pauseMenu;
+boolean gameOver;
 
 // Colors
 color debug = #FF00FF;
@@ -50,6 +51,7 @@ float speedPercentage;  // Player speed multiplier
 float damagePercentage;  // Player damage multiplier
 int money;  // Number of points to spend
 boolean[] buttonHover;
+float fade;
 
 // Objects
 ArrayList<Room> myRooms; 
@@ -75,19 +77,12 @@ void setup() {
   size(960, 540, FX2D);
   background(255);
   scaleWindow();
-  
-  // Mode Framework
-  mode = INTRO;
-  paused = false;
-  pauseMenu = false;
-  
+
   // Room values
   roomSize = 1000;
   default_roomScale = 0.5;
   default_wallSize = 50;
   default_doorSize = 300;
-  roomX = 0;
-  roomY = 0;
    
   // Game
   tempRoom = new PVector(0,0);
@@ -105,23 +100,68 @@ void setup() {
     {0,1,1,1,0,0,0,0},
     {0,0,0,0,0,0,0,0}
   };
-  roomRow = 3;  // Starting room
-  roomCol = 3;
   default_slSpeed = slSpeed = 10;
   inSize = 75*scale;  // Indicator size
   inOffset = 20*scale;  // Indicator offset 
-  slTargetY = inSize/2+inOffset;  // Start on first (default) weapon
   healAmount = 5;
-  maxHealth = 100;
-  speedPercentage = 1;
-  damagePercentage = 1;
-  money = 0;
   buttonHover = new boolean[] {  // Is mouse hovering over buttons
     false,  // 0: Left pause button
     false,  // 1: Middle pause button
     false,  // 2: Right pause button
     false   // 3: Intro screen button
   };  
+  
+  // Font
+  consolas = createFont("Consolas", 1);
+  
+  // Icons
+  gunIcons = new PImage[] {
+    loadImage("basic_gun.png"),
+    loadImage("rapid.png"),
+    loadImage("rifle.png"),
+    loadImage("shotgun.png"),
+    loadImage("sword.png")
+  };
+  otherIcons = new PImage[] {
+    loadImage("damage.png"),
+    loadImage("heart.png"),
+    loadImage("speed.png")
+  };
+  
+  
+  initialize();
+}
+
+
+void draw() {
+  detectClicks();
+  scaleWindow();
+  switch(mode) {  // Mode Framework
+    case INTRO: intro(); break;
+    case GAME:  game();  break;
+  }
+}
+
+
+void initialize() {  // Set up game
+  // Mode Framework
+  mode = INTRO;
+  paused = false;
+  pauseMenu = false;
+  gameOver = false;
+  
+  // Room values
+  roomX = 0;
+  roomY = 0;
+  
+  // Game
+  roomRow = 3;  // Starting room
+  roomCol = 3;
+  slTargetY = inSize/2+inOffset;  // Start on first (default) weapon
+  maxHealth = 100;
+  speedPercentage = 1;
+  damagePercentage = 1;
+  money = 0;
   
   // Objects
   myRooms   = new ArrayList<Room>();
@@ -145,35 +185,8 @@ void setup() {
   sideRooms.add(new Room(0, 1));
   sideRooms.add(new Room(-1, 0));
   
-  // Font
-  consolas = createFont("Consolas", 1);
-  
-  // Icons
-  gunIcons = new PImage[] {
-    loadImage("basic_gun.png"),
-    loadImage("rapid.png"),
-    loadImage("rifle.png"),
-    loadImage("shotgun.png"),
-    loadImage("sword.png")
-  };
-  otherIcons = new PImage[] {
-    loadImage("damage.png"),
-    loadImage("heart.png"),
-    loadImage("speed.png")
-  };
-  
+  // Enemies
   InitializeEnemies();
-  //myObjects.add(new Turret(-200, 0, 4, 3));
-}
-
-
-void draw() {
-  detectClicks();
-  scaleWindow();
-  switch(mode) {  // Mode Framework
-    case INTRO: intro(); break;
-    case GAME:  game();  break;
-  }
 }
 
 

@@ -1,4 +1,5 @@
 class Follower extends Enemy {
+  float vMag;
   Follower(float x, float y, int mapCol, int mapRow) {
     super(
       new PVector(width/2+x, height/2+y),  // Location
@@ -9,11 +10,12 @@ class Follower extends Enemy {
       #65E882,  // Color
       #0BE037  // Stroke Color
     );
+    vMag = random(0.5, 2);
   }
   
   void act() {
     velocity = new PVector(myPlayer.location.x-location.x, myPlayer.location.y-location.y);
-    velocity.setMag(1);
+    velocity.setMag(vMag);
     location.x = default_location.x*scale+roomX*scale;
     location.y = default_location.y*scale+roomY*scale;
     
