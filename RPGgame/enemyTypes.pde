@@ -14,7 +14,21 @@ class Follower extends Enemy {
   void act() {
     velocity = new PVector(myPlayer.location.x-location.x, myPlayer.location.y-location.y);
     velocity.setMag(1);
-    super.act();
+    location.x = default_location.x*scale+roomX*scale;
+    location.y = default_location.y*scale+roomY*scale;
+    
+    if(location.y <= height/2+roomY-roomSize*gameScale/2+rad) {  // Collide with walls (and not get stuck on them)
+      if(location.y > myPlayer.location.y) default_location.sub(velocity); else default_location.add(velocity);
+    } else if(location.y >= height/2+roomY+roomSize*gameScale/2-rad) {
+      if(location.y < myPlayer.location.y) default_location.sub(velocity); else default_location.add(velocity);
+    } else if(location.x <= width/2+roomX-roomSize*gameScale/2+rad) {
+      if(location.x > myPlayer.location.x) default_location.sub(velocity); else default_location.add(velocity);
+    } else if(location.x >= width/2+roomX+roomSize*gameScale/2-rad) {  
+      if(location.x < myPlayer.location.x) default_location.sub(velocity); else default_location.add(velocity);
+    } else {
+      super.act();
+    }
+    
     if(dist(location.x, location.y, myPlayer.location.x, myPlayer.location.y) <= myPlayer.rad+rad) {  // Deal damage to player when touching it
       myPlayer.damage(15);
     }
@@ -44,6 +58,8 @@ class Turret extends Enemy {
   
   // Act //
   void act() {
+    location.x = default_location.x*scale+roomX*scale;
+    location.y = default_location.y*scale+roomY*scale;
     super.act();
     bulletTimer++;
     if(bulletTimer > 60) {  // Shoot

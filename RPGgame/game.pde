@@ -18,7 +18,6 @@ void game() {
   // Rooms //  
   for(int i = 0; i < sideRooms.size(); i++) {  
     Room obj = sideRooms.get(i);
-    println(i);
     switch(i) {
       case 0: if(upDoor)    obj.show(); break;
       case 1: if(rightDoor) obj.show(); break;

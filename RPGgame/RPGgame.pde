@@ -85,7 +85,7 @@ void setup() {
   roomSize = 1000;
   default_roomScale = 0.5;
   default_wallSize = 50;
-  default_doorSize = 200;
+  default_doorSize = 300;
   roomX = 0;
   roomY = 0;
    
@@ -162,7 +162,7 @@ void setup() {
     loadImage("speed.png")
   };
   
-  //InitializeEnemies();
+  InitializeEnemies();
   //myObjects.add(new Turret(-200, 0, 4, 3));
 }
 
