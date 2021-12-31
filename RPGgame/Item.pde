@@ -42,8 +42,9 @@ class Item extends gameObject {
           return;
         case "HEALTH":
           lives = 0;
-          myPlayer.lives = myPlayer.lives+healAmount > maxHealth ? maxHealth : myPlayer.lives+healAmount;  // Adds HP, but doesn't go over maximum health
-          myObjects.add(new Message("HEALTH", "+"+healAmount, myPlayer.location.x, myPlayer.location.y, 45*gameScale, #38C12F));
+          int heal = round(random(healAmount.x, healAmount.y));
+          myPlayer.lives = myPlayer.lives+heal > maxHealth ? maxHealth : myPlayer.lives+heal;  // Adds HP, but doesn't go over maximum health
+          myObjects.add(new Message("HEALTH", "+"+heal, myPlayer.location.x, myPlayer.location.y, 45*gameScale, #38C12F));
           return;
       }
     }

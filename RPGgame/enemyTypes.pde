@@ -37,7 +37,7 @@ class Follower extends Enemy {
     
     if(lives < 1 && int(random(0,100)) <75) {  // Drop weapon item 3/4 of the time
       myObjects.add(new Item("HEALTH", location.x, location.y, mapCol, mapRow));
-      money += 5;
+      money += int(random(1,7));
     }
   }
 }
@@ -72,9 +72,43 @@ class Turret extends Enemy {
       bulletTimer = 0;
     }
     
-    if(lives < 1 && int(random(0,100)) >50) {  // Drop weapon item 1/2 of the time
+    if(lives < 1 && int(random(0,100)) >66) {  // Drop weapon item 1/3 of the time
       myObjects.add(new Item("WEAPON", location.x, location.y, mapCol, mapRow));
       money += 20;
+    }
+  }
+}
+
+class Spawner extends Enemy {
+  
+  Spawner(float x, float y, int mapCol, int mapRow) {
+    super(
+      new PVector(width/2+x, height/2+y),  // Location
+      200,  // Size
+      300,  // Lives
+      mapCol,  // Map Column
+      mapRow,  // Map Row
+      #7654E8,  // Color
+      #6A48DE  // Stroke Color
+    );
+    
+  }
+  
+  // Act //
+  void act() {
+    location.x = default_location.x*scale+roomX*scale;
+    location.y = default_location.y*scale+roomY*scale;
+    super.act();
+    bulletTimer++;
+    if(bulletTimer > map(lives, 300,0, 100, 20)) {  // Spawn follower (spawns more often if HP is lower 
+      bulletTimer = 0;
+      myObjects.add(0, new Follower(width/2-location.x+roomX+random(-100,100)*gameScale, height/2-location.y+roomY+random(-100,100)*gameScale, mapCol, mapRow));
+      bulletTimer = 0;
+    }
+    
+    if(lives < 1 && int(random(0,100)) >50) {  // Drop weapon item 1/2 of the time
+      myObjects.add(new Item("WEAPON", location.x, location.y, mapCol, mapRow));
+      money += 100;
     }
   }
 }

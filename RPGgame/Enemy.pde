@@ -45,7 +45,7 @@ class Enemy extends gameObject {
         if(dist(location.x, location.y, obj.location.x, obj.location.y) <= rad+obj.rad) {
           lives -= obj.dmg*damagePercentage;
           obj.lives --;
-          myObjects.add(new Message("DAMAGE", "-"+round(obj.dmg), location.x, location.y, 45*gameScale, #C12F2F));
+          myObjects.add(new Message("DAMAGE", "-"+(obj.dmg*damagePercentage), location.x, location.y, 45*gameScale, #C12F2F));
         }
       }
     }
@@ -53,8 +53,8 @@ class Enemy extends gameObject {
     if(myWeapons[myPlayer.selectedWeapon].attacking == true) {  // Player sword
       for(PVector i : myWeapons[myPlayer.selectedWeapon].swordPoint) {
         if(dist(location.x, location.y, i.x, i.y) < rad) {
-          lives -= myWeapons[myPlayer.selectedWeapon].dmg;
-          myObjects.add(new Message("DAMAGE", "-"+round(myWeapons[myPlayer.selectedWeapon].dmg), location.x, location.y, 45*gameScale, #C12F2F));
+          lives -= myWeapons[myPlayer.selectedWeapon].dmg*damagePercentage;
+          myObjects.add(new Message("DAMAGE", "-"+(myWeapons[myPlayer.selectedWeapon].dmg*damagePercentage), location.x, location.y, 45*gameScale, #C12F2F));
         }
       }
     }

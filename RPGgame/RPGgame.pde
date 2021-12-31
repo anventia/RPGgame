@@ -45,7 +45,7 @@ int rows, cols;
 int roomRow, roomCol;
 float inSize, inOffset; // Weapon indicator
 float slY, slTargetY, default_slSpeed, slSpeed;  // Weapon selector
-int healAmount;  // Item healing amount
+PVector healAmount;  // Item healing amount min/max
 int maxHealth;  // Player maximum lives
 float speedPercentage;  // Player speed multiplier
 float damagePercentage;  // Player damage multiplier
@@ -92,18 +92,18 @@ void setup() {
   cols = 8;
   minimap = new int[][] {  // Initialize map
     {0,0,0,0,0,0,0,0},
-    {0,0,0,0,2,1,1,0},
-    {0,0,1,3,3,1,1,0},  
-    {0,0,2,0,0,1,1,0},   
-    {0,2,2,0,0,1,0,0},  
-    {0,3,3,1,1,1,0,0},
-    {0,1,1,1,0,0,0,0},
+    {0,0,0,0,2,3,5,0},
+    {0,0,1,3,3,4,2,0},  
+    {0,0,2,0,0,3,2,0},   
+    {0,2,2,0,0,3,0,0},  
+    {0,3,3,4,6,2,0,0},
+    {0,5,5,3,0,0,0,0},
     {0,0,0,0,0,0,0,0}
   };
   default_slSpeed = slSpeed = 10;
   inSize = 75*scale;  // Indicator size
   inOffset = 20*scale;  // Indicator offset 
-  healAmount = 5;
+  healAmount = new PVector(2, 6);
   buttonHover = new boolean[] {  // Is mouse hovering over buttons
     false,  // 0: Left pause button
     false,  // 1: Middle pause button
@@ -196,7 +196,7 @@ void InitializeEnemies() {
     for(int c = 1; c <= cols; c++) {
       int cell = minimap[r-1][c-1];
       switch(cell) {
-        case 1: case 0: break;  // No enemies
+        case 0: case 1: break;  // No enemies
         case 2:  // 4 turrets
           myObjects.add(new Turret(-200,-200, c,r));
           myObjects.add(new Turret(200,-200, c,r));
@@ -205,6 +205,18 @@ void InitializeEnemies() {
           break;
         case 3:  // Followers
           for(int i = 0; i < 10; i++) myObjects.add(new Follower(random(-100,100),random(-100,100), c,r));
+          break;
+        case 4: // Spawner
+          myObjects.add(new Spawner(0,0, c,r));
+          break;
+        case 5:  // Spawner + Turrets
+          myObjects.add(new Spawner(0,0, c,r));
+          myObjects.add(new Turret(-100,-100, c,r));
+          myObjects.add(new Turret(100,100, c,r));
+          break;
+        case 6:  // Two spawners
+          myObjects.add(new Spawner(0, 150, c,r));
+          myObjects.add(new Spawner(0, -150, c,r));
       }
     }
   }
