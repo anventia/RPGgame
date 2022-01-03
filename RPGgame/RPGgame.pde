@@ -52,6 +52,7 @@ float damagePercentage;  // Player damage multiplier
 int money;  // Number of points to spend
 boolean[] buttonHover;
 float fade;
+int numEnemies;
 
 // Objects
 ArrayList<Room> myRooms; 
@@ -70,7 +71,7 @@ PImage[] gunIcons;
 PImage[] otherIcons;
 
 // Other
-int debugconsole = 1;
+boolean debugconsole;
 
 void setup() { 
   frameRate(60);

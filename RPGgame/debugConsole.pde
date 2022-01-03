@@ -7,9 +7,7 @@ void debugConsole() {
        "\nFramerate: "+round(frameRate)+
        "\nmx: "+mouseX+
        "\nmy: "+mouseY+
-       "\n"+tempRoom+" 1"+
-       "\n"+tempRoom2+" 2"+
-       "\n"+tempRooms.size()+
-       "\n"+offset.offsetX+" "+offset.offsetY
+       "\n"+offset.offsetX+" "+offset.offsetY+
+       "\nEnemies:"+numEnemies
        , 20*scale, 240*scale);
 }

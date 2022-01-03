@@ -231,9 +231,11 @@ void game() {
     
   // Show enemies when peeking into another room (Temporary Rooms) // does not work!!
   offset.offset();
-  for(int i = 0; i < myObjects.size(); i++) {  // Main loop
+  numEnemies = 0;
+  for(int i = 0; i < myObjects.size(); i++) {  // Main loop of gameobjects
     gameObject obj = myObjects.get(i);
     if(!(obj instanceof Enemy)) continue;
+    numEnemies++;
     InTempRoom = (obj.mapRow == int(tempRoom.x) && obj.mapCol == int(tempRoom.y));
     InTempRoom2 = (obj.mapRow == int(tempRoom2.x) && obj.mapCol == int(tempRoom2.y));
     //if(tempRooms.size() > 0) println(tempRooms.get(0).fade);
@@ -264,11 +266,7 @@ void game() {
     obj.fade();
     if(obj.lives == 0) tempRooms.remove(i);
   }
-  
-  for(Room obj : myRooms) {
-    //obj.fade();
-  }
-  
+    
   
   // Darkness //
   darkness();
@@ -277,7 +275,7 @@ void game() {
   // HUD //
   minimap();
   healthBar();
-  if(debugconsole == 1) debugConsole();
+  if(debugconsole) debugConsole();
    
   
   // Weapon Indicator 
@@ -381,14 +379,24 @@ void game() {
     gameOver = paused = true;
     fade = 0;
   }
+  
+  
+  // Win //
+  if(numEnemies <= 0 && !gameOver) {
+    gameOver = paused = true;
+    fade = 0;
+  }
+  
+  
+  // Game Over //
   if(gameOver) {
-    fill(255,0,0, map(fade, 0,100, 0, 175));
+    fill(numEnemies <= 0 ? color(0,255,0) : color(255,0,0), map(fade, 0,100, 0, 175));  // Fill green if win, red if lose
     rect(width/2,height/2, width,height);
     
     fill(255, map(fade, 0,100, 0, 255));
     textAlign(CENTER);
     textSize(100*scale);
-    text("You Died!", width/2, height/2);
+    text(numEnemies <= 0 ? "You Won!" : "You Died!", width/2, height/2);
     
     textSize(25*scale);
     text("< return to main menu >", width/2, height*0.61);
@@ -405,6 +413,7 @@ void game() {
   }
   
   
+  if(keyQ) { debugconsole = !debugconsole; keyQ = false; }
 } 
 
 class Offset extends gameObject {  // Temporary object to store values for temporary enemies
