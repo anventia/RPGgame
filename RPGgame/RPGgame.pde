@@ -36,7 +36,7 @@ float default_doorSize;
 boolean leftWall, rightWall, upWall, downWall;  // true if touching wall
 boolean leftDoor, rightDoor, upDoor, downDoor;  // true if door exists
 boolean leftMove, rightMove, upMove, downMove;  // true if can move in that direction
-int newRoom = -1;
+int newRoom;
 PVector tempRoom, tempRoom2;
 boolean InTempRoom, InTempRoom2;
 float darknessSize;  // Size of darkness pixels
@@ -163,6 +163,7 @@ void initialize() {  // Set up game
   speedPercentage = 1;
   damagePercentage = 1;
   money = 0;
+  newRoom = -1;
   
   // Objects
   myRooms   = new ArrayList<Room>();

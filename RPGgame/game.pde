@@ -58,7 +58,7 @@ void game() {
     if(leftDoor) door();
   popMatrix();
   
- 
+ /*
   // Weird rotate: rotate((atan((height/2-mouseY)-(width/2-mouseX))));
   pushMatrix();  // Debug line 
     translate(width/2, height/2);
