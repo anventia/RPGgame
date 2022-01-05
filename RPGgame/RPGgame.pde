@@ -59,6 +59,7 @@ ArrayList<Room> myRooms;
 ArrayList<Room> tempRooms;
 ArrayList<Room> sideRooms;
 ArrayList<gameObject> myObjects;
+ArrayList<gameObject> lasers;
 Weapon[] myWeapons;
 Player myPlayer;
 gameObject offset;
@@ -170,17 +171,20 @@ void initialize() {  // Set up game
   myObjects = new ArrayList<gameObject>();
   tempRooms = new ArrayList<Room>();
   sideRooms = new ArrayList<Room>(); 
-  offset = new Offset();
+  lasers    = new ArrayList<gameObject>();
+  offset    = new Offset();
   myWeapons = new Weapon[] {  // 1 = unlocked
     new BasicGun(1),
-    new Rapid(0),
-    new Rifle(0),
-    new Shotgun(0),
-    new Sword(0)
+    new Rapid(1),
+    new Rifle(1),
+    new Shotgun(1),
+    new Sword(1)
   };
   myPlayer  = new Player();
-  myRooms  .add(new Room(0,0, -2));
-  myObjects.add(new Laser());
+  myRooms.add(new Room(0,0, -2));
+  lasers.add(new Laser(0));
+  lasers.add(new Laser(-5));
+  lasers.add(new Laser(5));
   myObjects.add(myPlayer);
   sideRooms.add(new Room(0, -1));
   sideRooms.add(new Room(1 , 0));

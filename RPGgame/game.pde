@@ -217,6 +217,26 @@ void game() {
   }
   
   
+  // Aiming indicators //
+  switch(myWeapons[myPlayer.selectedWeapon].index) {
+    case 0: case 1: case 2:  // Single beam (basic, rapid, rifle)
+      lasers.get(0).show();
+      lasers.get(0).act();
+      break;
+    case 3:  // Two beam (shotgun)
+      lasers.get(1).show();
+      lasers.get(1).act();
+      lasers.get(2).show();
+      lasers.get(2).act();
+      break;
+    case 4:  // Circle (melee)
+      noFill();
+      stroke(255,0,0);
+      strokeWeight(lasers.get(0).size);
+      circle(myPlayer.location.x, myPlayer.location.y, myWeapons[4].size*2+myPlayer.size);
+  }
+  
+  
   // GameObjects //
   for(int i = 0; i < myObjects.size(); i++) {  // Main loop
     gameObject obj = myObjects.get(i);
@@ -226,13 +246,14 @@ void game() {
     obj.show();
     if(obj.lives <= 0) myObjects.remove(i);
   }
+  
      
   // println(myObjects.get(25).offsetX);
     
   // Show enemies when peeking into another room (Temporary Rooms) // does not work!!
   offset.offset();
   numEnemies = 0;
-  for(int i = 0; i < myObjects.size(); i++) {  // Main loop of gameobjects
+  for(int i = 0; i < myObjects.size(); i++) {  // Show enemies
     gameObject obj = myObjects.get(i);
     if(!(obj instanceof Enemy)) continue;
     numEnemies++;
@@ -250,7 +271,7 @@ void game() {
     //if(InTempRoom2) {
       //println(obj.mapRow+" "+int(tempRoom2.x)+" // "+obj.mapCol+" "+int(tempRoom2.y));
      
-     // todo: give enemies location value when showing in temp rooms
+     // todo: always show enemies, if not in same room as player, offset by room size multiplied by difference in room coordinates
      
       pushMatrix(); 
         translate(offset.offsetX, offset.offsetY); 

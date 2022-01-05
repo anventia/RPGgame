@@ -2,22 +2,26 @@ class Laser extends gameObject {
   // Instance Variables //
   boolean up, down, left, right;
   PVector laser;
+  float angle;
+  PVector rotation;
   
   // Constructor //
-  Laser() {
-    location = myPlayer.location.copy();
-    
-    
+  Laser(float angle) {
+    location = myPlayer.location.copy();   
     lives = 1;
+    this.angle = angle;
+    rotation = new PVector();
   }
   
   
   // Act //
   void act() {
-    size = 2*gameScale;
+    size = 3*gameScale;
     rad = size/2;
     velocity = new PVector(mouseX-myPlayer.location.x, mouseY-myPlayer.location.y);
-    velocity.setMag(5);
+    velocity.setMag(1);
+    rotation = velocity.copy();
+    velocity.rotate(radians(angle));
     location = myPlayer.location.copy();
     laser = location.copy();
     mapCol = myPlayer.mapCol;
@@ -45,5 +49,46 @@ class Laser extends gameObject {
     stroke(255,0,0);
     strokeWeight(size);
     line(myPlayer.location.x,myPlayer.location.y, location.x,location.y);
+    pushMatrix();
+      float a = dist(myPlayer.location.x, myPlayer.location.y, mouseX, mouseY);
+      float b = dist(myPlayer.location.x, myPlayer.location.y, location.x, location.y);
+      float arrow = a < b ? a : b;
+      translate(myPlayer.location.x, myPlayer.location.y);
+      rotate(rotation.heading());
+      switch(myWeapons[myPlayer.selectedWeapon].index) {  // Add animation switching between arrow types (maybe?)
+        case 0:  // Basic Gun
+          line(arrow,0, arrow-20*gameScale, 20*gameScale);
+          line(arrow,0, arrow-20*gameScale, -20*gameScale);
+          break;
+        case 1:  // Rapid
+          line(arrow,0, arrow-20*gameScale, 15*gameScale);
+          line(arrow,0, arrow-20*gameScale, -15*gameScale);
+          
+          line(arrow-30*gameScale,0, arrow-50*gameScale, 15*gameScale);
+          line(arrow-30*gameScale,0, arrow-50*gameScale, -15*gameScale);
+          
+          line(arrow-60*gameScale,0, arrow-80*gameScale, 15*gameScale);
+          line(arrow-60*gameScale,0, arrow-80*gameScale, -15*gameScale);
+          break;
+        case 2:  // Rifle
+          line(arrow+20*gameScale,0, arrow, 20*gameScale);
+          line(arrow+20*gameScale,0, arrow, -20*gameScale);
+          
+          line(arrow-20*gameScale,0, arrow, 20*gameScale);
+          line(arrow-20*gameScale,0, arrow, -20*gameScale);
+          break;
+        case 3:  // Shotgun
+          if(angle == 5) break;  // Only draw once for the two beams in shotgun mode
+          float y = tan(radians(5))*arrow;
+          line(arrow,0, arrow-y*gameScale, y*gameScale);
+          line(arrow,0, arrow-y*gameScale, -y*gameScale);
+          
+          arrow += 30;
+          y = tan(radians(5))*arrow;
+          line(arrow,0, arrow-y*gameScale, y*gameScale);
+          line(arrow,0, arrow-y*gameScale, -y*gameScale);
+          break;
+      }
+    popMatrix();
   }
 }

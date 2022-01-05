@@ -73,7 +73,6 @@ class Sword extends Weapon {
         new PVector(width/2+(myPlayer.rad+size)*cos(radians(angle)+startangle), height/2+(myPlayer.rad+size)*sin(radians(angle)+startangle)),
         new PVector(width/2+(myPlayer.rad+size/2)*cos(radians(angle)+startangle), height/2+(myPlayer.rad+size/2)*sin(radians(angle)+startangle))
       };
-
     }
   }
   
