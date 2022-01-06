@@ -1,5 +1,6 @@
 void game() {
   background(0);
+  cursor(CROSS);
 
   gameScale = default_roomScale*scale;
   doorSize = default_doorSize*gameScale;
@@ -230,10 +231,9 @@ void game() {
       lasers.get(2).act();
       break;
     case 4:  // Circle (melee)
-      noFill();
-      stroke(255,0,0);
-      strokeWeight(lasers.get(0).size);
-      circle(myPlayer.location.x, myPlayer.location.y, myWeapons[4].size*2+myPlayer.size);
+     lasers.get(3).show();
+     lasers.get(3).act();
+     break;
   }
   
   
@@ -337,6 +337,7 @@ void game() {
     rect(0,0, width,height);  // ADD ANIMATION HERE!!
     pauseMenu = true;  // Finish animation, load menu
     if(pauseMenu) {  // menu
+      cursor(ARROW);
       noFill(); 
       stroke(200);
       strokeWeight(10*scale);

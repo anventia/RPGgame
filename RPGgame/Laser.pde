@@ -21,7 +21,7 @@ class Laser extends gameObject {
     velocity = new PVector(mouseX-myPlayer.location.x, mouseY-myPlayer.location.y);
     velocity.setMag(1);
     rotation = velocity.copy();
-    velocity.rotate(radians(angle));
+    if(angle != -1) velocity.rotate(radians(angle));
     location = myPlayer.location.copy();
     laser = location.copy();
     mapCol = myPlayer.mapCol;
@@ -48,7 +48,7 @@ class Laser extends gameObject {
   void show() {
     stroke(255,0,0);
     strokeWeight(size);
-    line(myPlayer.location.x,myPlayer.location.y, location.x,location.y);
+    if(angle != -1) line(myPlayer.location.x,myPlayer.location.y, location.x,location.y);
     pushMatrix();
       float a = dist(myPlayer.location.x, myPlayer.location.y, mouseX, mouseY);
       float b = dist(myPlayer.location.x, myPlayer.location.y, location.x, location.y);
@@ -61,14 +61,14 @@ class Laser extends gameObject {
           line(arrow,0, arrow-20*gameScale, -20*gameScale);
           break;
         case 1:  // Rapid
+          line(arrow+30*gameScale,0, arrow+10*gameScale, 15*gameScale);
+          line(arrow+30*gameScale,0, arrow+10*gameScale, -15*gameScale);
+          
           line(arrow,0, arrow-20*gameScale, 15*gameScale);
           line(arrow,0, arrow-20*gameScale, -15*gameScale);
           
           line(arrow-30*gameScale,0, arrow-50*gameScale, 15*gameScale);
           line(arrow-30*gameScale,0, arrow-50*gameScale, -15*gameScale);
-          
-          line(arrow-60*gameScale,0, arrow-80*gameScale, 15*gameScale);
-          line(arrow-60*gameScale,0, arrow-80*gameScale, -15*gameScale);
           break;
         case 2:  // Rifle
           line(arrow+20*gameScale,0, arrow, 20*gameScale);
@@ -87,6 +87,15 @@ class Laser extends gameObject {
           y = tan(radians(5))*arrow;
           line(arrow,0, arrow-y*gameScale, y*gameScale);
           line(arrow,0, arrow-y*gameScale, -y*gameScale);
+          break;
+        case 4:  // Sword
+          float c = myWeapons[4].size;
+          line(0, 0, c+myPlayer.rad, 0);
+          noFill();
+          circle(0,0, c*2+myPlayer.size);
+          
+          line(myPlayer.rad+c/2-20*gameScale, 10*gameScale, myPlayer.rad+c/2, 30*gameScale);
+          line(myPlayer.rad+c/2+20*gameScale, 10*gameScale, myPlayer.rad+c/2, 30*gameScale);
           break;
       }
     popMatrix();

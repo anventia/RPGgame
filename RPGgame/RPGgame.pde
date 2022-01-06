@@ -185,6 +185,7 @@ void initialize() {  // Set up game
   lasers.add(new Laser(0));
   lasers.add(new Laser(-5));
   lasers.add(new Laser(5));
+  lasers.add(new Laser(-1));
   myObjects.add(myPlayer);
   sideRooms.add(new Room(0, -1));
   sideRooms.add(new Room(1 , 0));
