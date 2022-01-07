@@ -50,7 +50,7 @@ class Sword extends Weapon {
   float angle;
   
   Sword(int unlocked) {
-    super(4, 0.3, 5, 75, #000000, 5);
+    super(4, 0.3, 5, 100, #000000, 5);
     super.checkUnlocked(unlocked);
     attacking = false;
     increment = 15;  // Swing speed

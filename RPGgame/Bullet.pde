@@ -22,15 +22,14 @@ class Bullet extends gameObject {
   
   
   // Act //
-  void act() {
-    
+  void act() {   
     location.x = default_location.x+offsetX*scale;
     location.y = default_location.y+offsetY*scale;
     default_location.add(velocity);
     this.size = default_size*gameScale;
     rad = size/2;  // radius
     
-    
+    if(!roomWith(myPlayer)) lives = 0;  // Remove bullet if not in room with player
     
     super.offset();
     
