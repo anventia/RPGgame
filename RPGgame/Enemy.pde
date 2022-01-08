@@ -41,10 +41,10 @@ class Enemy extends gameObject {
     // Collide with player weapons //
     for(int i = 0; i < myObjects.size(); i++) {  // Player Bullets
       gameObject obj = myObjects.get(i);
-      if(obj instanceof Bullet && obj.type.equals("PLAYER")) {
+      if(obj instanceof Bullet && obj.type.equals("PLAYER") && obj.roomWith(myPlayer)) {
         if(dist(location.x, location.y, obj.location.x, obj.location.y) <= rad+obj.rad) {
           lives -= obj.dmg*damagePercentage;
-          obj.lives --;
+          obj.lives = 0;
           myObjects.add(new Message("DAMAGE", "-"+(obj.dmg*damagePercentage), location.x, location.y, 45*gameScale, #C12F2F));
         }
       }
