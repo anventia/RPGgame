@@ -57,12 +57,8 @@ class Item extends gameObject {
     fill(type == "WEAPON" ? iWeapon : iHealth);
     stroke(type == "WEAPON" ? iWeapon_s : iHealth_s);
     circle(location.x, location.y, size);
-    switch(type) {  // Draw icons
-      case "WEAPON":
-        PImage icon = gunIcons[addIndex];
-        imageMode(CENTER);
-        image(icon, location.x, location.y, size, size);
-        break;
-    }
+    PImage icon = type.equals("WEAPON") ? gunIcons[addIndex] : otherIcons[1];  // Selects image
+    imageMode(CENTER);
+    image(icon, location.x, location.y, size, size);
   }
 }

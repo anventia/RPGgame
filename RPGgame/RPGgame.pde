@@ -175,10 +175,10 @@ void initialize() {  // Set up game
   offset    = new Offset();
   myWeapons = new Weapon[] {  // 1 = unlocked
     new BasicGun(1),
-    new Rapid(1),
-    new Rifle(1),
-    new Shotgun(1),
-    new Sword(1)
+    new Rapid(0),
+    new Rifle(0),
+    new Shotgun(0),
+    new Sword(0)
   };
   myPlayer  = new Player();
   myRooms.add(new Room(0,0, -2));
