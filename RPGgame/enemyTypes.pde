@@ -106,6 +106,11 @@ class Spawner extends Enemy {
       bulletTimer = 0;
     }
     
+    
+    if(dist(location.x, location.y, myPlayer.location.x, myPlayer.location.y) <= myPlayer.rad+rad) {  // Deal damage to player when touching it
+      myPlayer.damage(25);
+    }
+    
     if(lives < 1 && int(random(0,100)) >50) {  // Drop weapon item 1/2 of the time
       myObjects.add(new Item("WEAPON", location.x, location.y, mapCol, mapRow));
       money += 100;

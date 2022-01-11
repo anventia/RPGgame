@@ -173,7 +173,7 @@ void initialize() {  // Set up game
   sideRooms = new ArrayList<Room>(); 
   lasers    = new ArrayList<gameObject>();
   offset    = new Offset();
-  myWeapons = new Weapon[] {  // 1 = unlocked
+  myWeapons = new Weapon[] {  // 1 = unlocked, 0 = locked.  -> Set all to 1 to unlock them all at the start to try all the weapons
     new BasicGun(1),
     new Rapid(0),
     new Rifle(0),
@@ -211,7 +211,7 @@ void InitializeEnemies() {
           myObjects.add(new Turret(200,200, c,r));
           break;
         case 3:  // Followers
-          for(int i = 0; i < 10; i++) myObjects.add(new Follower(random(-100,100),random(-100,100), c,r));
+          for(int i = 0; i < 10; i++) myObjects.add(new Follower(random(-100,100), random(-100,100), c,r));
           break;
         case 4: // Spawner
           myObjects.add(new Spawner(0,0, c,r));
