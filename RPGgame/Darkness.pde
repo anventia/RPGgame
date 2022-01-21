@@ -1,4 +1,4 @@
-void darkness() {
+void darkness() {  // Standard darkness effect
   noStroke();  
   for(float y = darknessSize/2; y <= height; y += darknessSize) {
     for( float x = darknessSize/2; x < width; x += darknessSize) {   
@@ -9,11 +9,11 @@ void darkness() {
   darknessTraced();
 }
 
-void darknessTraced() {  // better "raytracing" light effect without raytracing???
+void darknessTraced() {  // better "raytracing" light effect without actually raytracing???
   fill(0);
   noStroke();
   pushMatrix();
-    translate(width/2+roomX*scale, height/2+roomY*scale);
+    translate(width/2+roomX*scale, height/2+roomY*scale);  // Translate to room location
     float pX = -roomX;
     float pY = -roomY;
     
@@ -178,7 +178,7 @@ void darknessTraced() {  // better "raytracing" light effect without raytracing?
 }
 
 
-void darknessTraced_broken() {  // "raytracing" effect (does not work!!!)
+void darknessTraced_broken() {  // "raytracing" effect with squares (does not work!!!)
   int tSize = 20;
   ArrayList<ArrayList> points = new ArrayList<ArrayList>();  // Points on darkness cells (Each point in the ArrayList has its own ArrayList)
   PVector tVel, tLoc;

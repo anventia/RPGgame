@@ -1,7 +1,11 @@
+// Draws a piechart-like shape, but within a box shape instead of a circle
+// > with confusing trigonometry! <
+
 void arcBox(float x, float y, float w, float h, float r, float startAngle, float targetAngle, color base, color overlay) {
   
-  PVector origin = new PVector(x,y);
+  PVector origin = new PVector(x,y);  // Middle of square
   
+  // arm 1 //
   float a1x = 
     startAngle >= -45 && startAngle <= 45 || startAngle >= 270+45 && startAngle <= 360 ?  // Right side of square
       w/2 :          
@@ -31,7 +35,9 @@ void arcBox(float x, float y, float w, float h, float r, float startAngle, float
     startAngle > 180+45 && startAngle < 270+45 || startAngle > -90-45 && startAngle < -45 ?  // Top of square
       -h/2 :
       0;
+  
       
+  // arm 2 //
   float a2x = 
     targetAngle >= -45 && targetAngle <= 45 || targetAngle >= 270+45 && targetAngle <= 360 ?  // Right side of square
       w/2 :          
@@ -62,12 +68,17 @@ void arcBox(float x, float y, float w, float h, float r, float startAngle, float
       -h/2 :
       0;
   
+  
+  // Initialize Points //
   PVector arm1 = new PVector(origin.x+a1x, origin.y+a1y);  // two rotating arms
   PVector arm2 = new PVector(origin.x+a2x, origin.y+a2y);
   PVector c1 = new PVector(origin.x+w/2, origin.y+h/2);  // four corner points
   PVector c2 = new PVector(origin.x-w/2, origin.y+h/2);
   PVector c3 = new PVector(origin.x-w/2, origin.y-h/2);
   PVector c4 = new PVector(origin.x+w/2, origin.y-h/2);
+  
+  
+  // Draw ArcBox //
   noFill();
   rectMode(CENTER);
   fill(base);
@@ -76,7 +87,7 @@ void arcBox(float x, float y, float w, float h, float r, float startAngle, float
     fill(overlay);
     vertex(origin.x, origin.y);
     vertex(arm1.x, arm1.y);
-    if(between(45, startAngle, targetAngle) || between(45, targetAngle, startAngle)) vertex(c1.x, c1.y);
+    if(between( 45, startAngle, targetAngle) || between( 45, targetAngle, startAngle)) vertex(c1.x, c1.y);
     if(between(135, startAngle, targetAngle) || between(135, targetAngle, startAngle)) vertex(c2.x, c2.y);
     if(between(225, startAngle, targetAngle) || between(225, targetAngle, startAngle)) vertex(c3.x, c3.y);
     if(between(315, startAngle, targetAngle) || between(315, targetAngle, startAngle)) vertex(c4.x, c4.y);
