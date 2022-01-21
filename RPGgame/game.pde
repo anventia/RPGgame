@@ -435,7 +435,8 @@ void game() {
   }
   
   
-  if(keyQ) { debugconsole = !debugconsole; keyQ = false; }
+  if(keyQ) { debugconsole = !debugconsole; keyQ = false; }  // Debug
+  
 } 
 
 class Offset extends gameObject {  // Temporary object to store values for temporary enemies

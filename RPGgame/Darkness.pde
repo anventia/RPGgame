@@ -10,7 +10,7 @@ void darkness() {  // Standard darkness effect
 }
 
 void darknessTraced() {  // better "raytracing" light effect without actually raytracing???
-  fill(0);
+  fill(darkness);
   noStroke();
   pushMatrix();
     translate(width/2+roomX*scale, height/2+roomY*scale);  // Translate to room location

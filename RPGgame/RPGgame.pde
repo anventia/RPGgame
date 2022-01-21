@@ -21,6 +21,7 @@ color iWeapon = 75;  // Item weapon
 color iWeapon_s = 0;  // Stroke
 color iHealth = #3EFF49;  // Health pack item
 color iHealth_s = #48ED51; // Stroke
+color darkness;  // Darkness
 
 // Room values
 float wallSize;  
@@ -79,10 +80,13 @@ void setup() {
   size(960, 540, FX2D);
   background(255);
   scaleWindow();
+  
+  // Color
+  darkness = 0;  // Change this to something lighter than black to see how darkness works
 
   // Room values
   roomSize = 1000;
-  default_roomScale = 0.5;
+  default_roomScale = 0.5;  // Change this to 0.2 to see how darkness works
   default_wallSize = 50;
   default_doorSize = 300;
    
